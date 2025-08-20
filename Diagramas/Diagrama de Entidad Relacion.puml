@@ -1,0 +1,99 @@
+@startuml Diagrama de Entidad Relacion
+entity Producto {
+    idProducto: int <<PK>>
+    descripcion: String
+    stock: int
+    stockMinimo: int
+    idMarca: int <<FK>>
+    idCategoria: int <<FK>>
+    idProveedor: int <<FK>>
+}
+
+entity Marca {
+    idMarca: int <<PK>>
+    nombre: String
+}
+
+entity Categoria {
+    idCategoria: int <<PK>>
+    nombre: String
+}
+
+entity Proveedor {
+    idProveedor: int <<PK>>
+    nombre: String
+    direccion: String
+    telefono: String
+    email: String
+    idCiudad: int <<FK>>
+}
+
+entity Ciudad {
+    idCiudad: int <<PK>>
+    nombre: String
+    idProvincia: int <<FK>>
+}
+
+entity Provincia {
+    idProvincia: int <<PK>>
+    nombre: String
+    idPais: int <<FK>>
+}
+
+entity Pais {
+    idPais: int <<PK>>
+    nombre: String
+}
+
+entity Pedido {
+    idPedido: int <<PK>>
+    fecha: date
+    idProveedor: int <<FK>>
+}
+
+entity DetallePedido {
+    idDetallePedido: int <<PK>>
+    cantidad: int
+    idPedido: int <<FK>>
+    idProducto: int <<FK>>
+}
+
+entity Entrada {
+    idEntrada: int <<PK>>
+    fecha: date
+}
+
+entity DetalleEntrada {
+    idDetalleEntrada: int <<PK>>
+    cantidad: int
+    idEntrada: int <<FK>>
+    idProducto: int <<FK>>
+}
+
+entity Salida {
+    idSalida: int <<PK>>
+    fecha: date
+}
+
+entity DetalleSalida {
+    idDetalleSalida: int <<PK>>
+    cantidad: int
+    idSalida: int <<FK>>
+    idProducto: int <<FK>>
+}
+
+Producto }|--|| Marca
+Producto }|--|| Categoria
+Producto }|--|| Proveedor
+Proveedor }|--|| Ciudad
+Ciudad }|--|| Provincia
+Provincia }|--|| Pais
+Pedido }|--|| Proveedor
+DetallePedido }|--|| Pedido
+DetallePedido }|--|| Producto
+DetalleEntrada }|--|| Entrada
+DetalleEntrada }|--|| Producto
+DetalleSalida }|--|| Salida
+DetalleSalida }|--|| Producto
+
+@enduml

@@ -1,0 +1,108 @@
+@startuml Diagrama de Clases
+
+class Producto{
+    -idProducto: int
+    -marca: Marca
+    -descripcion: String
+    -categoria: Categoria
+    -proveedor: Proveedor
+    -stock: int
+    -stockMinimo: int
+}
+
+class Marca{
+    -idMarca: int
+    -nombre: String
+}
+
+class Categoria{
+    -idCategoria: int
+    -nombre: String
+}
+
+class Proveedor{
+    -idProveedor: int
+    -nombre: String
+    -ciudad: Ciudad
+    -direccion: String
+    -telefono: String
+    -email: String
+}
+
+class Ciudad{
+    -idCiudad: int
+    -nombre: String
+    -provincia: Provincia
+}
+
+class Provincia{
+    -idProvincia: int
+    -nombre: String
+    -pais: Pais
+}
+
+class Pais{
+    -idPais: int
+    -nombre: String
+}
+
+class Pedido{
+    -idPedido: int
+    -detallePedido: DetallePedido
+    -proveedor: Proveedor
+    -fecha: date
+}
+
+class DetallePedido{
+    -idDetallePedido
+    -producto: Producto
+    -cantidad: int
+}
+
+class Entrada {
+    -idEntrada: int
+    -DetalleEntrada: DetalleEntrada
+    -fecha: date
+}
+
+class DetalleEntrada{
+    -idDetalleEntrada: int
+    -producto: Producto
+    -cantidad: int
+}
+
+class Salida{
+    -idSalida: int
+    -DetalleSalida: DetalleSalida 
+    -fecha: date
+}
+
+class DetalleSalida{
+    -idDetalleSalida: int
+    -producto: Producto
+    -cantidad: int
+}
+
+class Notificacion{
+    -idNotificacion
+    -producto: Producto
+    -mensaje: String
+    -fechaYHora: date
+}
+
+Producto "0..*" --> "1" Marca
+Producto "0..*" --> "1" Categoria
+Producto "0..*" --> "1" Proveedor
+Proveedor "0..*" --> "1" Ciudad
+Pais "1" *-- "0..*" Provincia
+Provincia "1" *-- "0..*" Ciudad
+Pedido "1" *-- "1..*" DetallePedido
+Pedido "0..*" --> "1" Proveedor
+DetallePedido "0..*" --> "1" Producto
+Entrada "1" *-- "1..*" DetalleEntrada
+DetalleEntrada "0..*" --> "1" Producto
+Salida "1" *-- "1..*" DetalleSalida
+DetalleSalida "0..*" --> "1" Producto
+Notificacion "0..*" --> "1" Producto
+
+@enduml
