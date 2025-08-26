@@ -28,21 +28,21 @@ entity Proveedor {
     idCiudad: int <<FK>>
 }
 
-entity Ciudad {
+entity City {
     idCiudad: int <<PK>>
-    nombre: String
-    idProvincia: int <<FK>>
+    name: String
+    Province: int <<FK>>
 }
 
-entity Provincia {
-    idProvincia: int <<PK>>
-    nombre: String
-    idPais: int <<FK>>
+entity Province {
+    idProvince: int <<PK>>
+    nanme: String
+    country: int <<FK>>
 }
 
 entity Pais {
     idPais: int <<PK>>
-    nombre: String
+    name: String
 }
 
 entity Pedido {
