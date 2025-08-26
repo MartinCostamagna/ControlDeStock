@@ -87,7 +87,7 @@ entity DetalleSalida {
     idProducto: int <<FK>>
 }
 
-entity User {
+entity Usuario {
     idUSer: int <<PK>>
     firstName: string
     lastName: string

@@ -84,10 +84,20 @@ class DetalleSalida{
 }
 
 class Notificacion{
-    -idNotificacion
+    -idNotificacion: int
     -producto: Producto
     -mensaje: String
     -fechaYHora: date
+}
+
+class Usuario{
+    -idUsuario: int
+    -nombre: String
+    -apellido: String
+    -email: String
+    -contraseña: String
+    -fechaNacimiento: date
+    -role: String
 }
 
 Producto "0..*" --> "1" Marca
@@ -104,5 +114,6 @@ DetalleEntrada "0..*" --> "1" Producto
 Salida "1" *-- "1..*" DetalleSalida
 DetalleSalida "0..*" --> "1" Producto
 Notificacion "0..*" --> "1" Producto
+Usuario "0..*" --> "1" Ciudad
 
 @enduml
