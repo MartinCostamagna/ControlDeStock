@@ -15,6 +15,9 @@ import { CountriesModule } from './country/country.module';
 // Módulos para la siembra de datos
 import { GeorefModule } from './georef/georef.module';
 import { DataSeedingModule } from './database/data-seeding/data-seeding.module';
+import { ProveedorModule } from './proveedor/proveedor.module';
+import { MarcaModule } from './marca/marca.module';
+import { CategoriaModule } from './categoria/categoria.module';
 
 @Module({
   imports: [
@@ -48,6 +51,9 @@ import { DataSeedingModule } from './database/data-seeding/data-seeding.module';
     CountriesModule,
     GeorefModule,
     DataSeedingModule,
+    ProveedorModule,
+    MarcaModule,
+    CategoriaModule,
   ],
   controllers: [AppController],
   providers: [

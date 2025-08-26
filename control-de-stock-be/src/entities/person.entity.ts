@@ -1,10 +1,7 @@
-// src/person/entities/person.entity.ts
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  CreateDateColumn,
-  UpdateDateColumn,
   Index,
   ManyToOne,
   JoinColumn,

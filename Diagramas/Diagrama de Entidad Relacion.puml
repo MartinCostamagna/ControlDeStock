@@ -31,18 +31,23 @@ entity Proveedor {
 entity City {
     idCiudad: int <<PK>>
     name: String
+    latitude: decimal
+    longitud: decimal
     Province: int <<FK>>
 }
 
 entity Province {
     idProvince: int <<PK>>
-    nanme: String
+    name: String
+    latitude: decimal
+    longitud: decimal
     country: int <<FK>>
 }
 
 entity Pais {
     idPais: int <<PK>>
     name: String
+    code: int
 }
 
 entity Pedido {
@@ -82,12 +87,24 @@ entity DetalleSalida {
     idProducto: int <<FK>>
 }
 
+entity User {
+    idUSer: int <<PK>>
+    firstName: string
+    lastName: string
+    email: string
+    password: string
+    birthDate: date
+    role: string
+    idCity: int <<FK>>
+}
+
 Producto }|--|| Marca
 Producto }|--|| Categoria
 Producto }|--|| Proveedor
-Proveedor }|--|| Ciudad
-Ciudad }|--|| Provincia
-Provincia }|--|| Pais
+Proveedor }|--|| City
+User }|--|| City 
+City }|--|| Province
+Province }|--|| Pais
 Pedido }|--|| Proveedor
 DetallePedido }|--|| Pedido
 DetallePedido }|--|| Producto
