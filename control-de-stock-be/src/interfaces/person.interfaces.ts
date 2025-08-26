@@ -1,4 +1,4 @@
-// src/person/interfaces/person.interfaces.ts
+// src/usuario/interfaces/usuario.interfaces.ts
 
 export interface CountryResponse {
   id: number;
@@ -17,7 +17,7 @@ export interface CityResponse {
   province?: ProvinceResponse | null;
 }
 
-export interface PersonResponseDto {
+export interface UsuarioResponseDto {
   id: number;
   firstName: string;
   lastName: string;

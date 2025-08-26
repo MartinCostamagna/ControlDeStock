@@ -7,7 +7,7 @@ import { AppService } from './app.service';
 
 // Módulos de la aplicación principal
 import { AuthModule } from './auth/auth.module';
-import { PersonsModule } from './person/person.module';
+import { UsuariosModule } from './usuario/usuario.module';
 import { CitiesModule } from './city/city.module';
 import { ProvincesModule } from './province/province.module';
 import { CountriesModule } from './country/country.module';
@@ -38,14 +38,14 @@ import { CategoriaModule } from './categoria/categoria.module';
         database: configService.get<string>('POSTGRES_DB'),
         autoLoadEntities: true,
 
-        synchronize: configService.get<string>('TYPEORM_SYNCHRONIZE') === 'true',
+        synchronize:
+          configService.get<string>('TYPEORM_SYNCHRONIZE') === 'true',
 
         logging: configService.get<string>('TYPEORM_LOGGING') === 'true',
-
       }),
     }),
     AuthModule,
-    PersonsModule,
+    UsuariosModule,
     CitiesModule,
     ProvincesModule,
     CountriesModule,
@@ -56,8 +56,6 @@ import { CategoriaModule } from './categoria/categoria.module';
     CategoriaModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-  ],
+  providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

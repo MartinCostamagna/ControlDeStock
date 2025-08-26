@@ -1,9 +1,22 @@
 // src/auth/auth.controller.ts
-import { Controller, Post, Body, Res, HttpCode, HttpStatus, UsePipes, ValidationPipe, Logger, Req, Get, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Res,
+  HttpCode,
+  HttpStatus,
+  UsePipes,
+  ValidationPipe,
+  Logger,
+  Req,
+  Get,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Response } from 'express';
 import { LoginDto } from './dto/login.dto';
-import { RegisterPersonDto } from './dto/register-person.dto';
+import { RegisterUsuarioDto } from './dto/register-usuario.dto';
 import { ConfigService } from '@nestjs/config';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { User } from '../auth/decorators/user.decorator';
@@ -15,14 +28,22 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly configService: ConfigService,
-  ) { }
+  ) {}
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true, transform: true }))
-  async register(@Body() registerPersonDto: RegisterPersonDto) {
-    this.logger.log(`Intento de registro para el email: ${registerPersonDto.email}`);
-    const result = await this.authService.register(registerPersonDto);
+  @UsePipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  )
+  async register(@Body() registerUsuarioDto: RegisterUsuarioDto) {
+    this.logger.log(
+      `Intento de registro para el email: ${registerUsuarioDto.email}`,
+    );
+    const result = await this.authService.register(registerUsuarioDto);
     return result;
   }
 
@@ -34,9 +55,14 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     this.logger.log(`Intento de login para: ${loginDto.email}`);
-    const result = await this.authService.login(loginDto.email, loginDto.password);
+    const result = await this.authService.login(
+      loginDto.email,
+      loginDto.password,
+    );
 
-    const expiresInMs = this.parseExpiresIn(this.configService.get<string>('JWT_EXPIRES_IN', '1h'));
+    const expiresInMs = this.parseExpiresIn(
+      this.configService.get<string>('JWT_EXPIRES_IN', '1h'),
+    );
     const cookieOptions = {
       httpOnly: true,
       secure: this.configService.get<string>('NODE_ENV') === 'production',
@@ -45,10 +71,12 @@ export class AuthController {
     };
 
     response.cookie('jwt', result.access_token, cookieOptions);
-    this.logger.log(`Login exitoso para: ${loginDto.email}. Cookie establecida.`);
+    this.logger.log(
+      `Login exitoso para: ${loginDto.email}. Cookie establecida.`,
+    );
     return {
       message: 'Inicio de sesión exitoso.',
-      accessToken: result.access_token
+      accessToken: result.access_token,
     };
   }
 
@@ -69,7 +97,9 @@ export class AuthController {
   @Get('status')
   @UseGuards(JwtAuthGuard)
   status(@User() user: any) {
-    this.logger.log(`Verificando estado de auth para usuario: ${JSON.stringify(user)}`);
+    this.logger.log(
+      `Verificando estado de auth para usuario: ${JSON.stringify(user)}`,
+    );
     return { isAuthenticated: true, user: user };
   }
 
@@ -79,10 +109,14 @@ export class AuthController {
     if (isNaN(value)) return 3600 * 1000;
 
     switch (unit) {
-      case 's': return value * 1000;
-      case 'm': return value * 60 * 1000;
-      case 'h': return value * 60 * 60 * 1000;
-      case 'd': return value * 24 * 60 * 60 * 1000;
+      case 's':
+        return value * 1000;
+      case 'm':
+        return value * 60 * 1000;
+      case 'h':
+        return value * 60 * 60 * 1000;
+      case 'd':
+        return value * 24 * 60 * 60 * 1000;
       default:
         const num = parseInt(expiresInString, 10);
         return isNaN(num) ? 3600 * 1000 : num * 1000;

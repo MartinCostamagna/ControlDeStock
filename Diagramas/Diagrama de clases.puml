@@ -1,7 +1,7 @@
 @startuml Diagrama de Clases
 
 class Producto{
-    -idProducto: int
+    -codigoDeBarras: int
     -marca: Marca
     -descripcion: String
     -categoria: Categoria
@@ -97,6 +97,7 @@ class Usuario{
     -email: String
     -contraseña: String
     -fechaNacimiento: date
+    -ciudad: Ciudad
     -role: String
 }
 

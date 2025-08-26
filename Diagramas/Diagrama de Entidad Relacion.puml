@@ -1,6 +1,6 @@
 @startuml Diagrama de Entidad Relacion
 entity Producto {
-    idProducto: int <<PK>>
+    codigoDeBarras: int <<PK>>
     descripcion: String
     stock: int
     stockMinimo: int
@@ -88,7 +88,7 @@ entity DetalleSalida {
 }
 
 entity Usuario {
-    idUSer: int <<PK>>
+    idUsuario: int <<PK>>
     firstName: string
     lastName: string
     email: string

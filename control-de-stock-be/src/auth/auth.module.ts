@@ -3,7 +3,7 @@ import { forwardRef, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
-import { PersonsModule } from '../person/person.module';
+import { UsuariosModule } from '../usuario/usuario.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
@@ -13,7 +13,7 @@ import { CitiesModule } from '../city/city.module';
   imports: [
     ConfigModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
-    forwardRef(() => PersonsModule),
+    forwardRef(() => UsuariosModule),
     CitiesModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -30,4 +30,4 @@ import { CitiesModule } from '../city/city.module';
   providers: [AuthService, JwtStrategy],
   exports: [AuthService, JwtModule, PassportModule],
 })
-export class AuthModule { }
+export class AuthModule {}

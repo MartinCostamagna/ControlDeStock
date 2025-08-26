@@ -1,7 +1,20 @@
 // src/city/city.controller.ts
 import {
-  Controller, Get, Post, Body, Put, Patch, Param, Delete,
-  ParseIntPipe, UseGuards, HttpCode, HttpStatus, Logger, Query, BadRequestException
+  Controller,
+  Get,
+  Post,
+  Body,
+  Put,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+  UseGuards,
+  HttpCode,
+  HttpStatus,
+  Logger,
+  Query,
+  BadRequestException,
 } from '@nestjs/common';
 import { CitiesService } from './city.service';
 import { CreateCityDto } from '../dto/create-city.dto';
@@ -10,7 +23,7 @@ import { UpdatePutCityDto } from '../dto/update-put-city.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { PersonRole } from '../entities/person.entity';
+import { UsuarioRole } from '../entities/usuario.entity';
 import { CityResponseDto } from '../interfaces/city.interfaces';
 
 import { PaginationDto } from '../dto/pagination.dto';
@@ -22,21 +35,30 @@ import { Public } from '../auth/decorators/public.decorator';
 export class CitiesController {
   private readonly logger = new Logger(CitiesController.name);
 
-  constructor(private readonly citiesService: CitiesService) { }
+  constructor(private readonly citiesService: CitiesService) {}
 
   @Post()
   @UseGuards(RolesGuard)
-  @Roles(PersonRole.ADMIN)
+  @Roles(UsuarioRole.ADMIN)
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createCityDto: CreateCityDto): Promise<CityResponseDto> {
-    this.logger.log(`Recibida solicitud para crear ciudad: ${JSON.stringify(createCityDto)}`);
-    return this.citiesService.create(createCityDto, false) as Promise<CityResponseDto>;
+    this.logger.log(
+      `Recibida solicitud para crear ciudad: ${JSON.stringify(createCityDto)}`,
+    );
+    return this.citiesService.create(
+      createCityDto,
+      false,
+    ) as Promise<CityResponseDto>;
   }
 
   @Public()
   @Get()
-  findAll(@Query() paginationDto: PaginationDto): Promise<PaginatedResponseDto<CityResponseDto>> {
-    this.logger.log(`Recibida solicitud para obtener todas las ciudades con paginación: ${JSON.stringify(paginationDto)}`);
+  findAll(
+    @Query() paginationDto: PaginationDto,
+  ): Promise<PaginatedResponseDto<CityResponseDto>> {
+    this.logger.log(
+      `Recibida solicitud para obtener todas las ciudades con paginación: ${JSON.stringify(paginationDto)}`,
+    );
     return this.citiesService.findAll(paginationDto);
   }
 
@@ -49,13 +71,17 @@ export class CitiesController {
 
   @Get('search')
   async searchByName(
-    @Query() paginationDto: PaginationDto
+    @Query() paginationDto: PaginationDto,
   ): Promise<PaginatedResponseDto<CityResponseDto>> {
     const name = paginationDto.name;
-    this.logger.log(`Buscando ciudades por nombre: ${name} con paginación: ${JSON.stringify(paginationDto)}`);
+    this.logger.log(
+      `Buscando ciudades por nombre: ${name} con paginación: ${JSON.stringify(paginationDto)}`,
+    );
 
     if (!name || name.trim() === '') {
-      throw new BadRequestException('El término de búsqueda "name" no puede estar vacío para esta operación.');
+      throw new BadRequestException(
+        'El término de búsqueda "name" no puede estar vacío para esta operación.',
+      );
     }
     return this.citiesService.searchByName(name, paginationDto);
   }
@@ -68,7 +94,7 @@ export class CitiesController {
 
   @Put(':id')
   @UseGuards(RolesGuard)
-  @Roles(PersonRole.ADMIN)
+  @Roles(UsuarioRole.ADMIN)
   updatePut(
     @Param('id', ParseIntPipe) id: number,
     @Body() updatePutCityDto: UpdatePutCityDto,
@@ -79,18 +105,20 @@ export class CitiesController {
 
   @Patch(':id')
   @UseGuards(RolesGuard)
-  @Roles(PersonRole.ADMIN)
+  @Roles(UsuarioRole.ADMIN)
   updatePatch(
     @Param('id', ParseIntPipe) id: number,
     @Body() updatePatchCityDto: UpdateCityDto,
   ): Promise<CityResponseDto> {
-    this.logger.log(`Recibida solicitud PATCH para actualizar ciudad ID: ${id}`);
+    this.logger.log(
+      `Recibida solicitud PATCH para actualizar ciudad ID: ${id}`,
+    );
     return this.citiesService.updatePatch(id, updatePatchCityDto);
   }
 
   @Delete(':id')
   @UseGuards(RolesGuard)
-  @Roles(PersonRole.ADMIN)
+  @Roles(UsuarioRole.ADMIN)
   @HttpCode(HttpStatus.OK)
   remove(@Param('id', ParseIntPipe) id: number) {
     this.logger.log(`Recibida solicitud para eliminar ciudad ID: ${id}`);

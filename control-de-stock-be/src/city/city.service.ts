@@ -339,15 +339,15 @@ export class CitiesService {
 
   async remove(id: number): Promise<{ message: string }> {
     this.logger.debug(`Eliminando ciudad ID: ${id}`);
-    const city = await this.cityRepository.findOne({ where: { id }, relations: ['persons'] });
+    const city = await this.cityRepository.findOne({ where: { id }, relations: ['usuarios'] });
     if (!city) {
       this.logger.warn(`Ciudad ID ${id} no encontrada para eliminar.`);
       throw new NotFoundException(`Ciudad con ID ${id} no encontrada.`);
     }
 
-    if (city.persons && city.persons.length > 0) {
-      this.logger.warn(`No se puede eliminar la ciudad ID ${id} porque tiene personas asociadas.`);
-      throw new ConflictException(`No se puede eliminar la ciudad '${city.name}' porque tiene personas asociadas. Reasigne las personas primero.`);
+    if (city.usuarios && city.usuarios.length > 0) {
+      this.logger.warn(`No se puede eliminar la ciudad ID ${id} porque tiene usuarioas asociadas.`);
+      throw new ConflictException(`No se puede eliminar la ciudad '${city.name}' porque tiene usuarioas asociadas. Reasigne las usuarioas primero.`);
     }
     await this.cityRepository.remove(city);
     this.logger.log(`Ciudad ID: ${id} eliminada.`);

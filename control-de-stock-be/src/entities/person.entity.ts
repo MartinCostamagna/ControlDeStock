@@ -11,14 +11,14 @@ import {
 import { City } from '../entities/city.entity';
 import * as bcrypt from 'bcrypt';
 
-export enum PersonRole {
+export enum UsuarioRole {
   ADMIN = 'admin',
   USER = 'user',
   MODERATOR = 'moderator',
 }
 
-@Entity('persons')
-export class Person {
+@Entity('usuarios')
+export class Usuario {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -40,13 +40,17 @@ export class Person {
 
   @Column({
     type: 'enum',
-    enum: PersonRole,
-    default: PersonRole.USER,
+    enum: UsuarioRole,
+    default: UsuarioRole.USER,
     nullable: false,
   })
-  role!: PersonRole;
+  role!: UsuarioRole;
 
-  @ManyToOne(() => City, (city) => city.persons, { nullable: true, onDelete: 'SET NULL', eager: false })
+  @ManyToOne(() => City, (city) => city.usuarios, {
+    nullable: true,
+    onDelete: 'SET NULL',
+    eager: false,
+  })
   @JoinColumn({ name: 'cityId' })
   city!: City | null;
 
@@ -56,7 +60,10 @@ export class Person {
   @BeforeInsert()
   @BeforeUpdate()
   async hashPassword() {
-    if (this.password && (this.password.length < 50 || !this.password.startsWith('$2b$'))) {
+    if (
+      this.password &&
+      (this.password.length < 50 || !this.password.startsWith('$2b$'))
+    ) {
       const saltRounds = 10;
       this.password = await bcrypt.hash(this.password, saltRounds);
     }

@@ -1,11 +1,17 @@
 // src/auth/auth.service.ts
-import { Injectable, UnauthorizedException, Logger, ConflictException, BadRequestException } from '@nestjs/common';
-import { PersonService } from '../person/person.service';
+import {
+  Injectable,
+  UnauthorizedException,
+  Logger,
+  ConflictException,
+  BadRequestException,
+} from '@nestjs/common';
+import { UsuarioService } from '../usuario/usuario.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import { Person } from '../entities/person.entity';
+import { Usuario } from '../entities/usuario.entity';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
-import { RegisterPersonDto } from './dto/register-person.dto';
+import { RegisterUsuarioDto } from './dto/register-usuario.dto';
 import { CitiesService } from '../city/city.service';
 
 @Injectable()
@@ -13,32 +19,32 @@ export class AuthService {
   private readonly logger = new Logger(AuthService.name);
 
   constructor(
-    private readonly personsService: PersonService,
+    private readonly usuariosService: UsuarioService,
     private readonly jwtService: JwtService,
     private readonly citiesService: CitiesService,
-  ) { }
+  ) {}
 
   async login(email: string, pass: string): Promise<{ access_token: string }> {
     this.logger.debug(`Procesando login para: ${email}`);
-    const person = await this.personsService.findByEmailForAuth(email);
+    const usuario = await this.usuariosService.findByEmailForAuth(email);
 
-    if (!person) {
+    if (!usuario) {
       this.logger.warn(`Login fallido: Email no encontrado - ${email}`);
       throw new UnauthorizedException('Credenciales inválidas.');
     }
 
-    const passwordIsValid = await bcrypt.compare(pass, person.password);
+    const passwordIsValid = await bcrypt.compare(pass, usuario.password);
     if (!passwordIsValid) {
       this.logger.warn(`Login fallido: Contraseña incorrecta para - ${email}`);
       throw new UnauthorizedException('Credenciales inválidas.');
     }
 
     const payload: JwtPayload = {
-      sub: person.id,
-      email: person.email,
-      role: person.role,
-      firstName: person.firstName,
-      lastName: person.lastName
+      sub: usuario.id,
+      email: usuario.email,
+      role: usuario.role,
+      firstName: usuario.firstName,
+      lastName: usuario.lastName,
     };
     this.logger.log(`Login exitoso para: ${email}. Generando token.`);
     return {
@@ -46,12 +52,17 @@ export class AuthService {
     };
   }
 
-  async register(registerPersonDto: RegisterPersonDto): Promise<{ message: string; userId: number }> {
-    this.logger.debug(`Intentando registrar nueva persona con email: ${registerPersonDto.email}`);
+  async register(
+    registerUsuarioDto: RegisterUsuarioDto,
+  ): Promise<{ message: string; userId: number }> {
+    this.logger.debug(
+      `Intentando registrar nueva usuarioa con email: ${registerUsuarioDto.email}`,
+    );
 
-    const { email, password, cityName, provinceName, ...personData } = registerPersonDto;
+    const { email, password, cityName, provinceName, ...usuarioData } =
+      registerUsuarioDto;
 
-    const existingUser = await this.personsService.findByEmailForAuth(email);
+    const existingUser = await this.usuariosService.findByEmailForAuth(email);
     if (existingUser) {
       this.logger.warn(`Registro fallido: El email '${email}' ya está en uso.`);
       throw new ConflictException(`El email '${email}' ya está registrado.`);
@@ -59,21 +70,30 @@ export class AuthService {
 
     let cityIdToAssign: number | undefined = undefined;
     if (cityName) {
-      const city = await this.citiesService.findOneByNameAndProvinceName(cityName, provinceName);
+      const city = await this.citiesService.findOneByNameAndProvinceName(
+        cityName,
+        provinceName,
+      );
       if (!city) {
-        this.logger.warn(`Registro fallido: Ciudad '${cityName}' ${provinceName ? `en provincia '${provinceName}'` : ''} no encontrada.`);
-        throw new BadRequestException(`La ciudad '${cityName}' ${provinceName ? `en la provincia '${provinceName}'` : ''} no fue encontrada.`);
+        this.logger.warn(
+          `Registro fallido: Ciudad '${cityName}' ${provinceName ? `en provincia '${provinceName}'` : ''} no encontrada.`,
+        );
+        throw new BadRequestException(
+          `La ciudad '${cityName}' ${provinceName ? `en la provincia '${provinceName}'` : ''} no fue encontrada.`,
+        );
       }
       cityIdToAssign = city.id;
-      this.logger.log(`Ciudad encontrada para el registro: ID ${cityIdToAssign}, Nombre: ${city.name}`);
+      this.logger.log(
+        `Ciudad encontrada para el registro: ID ${cityIdToAssign}, Nombre: ${city.name}`,
+      );
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     this.logger.debug(`Contraseña hasheada para el usuario ${email}`);
 
     try {
-      const newUser = await this.personsService.create({
-        ...personData,
+      const newUser = await this.usuariosService.create({
+        ...usuarioData,
         email,
         password: hashedPassword, // ¡Guardamos la contraseña hasheada!
         cityId: cityIdToAssign, // Asignamos la ciudad por su ID
@@ -98,15 +118,20 @@ export class AuthService {
           error,
         );
       }
-      throw new BadRequestException('No se pudo completar el registro, por favor intente de nuevo.');
+      throw new BadRequestException(
+        'No se pudo completar el registro, por favor intente de nuevo.',
+      );
     }
   }
 
-  async validatePersonCredentials(email: string, pass: string): Promise<Omit<Person, 'password' | 'hashPassword'> | null> {
-    const person = await this.personsService.findByEmailForAuth(email);
-    if (person && await bcrypt.compare(pass, person.password)) {
-      const { password, hashPassword, ...result } = person;
-      return result as Omit<Person, 'password' | 'hashPassword'>;
+  async validateUsuarioCredentials(
+    email: string,
+    pass: string,
+  ): Promise<Omit<Usuario, 'password' | 'hashPassword'> | null> {
+    const usuario = await this.usuariosService.findByEmailForAuth(email);
+    if (usuario && (await bcrypt.compare(pass, usuario.password))) {
+      const { password, hashPassword, ...result } = usuario;
+      return result as Omit<Usuario, 'password' | 'hashPassword'>;
     }
     return null;
   }
