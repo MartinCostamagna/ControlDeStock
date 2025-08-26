@@ -102,7 +102,7 @@ Producto }|--|| Marca
 Producto }|--|| Categoria
 Producto }|--|| Proveedor
 Proveedor }|--|| City
-User }|--|| City 
+Usuario }|--|| City 
 City }|--|| Province
 Province }|--|| Pais
 Pedido }|--|| Proveedor
