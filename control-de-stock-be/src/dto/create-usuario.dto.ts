@@ -1,4 +1,3 @@
-// src/usuario/dto/update-put-usuario.dto.ts
 import {
   IsNotEmpty,
   IsString,
@@ -7,11 +6,13 @@ import {
   IsInt,
   IsOptional,
   IsEnum,
+  MinLength,
+  Matches,
   MaxLength,
 } from 'class-validator';
 import { UsuarioRole } from '../entities/usuario.entity';
 
-export class UpdatePutUsuarioDto {
+export class CreateUsuarioDto {
   @IsNotEmpty({ message: 'El nombre no puede estar vacío.' })
   @IsString({ message: 'El nombre debe ser una cadena de texto.' })
   @MaxLength(50, { message: 'El nombre no debe exceder los 50 caracteres.' })
@@ -27,6 +28,15 @@ export class UpdatePutUsuarioDto {
   @MaxLength(100, { message: 'El email no debe exceder los 100 caracteres.' })
   email!: string;
 
+  @IsNotEmpty({ message: 'La contraseña no puede estar vacía.' })
+  @IsString({ message: 'La contraseña debe ser una cadena de texto.' })
+  @MinLength(8, { message: 'La contraseña debe tener al menos 8 caracteres.' })
+  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/, {
+    message:
+      'La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial.',
+  })
+  password!: string;
+
   @IsOptional()
   @IsDateString(
     {},
@@ -35,18 +45,15 @@ export class UpdatePutUsuarioDto {
         'La fecha de nacimiento debe ser una fecha válida en formato YYYY-MM-DD.',
     },
   )
-  birthDate?: string | null; // Permitir null para "borrar" la fecha
+  birthDate?: string;
 
   @IsOptional()
   @IsInt({ message: 'El ID de la ciudad debe ser un número entero.' })
-  cityId?: number | null; // Permitir null para desasociar
+  cityId?: number;
 
-  @IsNotEmpty({ message: 'El rol no puede estar vacío.' })
+  @IsOptional()
   @IsEnum(UsuarioRole, {
     message: `El rol debe ser uno de los siguientes: ${Object.values(UsuarioRole).join(', ')}`,
   })
-  role!: UsuarioRole;
-
-  // La contraseña no se incluye aquí para PUT, ya que su actualización suele ser un proceso diferente
-  // o a través de PATCH con validación de contraseña actual.
+  role?: UsuarioRole;
 }

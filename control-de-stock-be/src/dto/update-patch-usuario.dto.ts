@@ -1,4 +1,3 @@
-// src/usuario/dto/update-patch-usuario.dto.ts
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateUsuarioDto } from './create-usuario.dto';
 import { IsString, IsOptional, MinLength, Matches } from 'class-validator';
