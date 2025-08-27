@@ -1,61 +1,17 @@
-// src/app.module.ts
-import { Module, Logger } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
-// Módulos de la aplicación principal
-import { AuthModule } from './auth/auth.module';
-import { UsuariosModule } from './usuario/usuario.module';
-import { CitiesModule } from './city/city.module';
-import { ProvincesModule } from './province/province.module';
-import { CountriesModule } from './country/country.module';
-
-// Módulos para la siembra de datos
-import { GeorefModule } from './georef/georef.module';
-import { DataSeedingModule } from './database/data-seeding/data-seeding.module';
-import { ProveedorModule } from './proveedor/proveedor.module';
-import { MarcaModule } from './marca/marca.module';
-import { CategoriaModule } from './categoria/categoria.module';
+import { CiudadResolver } from './ciudad/ciudad.resolver';
+import { ProvinciaResolver } from './provincia/provincia.resolver';
+import { PaisResolver } from './pais/pais.resolver';
+import { CiudadModule } from './ciudad/ciudad.module';
+import { ProvinciaModule } from './provincia/provincia.module';
+import { PaisModule } from './pais/pais.module';
+import { UsuarioModule } from './usuario/usuario.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
-      envFilePath: process.env.NODE_ENV === 'test' ? '.env.test' : '.env',
-      ignoreEnvFile: process.env.NODE_ENV === 'production',
-    }),
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get<string>('POSTGRES_HOST'),
-        port: parseInt(configService.get<string>('POSTGRES_PORT', '5433')!, 10),
-        username: configService.get<string>('POSTGRES_USER'),
-        password: configService.get<string>('POSTGRES_PASSWORD'),
-        database: configService.get<string>('POSTGRES_DB'),
-        autoLoadEntities: true,
-
-        synchronize:
-          configService.get<string>('TYPEORM_SYNCHRONIZE') === 'true',
-
-        logging: configService.get<string>('TYPEORM_LOGGING') === 'true',
-      }),
-    }),
-    AuthModule,
-    UsuariosModule,
-    CitiesModule,
-    ProvincesModule,
-    CountriesModule,
-    GeorefModule,
-    DataSeedingModule,
-    ProveedorModule,
-    MarcaModule,
-    CategoriaModule,
-  ],
+  imports: [CiudadModule, ProvinciaModule, PaisModule, UsuarioModule],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CiudadResolver, ProvinciaResolver, PaisResolver],
 })
 export class AppModule {}

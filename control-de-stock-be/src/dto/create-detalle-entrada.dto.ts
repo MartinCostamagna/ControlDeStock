@@ -1,1 +1,4 @@
-export class CreateDetalleEntradaDto {}
+export class CreateDetalleEntradaDto {
+
+
+}
