@@ -4,6 +4,7 @@ import { Categoria } from './categoria.entity'
 import { Proveedor } from './proveedor.entity'
 import { DetallePedido } from "./detalle-pedido.entity";
 import { DetalleEntrada } from "./detalle-entrada.entity";
+import { DetalleSalida } from "./detalle-salida.entity";
 
 @Entity('productos')
 export class Producto {
@@ -19,15 +20,15 @@ export class Producto {
     @Column({type: 'int', nullable: false})
     stockMinimo!: number;
 
-    @ManyToOne(() => Marca, (marca) => marca.productos)
+    @ManyToOne(() => Marca, (marca) => marca.productos, {nullable: false})
     @JoinColumn({name: 'idMarca'})
     marca!: Marca;
 
-    @ManyToOne(() => Categoria, (categoria) => categoria.productos)
+    @ManyToOne(() => Categoria, (categoria) => categoria.productos, {nullable: false})
     @JoinColumn({name: 'idCategoria'})
     categoria!: Categoria;
 
-    @ManyToOne(() => Proveedor, (proveedor) => proveedor.productos)
+    @ManyToOne(() => Proveedor, (proveedor) => proveedor.productos, {nullable: false})
     @JoinColumn({name: 'idProveedor'})
     proveedor!: Proveedor;
 
@@ -36,4 +37,7 @@ export class Producto {
 
     @OneToMany(() => DetalleEntrada, (detalleEntrada) => detalleEntrada.producto)
     detallesEntrada!: DetalleEntrada[]
+
+    @OneToMany(() => DetalleSalida, (detalleSalida) => detalleSalida.producto)
+    detallesSalida!: DetalleSalida[]
 }

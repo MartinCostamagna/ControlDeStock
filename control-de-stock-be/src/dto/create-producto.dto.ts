@@ -1,8 +1,5 @@
-// 
-
 import { IsInt, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 export class CreateProductoDto {
-
     @IsNotEmpty({ message: 'El código de barras es requerido.' })
     @IsInt({ message: 'El código de barras debe ser un número entero.' })
     codigoDeBarras!: number;
@@ -31,6 +28,4 @@ export class CreateProductoDto {
     @IsNotEmpty({ message: 'El ID del proveedor es requerido.' })
     @IsInt({ message: 'El ID del proveedor debe ser un número entero.' })
     idProveedor!: number;
-
-    
 }
