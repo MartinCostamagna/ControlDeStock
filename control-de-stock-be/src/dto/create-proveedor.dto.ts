@@ -1,3 +1,4 @@
+//src\dto\create-proveedor.dto.ts
 import { IsEmail, IsNotEmpty, IsString, MaxLength, IsInt  } from "class-validator";
 
 export class CreateProveedorDto {

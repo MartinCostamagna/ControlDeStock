@@ -1,3 +1,4 @@
+//src\entities\proveedor.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm"
 import { Ciudad } from "./ciudad.entity"
 import { Producto } from "./producto.entity";

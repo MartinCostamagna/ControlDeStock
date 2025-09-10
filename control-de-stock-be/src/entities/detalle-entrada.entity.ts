@@ -1,3 +1,4 @@
+//src\entities\detalle-entrada.entity.ts
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Producto } from "./producto.entity";
 import { Entrada } from "./entrada.entity";

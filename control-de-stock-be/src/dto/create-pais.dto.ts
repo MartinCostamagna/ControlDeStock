@@ -1,3 +1,4 @@
+//src\dto\create-pais.dto.ts
 import {IsNotEmpty, IsString, MaxLength} from 'class-validator';
 
 export class CreatePaisDto {

@@ -1,3 +1,4 @@
+//src\entities\producto.entity.ts
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
 import { Marca } from './marca.entity'
 import { Categoria } from './categoria.entity'
@@ -9,7 +10,7 @@ import { DetalleSalida } from "./detalle-salida.entity";
 @Entity('productos')
 export class Producto {
     @PrimaryColumn()
-    codigoDeBarras!: number;
+    codigoDeBarras!: string;
 
     @Column({type: 'string', nullable: false})
     descripcion!: string;

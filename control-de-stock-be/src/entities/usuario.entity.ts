@@ -1,4 +1,6 @@
+//src/entities/usuario.entity.ts
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Exclude } from 'class-transformer';
 import { Ciudad } from "./ciudad.entity";
 
 @Entity('usuarios')
@@ -16,9 +18,10 @@ export class Usuario {
     email!: string;
 
     @Column({type: 'string', nullable: false})
+    @Exclude()
     contraseña!: string;
 
     @ManyToOne(() => Ciudad, (ciudad) => ciudad.usuarios, {nullable: false})
-    @JoinColumn({name: "idCIudad"})
+    @JoinColumn({name: "idCiudad"})
     ciudad!: Ciudad 
 }

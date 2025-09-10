@@ -1,3 +1,4 @@
+//src\dto\create-detalle-entrada.dto.ts
 import { IsNotEmpty, IsInt } from "class-validator"
 
 export class CreateDetalleEntradaDto {

@@ -1,3 +1,4 @@
+//src\entities\entrada.entity.ts
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { DetalleEntrada } from "./detalle-entrada.entity";
 

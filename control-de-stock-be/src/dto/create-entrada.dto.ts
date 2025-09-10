@@ -1,3 +1,4 @@
+//src\dto\create-entrada.dto.ts
 import { IsDate, IsNotEmpty } from "class-validator";
 
 export class CreateEntradaDto {

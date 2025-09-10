@@ -1,3 +1,4 @@
+//src\entities\salida.entity.ts
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { DetalleSalida } from "./detalle-salida.entity";
 

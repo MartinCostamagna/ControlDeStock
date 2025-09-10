@@ -1,3 +1,4 @@
+//src\dto\create-salida.dto.ts
 import { IsDate, IsNotEmpty } from "class-validator";
 
 export class CreateSalidaDto {

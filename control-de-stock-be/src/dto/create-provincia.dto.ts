@@ -1,3 +1,4 @@
+//src\dto\create-provincia.dto.ts
 import {IsNotEmpty, IsString, MaxLength, IsNumber, IsInt} from 'class-validator';
 
 export class CreateProvinciaDto {
@@ -8,7 +9,7 @@ export class CreateProvinciaDto {
 
     @IsNotEmpty({ message: 'La latitud de la provincia no puede estar vacío.' })
     @IsNumber({}, { message: 'La latitud de la provincia debe ser un numero.' })
-    lalitud!: number;
+    latitud!: number;
     
     @IsNotEmpty({ message: 'La longitud de la provincia no puede estar vacío.' })
     @IsNumber({}, { message: 'La longitud de la provincia debe ser un numero.' })

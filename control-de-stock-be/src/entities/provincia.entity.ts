@@ -1,3 +1,4 @@
+//src\entities\provincia.entity.ts
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Pais } from "./pais.entity";
 import { Ciudad } from "./ciudad.entity";

@@ -1,3 +1,4 @@
+//src\dto\create-ciudad.dto.ts
 import {IsNotEmpty, IsString, MaxLength, IsNumber, IsInt} from 'class-validator';
 
 export class CreateCiudadDto {
@@ -8,7 +9,7 @@ export class CreateCiudadDto {
 
     @IsNotEmpty({ message: 'La latitud de la ciudad no puede estar vacío.' })
     @IsNumber({}, { message: 'La latitud de la ciudad debe ser un numero.' })
-    lalitud!: number;
+    latitud!: number;
     
     @IsNotEmpty({ message: 'La longitud de la ciudad no puede estar vacío.' })
     @IsNumber({}, { message: 'La longitud de la ciudad debe ser un numero.' })

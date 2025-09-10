@@ -1,9 +1,10 @@
+//src\entities\ciudad.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from "typeorm";
 import { Provincia } from "./provincia.entity";
 import { Usuario } from "./usuario.entity";
 import { Proveedor } from "./proveedor.entity";
 
-@Entity('çiudades')
+@Entity('ciudades')
 export class Ciudad {
     @PrimaryGeneratedColumn()
     idCiudad!: number;

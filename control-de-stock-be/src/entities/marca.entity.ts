@@ -1,3 +1,4 @@
+//src\entities\marca.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Producto } from "./producto.entity";
 
@@ -10,6 +11,6 @@ export class Marca {
     @Column({type: 'string', nullable: false})
     nombre!: string;
     
-    @OneToMany(() => Producto, (producto) => producto.categoria)
+    @OneToMany(() => Producto, (producto) => producto.marca)
     productos!: Producto[];
 }

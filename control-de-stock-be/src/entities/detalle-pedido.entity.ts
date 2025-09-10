@@ -1,3 +1,4 @@
+//src\entities\detalle-pedido.entity.ts
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { Pedido } from "./pedido.entity";
 import { Producto } from "./producto.entity";

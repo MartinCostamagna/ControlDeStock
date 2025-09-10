@@ -1,5 +1,5 @@
+//src\dto\create-detalle-pedido.dto.ts
 import { IsInt, IsNotEmpty } from "class-validator";
-
 
 export class CreateDetallePedidoDto {
     @IsNotEmpty({message: "La cantidad no debe ser nula"})
