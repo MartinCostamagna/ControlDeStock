@@ -1,34 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { PaisService } from './pais.service';
-import { CreatePaiDto } from './dto/create-pai.dto';
-import { UpdatePaiDto } from './dto/update-pai.dto';
+import { CreatePaisDto } from '../dto/create-pais.dto';
+import { UpdatePaisDto } from '../dto/update-pais.dto';
+import { Pais } from '../entities/pais.entity';
 
 @Controller('pais')
 export class PaisController {
   constructor(private readonly paisService: PaisService) {}
 
   @Post()
-  create(@Body() createPaiDto: CreatePaiDto) {
-    return this.paisService.create(createPaiDto);
+  create(@Body() createPaisDto: CreatePaisDto): Promise<Pais> {
+    return this.paisService.create(createPaisDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Pais[]> {
     return this.paisService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.paisService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<Pais> {
+    return this.paisService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePaiDto: UpdatePaiDto) {
-    return this.paisService.update(+id, updatePaiDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updatePaisDto: UpdatePaisDto,
+  ): Promise<Pais> {
+    return this.paisService.update(id, updatePaisDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.paisService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.paisService.remove(id);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateEntradaDto } from './dto/create-entrada.dto';
-import { UpdateEntradaDto } from './dto/update-entrada.dto';
+import { CreateEntradaDto } from '../dto/create-entrada.dto';
+import { UpdateEntradaDto } from '../dto/update-entrada.dto';
 
 @Injectable()
 export class EntradaService {

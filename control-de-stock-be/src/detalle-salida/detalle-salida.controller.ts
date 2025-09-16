@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { DetalleSalidaService } from './detalle-salida.service';
-import { CreateDetalleSalidaDto } from './dto/create-detalle-salida.dto';
-import { UpdateDetalleSalidaDto } from './dto/update-detalle-salida.dto';
+import { CreateDetalleSalidaDto } from '../dto/create-detalle-salida.dto';
+import { UpdateDetalleSalidaDto } from '../dto/update-detalle-salida.dto';
 
 @Controller('detalle-salida')
 export class DetalleSalidaController {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDetalleEntradaDto } from './dto/create-detalle-entrada.dto';
-import { UpdateDetalleEntradaDto } from './dto/update-detalle-entrada.dto';
+import { CreateDetalleEntradaDto } from '../dto/create-detalle-entrada.dto';
+import { UpdateDetalleEntradaDto } from '../dto/update-detalle-entrada.dto';
 
 @Injectable()
 export class DetalleEntradaService {
