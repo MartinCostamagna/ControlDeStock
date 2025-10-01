@@ -6,13 +6,9 @@ import { CiudadService } from './ciudad.service';
 import { CiudadController } from './ciudad.controller';
 
 @Module({
-<<<<<<< Updated upstream
-  imports: [TypeOrmModule.forFeature([Ciudad, Provincia])],
-=======
   imports: [
     TypeOrmModule.forFeature([Ciudad, Provincia])
   ],
->>>>>>> Stashed changes
   controllers: [CiudadController],
   providers: [CiudadService],
 })

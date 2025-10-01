@@ -2,10 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from 
 import { EntradaService } from './entrada.service';
 import { CreateEntradaDto } from '../dto/create-entrada.dto';
 import { UpdateEntradaDto } from '../dto/update-entrada.dto';
-<<<<<<< Updated upstream
-=======
 import { Entrada } from '../entities/entrada.entity';
->>>>>>> Stashed changes
 
 @Controller('entrada')
 export class EntradaController {

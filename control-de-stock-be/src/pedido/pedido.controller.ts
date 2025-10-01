@@ -24,14 +24,10 @@ export class PedidoController {
   }
 
   @Patch(':id')
-<<<<<<< Updated upstream
-  update(@Param('id', ParseIntPipe) id: number, @Body() updatePedidoDto: UpdatePedidoDto): Promise<Pedido> {
-=======
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updatePedidoDto: UpdatePedidoDto,
   ): Promise<Pedido> {
->>>>>>> Stashed changes
     return this.pedidoService.update(id, updatePedidoDto);
   }
 

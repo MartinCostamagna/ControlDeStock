@@ -1,13 +1,9 @@
-<<<<<<< Updated upstream
-import { Injectable } from '@nestjs/common';
-=======
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DetallePedido } from '../entities/detalle-pedido.entity';
 import { Pedido } from '../entities/pedido.entity';
 import { Producto } from '../entities/producto.entity';
->>>>>>> Stashed changes
 import { CreateDetallePedidoDto } from '../dto/create-detalle-pedido.dto';
 import { UpdateDetallePedidoDto } from '../dto/update-detalle-pedido.dto';
 

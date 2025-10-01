@@ -1,11 +1,7 @@
-<<<<<<< Updated upstream
-import { Injectable } from '@nestjs/common';
-=======
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Entrada } from '../entities/entrada.entity';
->>>>>>> Stashed changes
 import { CreateEntradaDto } from '../dto/create-entrada.dto';
 import { UpdateEntradaDto } from '../dto/update-entrada.dto';
 

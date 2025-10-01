@@ -2,10 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from 
 import { DetallePedidoService } from './detalle-pedido.service';
 import { CreateDetallePedidoDto } from '../dto/create-detalle-pedido.dto';
 import { UpdateDetallePedidoDto } from '../dto/update-detalle-pedido.dto';
-<<<<<<< Updated upstream
-=======
 import { DetallePedido } from '../entities/detalle-pedido.entity';
->>>>>>> Stashed changes
 
 @Controller('detalle-pedido')
 export class DetallePedidoController {

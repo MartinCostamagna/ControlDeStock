@@ -2,10 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { ProductoService } from './producto.service';
 import { CreateProductoDto } from '../dto/create-producto.dto';
 import { UpdateProductoDto } from '../dto/update-producto.dto';
-<<<<<<< Updated upstream
-=======
 import { Producto } from '../entities/producto.entity';
->>>>>>> Stashed changes
 
 @Controller('producto')
 export class ProductoController {
@@ -21,21 +18,6 @@ export class ProductoController {
     return this.productoService.findAll();
   }
 
-<<<<<<< Updated upstream
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.productoService.findOne(id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateProductoDto: UpdateProductoDto) {
-    return this.productoService.update(id, updateProductoDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.productoService.remove(id);
-=======
   @Get(':codigoDeBarras')
   findOne(@Param('codigoDeBarras') codigoDeBarras: string): Promise<Producto> {
     return this.productoService.findOne(codigoDeBarras);
@@ -49,6 +31,5 @@ export class ProductoController {
   @Delete(':codigoDeBarras')
   remove(@Param('codigoDeBarras') codigoDeBarras: string): Promise<void> {
     return this.productoService.remove(codigoDeBarras);
->>>>>>> Stashed changes
   }
 }
