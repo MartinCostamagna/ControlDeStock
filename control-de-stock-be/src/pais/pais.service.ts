@@ -13,8 +13,18 @@ export class PaisService {
   ) {}
 
   async create(createPaisDto: CreatePaisDto): Promise<Pais> {
+<<<<<<< Updated upstream
     const nombreExistente = await this.paisRepository.findOneBy({ nombre: createPaisDto.nombre });
     if (nombreExistente) {
+=======
+    const nombre = createPaisDto.nombre.toLowerCase();
+    const paisExistente = await this.paisRepository
+      .createQueryBuilder('pais')
+      .where('LOWER(pais.nombre) = :nombre', { nombre })
+      .getOne();
+
+    if (paisExistente) {
+>>>>>>> Stashed changes
       throw new BadRequestException(`El país '${createPaisDto.nombre}' ya existe.`);
     }
 
@@ -35,6 +45,7 @@ export class PaisService {
   }
 
   async update(id: number, updatePaisDto: UpdatePaisDto): Promise<Pais> {
+<<<<<<< Updated upstream
     const pais = await this.paisRepository.findOneBy({ idPais: id });
     if (!pais) {
       throw new NotFoundException(`País con ID '${id}' no encontrado.`);
@@ -48,11 +59,21 @@ export class PaisService {
     }
 
     const paisActualizado = this.paisRepository.merge(pais, updatePaisDto);
+=======
+    const pais = await this.findOne(id);
+
+    const paisActualizado = this.paisRepository.merge(pais, updatePaisDto);
+
+>>>>>>> Stashed changes
     return this.paisRepository.save(paisActualizado);
   }
 
   async remove(id: number): Promise<void> {
     const result = await this.paisRepository.delete(id);
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     if (result.affected === 0) {
       throw new NotFoundException(`País con ID '${id}' no encontrado.`);
     }

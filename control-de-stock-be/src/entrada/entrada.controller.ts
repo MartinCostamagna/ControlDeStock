@@ -1,34 +1,41 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { EntradaService } from './entrada.service';
 import { CreateEntradaDto } from '../dto/create-entrada.dto';
 import { UpdateEntradaDto } from '../dto/update-entrada.dto';
+<<<<<<< Updated upstream
+=======
+import { Entrada } from '../entities/entrada.entity';
+>>>>>>> Stashed changes
 
 @Controller('entrada')
 export class EntradaController {
   constructor(private readonly entradaService: EntradaService) {}
 
   @Post()
-  create(@Body() createEntradaDto: CreateEntradaDto) {
+  create(@Body() createEntradaDto: CreateEntradaDto): Promise<Entrada> {
     return this.entradaService.create(createEntradaDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Entrada[]> {
     return this.entradaService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.entradaService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<Entrada> {
+    return this.entradaService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateEntradaDto: UpdateEntradaDto) {
-    return this.entradaService.update(+id, updateEntradaDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateEntradaDto: UpdateEntradaDto,
+  ): Promise<Entrada> {
+    return this.entradaService.update(id, updateEntradaDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.entradaService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.entradaService.remove(id);
   }
 }

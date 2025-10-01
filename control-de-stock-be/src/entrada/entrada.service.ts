@@ -1,26 +1,53 @@
+<<<<<<< Updated upstream
 import { Injectable } from '@nestjs/common';
+=======
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Entrada } from '../entities/entrada.entity';
+>>>>>>> Stashed changes
 import { CreateEntradaDto } from '../dto/create-entrada.dto';
 import { UpdateEntradaDto } from '../dto/update-entrada.dto';
 
 @Injectable()
 export class EntradaService {
-  create(createEntradaDto: CreateEntradaDto) {
-    return 'This action adds a new entrada';
+  constructor(
+    @InjectRepository(Entrada)
+    private readonly entradaRepository: Repository<Entrada>,
+  ) {}
+
+  async create(createEntradaDto: CreateEntradaDto): Promise<Entrada> {
+    const nuevaEntrada = this.entradaRepository.create(createEntradaDto);
+    return this.entradaRepository.save(nuevaEntrada);
   }
 
-  findAll() {
-    return `This action returns all entrada`;
+  async findAll(): Promise<Entrada[]> {
+    return this.entradaRepository.find({
+      relations: ['detallesEntrada'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} entrada`;
+  async findOne(id: number): Promise<Entrada> {
+    const entrada = await this.entradaRepository.findOne({
+      where: { idEntrada: id },
+      relations: ['detallesEntrada'],
+    });
+    if (!entrada) {
+      throw new NotFoundException(`Entrada con ID '${id}' no encontrada.`);
+    }
+    return entrada;
   }
 
-  update(id: number, updateEntradaDto: UpdateEntradaDto) {
-    return `This action updates a #${id} entrada`;
+  async update(id: number, updateEntradaDto: UpdateEntradaDto): Promise<Entrada> {
+    const entrada = await this.findOne(id);
+    const entradaActualizada = this.entradaRepository.merge(entrada, updateEntradaDto);
+    return this.entradaRepository.save(entradaActualizada);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} entrada`;
+  async remove(id: number): Promise<void> {
+    const result = await this.entradaRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Entrada con ID '${id}' no encontrada.`);
+    }
   }
 }

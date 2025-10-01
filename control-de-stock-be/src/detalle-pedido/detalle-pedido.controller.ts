@@ -1,34 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { DetallePedidoService } from './detalle-pedido.service';
 import { CreateDetallePedidoDto } from '../dto/create-detalle-pedido.dto';
 import { UpdateDetallePedidoDto } from '../dto/update-detalle-pedido.dto';
+<<<<<<< Updated upstream
+=======
+import { DetallePedido } from '../entities/detalle-pedido.entity';
+>>>>>>> Stashed changes
 
 @Controller('detalle-pedido')
 export class DetallePedidoController {
   constructor(private readonly detallePedidoService: DetallePedidoService) {}
 
   @Post()
-  create(@Body() createDetallePedidoDto: CreateDetallePedidoDto) {
+  create(@Body() createDetallePedidoDto: CreateDetallePedidoDto): Promise<DetallePedido> {
     return this.detallePedidoService.create(createDetallePedidoDto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<DetallePedido[]> {
     return this.detallePedidoService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.detallePedidoService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<DetallePedido> {
+    return this.detallePedidoService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDetallePedidoDto: UpdateDetallePedidoDto) {
-    return this.detallePedidoService.update(+id, updateDetallePedidoDto);
+  update(@Param('id', ParseIntPipe) id: number, @Body() updateDetallePedidoDto: UpdateDetallePedidoDto): Promise<DetallePedido> {
+    return this.detallePedidoService.update(id, updateDetallePedidoDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.detallePedidoService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.detallePedidoService.remove(id);
   }
 }

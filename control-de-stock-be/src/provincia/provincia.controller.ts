@@ -24,7 +24,14 @@ export class ProvinciaController {
   }
 
   @Patch(':id')
+<<<<<<< Updated upstream
   update(@Param('id', ParseIntPipe) id: number, @Body() updateProvinciaDto: UpdateProvinciaDto): Promise<Provincia> {
+=======
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateProvinciaDto: UpdateProvinciaDto,
+  ): Promise<Provincia> {
+>>>>>>> Stashed changes
     return this.provinciaService.update(id, updateProvinciaDto);
   }
 

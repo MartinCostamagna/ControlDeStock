@@ -1,5 +1,5 @@
 //src/dto/create-usuario.dto.ts
-import {IsNotEmpty, IsString, MaxLength, IsInt, IsEmail, MinLength, Matches} from 'class-validator';
+import {IsNotEmpty, IsString, MaxLength, IsInt, IsEmail, MinLength, Matches, IsOptional} from 'class-validator';
 
 export class CreateUsuarioDto {
     @IsNotEmpty({ message: 'El nombre del usuario no puede estar vacío.' })
@@ -23,7 +23,7 @@ export class CreateUsuarioDto {
     message: 'La contraseña debe contener al menos una letra mayúscula, una minúscula, un número y un carácter especial.',})
     contraseña!: string;
 
-    @IsNotEmpty({ message: 'El ID de la ciudad es requerido.' })
+    @IsOptional()
     @IsInt({ message: 'El ID de la ciudad debe ser un número entero.' })
-    idCiudad!: number;
+    idCiudad?: number;
 }
