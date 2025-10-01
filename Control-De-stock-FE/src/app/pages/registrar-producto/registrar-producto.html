@@ -1,0 +1,60 @@
+<div class="barraSuperior">
+  <img
+    src="imagenes/CasaBarra.png"
+    alt="Ir a la página de inicio"
+    routerLink="/inicio"
+  />
+</div>
+<h1>Registrar producto</h1>
+<div class="registro">
+  <div class="izquierda">
+    <label for="Marca">Marca</label>
+    <select name="Marcas" id="Marca"></select>
+    <button class="Registrar" (click)="registrarMarca()">+</button>
+    <label for="Categoria">Categoria</label>
+    <select name="Categorias" id="Categoria"></select>
+    <label for="Descripcion">Descripcion</label>
+    <input type="text" name="" id="Descripcion" />
+  </div>
+  <div class="derecha">
+    <label for="Codigo">Codigo</label>
+    <input type="text" name="Codigo" id="Codigo" />
+    <label for="StockMinimo">Stock Minimo</label>
+    <input type="text" name="StockMinimo" id="StockMinimo" />
+    <label for="Proveedor">Proveedor</label>
+    <select name="Proveedores" id="Proveedor"></select>
+    <button class="Registrar" (click)="registrarProveedor()">+</button>
+  </div>
+</div>
+<div class="botones">
+  <input type="submit" value="Cancelar" routerLink="/inicio" />
+  <input type="submit" value="Guardar" />
+</div>
+
+<div *ngIf="RegistrarMarca" class="overlay">
+  <div class="modal">
+    <h2>Registrar Marca</h2>
+    <label for="Marca">Marca</label>
+    <input type="text" name="Marca" placeholder="Ingrese el nombre" />
+    <button class="cerrar" (click)="registrarMarca()">Cerrar</button>
+    <input type="submit" value="Registrar" id="botonRegistrarMarca" />
+  </div>
+</div>
+
+<div *ngIf="RegistrarProveedor" class="overlay">
+  <div class="modal proveedor">
+    <h2>Registrar Proveedor</h2>
+    <label for="Nombre">Nombre</label>
+    <input type="text" name="Nombre" placeholder="Ingrese el nombre" />
+    <label for="Direccion">Dirección</label>
+    <input type="text" name="Direccion" placeholder="Ingrese la direccion" />
+    <label for="Telefono">Telefono</label>
+    <input type="text" name="Telefono" placeholder="Ingrese el telefono" />
+    <label for="Email">Email</label>
+    <input type="email" name="Email" placeholder="Ingrese el email" />
+    <label for="Ciudad">Ciudad</label>
+    <select name="Ciudad"></select>
+    <button class="cerrar" (click)="registrarProveedor()">Cerrar</button>
+    <input type="submit" value="Registrar" id="botonRegistrarProveedor" />
+  </div>
+</div>

@@ -1,0 +1,69 @@
+.barraSuperior {
+    background-color: #FF9E01;
+    height: 60px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Formulario de logueo */
+.login {
+    position: relative;
+    z-index: 2;
+    width: 400px;
+    margin: auto;
+    margin-top: 100px;
+}
+
+h1 {
+    font-size: 40px;
+    color: #000000;
+    margin: 20%, 0%, 10px, 0%;
+    text-align: center;
+}
+
+label {
+    font-size: 15px;
+    color: #000000;
+    margin: auto;
+    margin-left: 40px;
+    width: 80%;
+}
+
+input[type="text"],
+input[type="password"] {
+    display: block;
+    width: 80%;
+    padding: 10px;
+    margin: auto;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    border: none;
+    background-color: #fff;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #FF9E01;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    width: 40%;
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+img {
+    position: absolute;
+    bottom: 0;
+    left: 19%;
+    top: 24.6%;
+    transform: translateX(-50%);
+    width: 56.6%;
+    height: auto;
+    z-index: 1;
+}

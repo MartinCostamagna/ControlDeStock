@@ -1,0 +1,153 @@
+/* Barra superior */
+.barraSuperior {
+    position: relative;
+    background-color: #FF9E01;
+    height: 60px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+img {
+    position: absolute;
+    top: 3px;
+    right: 50px;
+    width: 56px;
+    z-index: 1;
+    cursor: pointer;
+}
+
+/* Titulo */
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+/*div contenedor del formulario*/
+.registro {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 70px;
+    flex-wrap: wrap;
+}
+
+/*divs internos del formulario*/
+.izquierda,
+.derecha {
+    justify-content: center;
+    margin-top: 0px;
+    margin-bottom: 0;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+/*textos e inputs del formulario*/
+label {
+    display: block;
+    color: #000000;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+select {
+    width: 250px;
+    height: 40px;
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+}
+
+input[type="text"], input[type="email"] {
+    width: 240px;
+    height: 30px;
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+}
+
+.Registrar {
+    font-size: 22px;
+    background-color: #FF9E01;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    height: 40px;
+    width: 40px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+
+/*Div Botones de envio*/
+.botones {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+    text-align: center;
+    margin: auto;
+    margin-top: 110px;
+}
+
+/*Botones de envio*/
+input[type="submit"] {
+    font-family: 'Ubuntu', sans-serif;
+    width: 160px;
+    height: 40px;
+    background-color: #FF9E01;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Div para registro de marca y proveedor*/
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 100px;
+    z-index: 2000;
+}
+
+/*Div con componentes*/
+.modal {
+    background: #ececec;
+    padding: 20px;
+    width: 400px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    margin-bottom: 10%;
+}
+
+/*Botón cerrar*/
+.cerrar {
+    font-family: 'Ubuntu', sans-serif;
+    width: 160px;
+    height: 40px;
+    margin-top: 10%;
+    margin-right: 5%;
+    background-color: #FF9E01;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.modal.proveedor {
+    margin-top: -70px;
+}
