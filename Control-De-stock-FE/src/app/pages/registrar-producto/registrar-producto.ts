@@ -22,4 +22,10 @@ export class RegistrarProducto {
     this.RegistrarProveedor = !this.RegistrarProveedor
   }
 
+  ConfirmarProducto = false
+
+  confirmarProducto(): void {
+    this.ConfirmarProducto = !this.ConfirmarProducto
+  }
+
 }

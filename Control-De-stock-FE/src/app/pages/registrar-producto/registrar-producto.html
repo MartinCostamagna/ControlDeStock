@@ -5,6 +5,7 @@
     routerLink="/inicio"
   />
 </div>
+
 <h1>Registrar producto</h1>
 <div class="registro">
   <div class="izquierda">
@@ -14,7 +15,7 @@
     <label for="Categoria">Categoria</label>
     <select name="Categorias" id="Categoria"></select>
     <label for="Descripcion">Descripcion</label>
-    <input type="text" name="" id="Descripcion" />
+    <input type="text" name="Descripcion" id="Descripcion" />
   </div>
   <div class="derecha">
     <label for="Codigo">Codigo</label>
@@ -28,7 +29,7 @@
 </div>
 <div class="botones">
   <input type="submit" value="Cancelar" routerLink="/inicio" />
-  <input type="submit" value="Guardar" />
+  <button class="cerrar" (click)="confirmarProducto()">Guardar</button>
 </div>
 
 <div *ngIf="RegistrarMarca" class="overlay">
@@ -56,5 +57,31 @@
     <select name="Ciudad"></select>
     <button class="cerrar" (click)="registrarProveedor()">Cerrar</button>
     <input type="submit" value="Registrar" id="botonRegistrarProveedor" />
+  </div>
+</div>
+
+<div *ngIf="ConfirmarProducto" class="overlay">
+  <div class="modal producto">
+    <h2>Confirmar Producto</h2>
+    <div class="izquierdaConfirmacion">
+      <label for="Marca">Marca</label>
+      <input type="text" name="Marca" />
+      <label for="Categoria">Categoria</label>
+      <input type="text" name="Categoria" />
+      <label for="Descripcion">Descripcion</label>
+      <input type="text" name="Descripcion" />
+    </div>
+    <div class="derecha">
+      <label for="Codigo">Codigo</label>
+      <input type="text" name="Codigo" id="Codigo" />
+      <label for="StockMinimo">Stock Minimo</label>
+      <input type="text" name="StockMinimo" id="StockMinimo" />
+      <label for="Proveedor">Proveedor</label>
+      <input type="text" name="Proveedor" id="Proveedor" />
+    </div>
+    <div class="botonesConfirmacion">
+      <button class="cerrar" (click)="confirmarProducto()">Cerrar</button>
+      <input type="submit" value="Confirmar" id="botonConfirmarProducto" />
+    </div>
   </div>
 </div>

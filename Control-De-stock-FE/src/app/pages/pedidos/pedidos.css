@@ -56,6 +56,5 @@ button, input[type=button] {
     border: none;
     border-radius: 6px;
     font-size: 20px;
-    margin:auto;
     cursor: pointer;
 }
