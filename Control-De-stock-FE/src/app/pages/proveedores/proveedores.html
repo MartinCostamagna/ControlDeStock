@@ -6,19 +6,39 @@
   />
 </div>
 <h1>Proveedores</h1>
-<div class="tabla">
+<div class="divTabla">
   <table class="Proveedores">
     <thead>
-      <th>Código</th>
-      <th>Nombre</th>
-      <th>Dirección</th>
-      <th>Telefono</th>
-      <th>Email</th>
-      <th>Ciudad</th>
+      <tr>
+        <th>Código</th>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Telefono</th>
+        <th>Email</th>
+        <th>Ciudad</th>
+      </tr>
     </thead>
+    <tbody>
+      <tr>
+        <td>PROV-001</td>
+        <td>Distribuidora Central</td>
+        <td>Av. Siempre Viva 742</td>
+        <td>351-1234567</td>
+        <td>contacto@distribuidora.com</td>
+        <td>Córdoba</td>
+      </tr>
+      <tr>
+        <td>PROV-002</td>
+        <td>Insumos del Sur</td>
+        <td>Calle Falsa 123</td>
+        <td>358-7654321</td>
+        <td>ventas@insumosdelsur.com</td>
+        <td>Río Cuarto</td>
+      </tr>
+    </tbody>
   </table>
 </div>
 <div class="divBotones">
-  <button routerLink="/inicio">Volver</button>
-  <button routerLink="/editarProveedor">Editar</button>
+  <button type="button" routerLink="/inicio">Volver</button>
+  <button type="button" routerLink="/editarProveedor">Editar</button>
 </div>

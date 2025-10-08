@@ -7,11 +7,13 @@
 </div>
 
 <h1>Registrar producto</h1>
-<div class="registro">
+<form class="formRegistro">
   <div class="izquierda">
     <label for="Marca">Marca</label>
     <select name="Marcas" id="Marca"></select>
-    <button class="Registrar" (click)="registrarMarca()">+</button>
+    <button type="button" class="botonRegistrar" (click)="registrarMarca()">
+      +
+    </button>
     <label for="Categoria">Categoria</label>
     <select name="Categorias" id="Categoria"></select>
     <label for="Descripcion">Descripcion</label>
@@ -24,26 +26,40 @@
     <input type="text" name="StockMinimo" id="StockMinimo" />
     <label for="Proveedor">Proveedor</label>
     <select name="Proveedores" id="Proveedor"></select>
-    <button class="Registrar" (click)="registrarProveedor()">+</button>
+    <button type="button" class="botonRegistrar" (click)="registrarProveedor()">
+      +
+    </button>
   </div>
-</div>
-<div class="botones">
-  <input type="submit" value="Cancelar" routerLink="/inicio" />
-  <button class="cerrar" (click)="confirmarProducto()">Guardar</button>
+</form>
+
+<div class="divBotones">
+  <button type="button" class="botonGrande" routerLink="/inicio">
+    Cancelar
+  </button>
+  <button type="button" class="botonGrande">Guardar</button>
 </div>
 
 <div *ngIf="RegistrarMarca" class="overlay">
-  <div class="modal">
+  <form class="modal">
     <h2>Registrar Marca</h2>
-    <label for="Marca">Marca</label>
-    <input type="text" name="Marca" placeholder="Ingrese el nombre" />
-    <button class="cerrar" (click)="registrarMarca()">Cerrar</button>
-    <input type="submit" value="Registrar" id="botonRegistrarMarca" />
-  </div>
+    <label for="regMarca">Marca</label>
+    <input
+      type="text"
+      name="regMarca"
+      id="regMarca"
+      placeholder="Ingrese el nombre"
+    />
+    <div class="divBotonesRegistroMP">
+      <button type="button" class="botonGrande" (click)="registrarMarca()">
+        Cerrar
+      </button>
+      <button type="submit" class="botonGrande">Registrar</button>
+    </div>
+  </form>
 </div>
 
 <div *ngIf="RegistrarProveedor" class="overlay">
-  <div class="modal proveedor">
+  <form class="modal proveedor">
     <h2>Registrar Proveedor</h2>
     <label for="Nombre">Nombre</label>
     <input type="text" name="Nombre" placeholder="Ingrese el nombre" />
@@ -55,33 +71,11 @@
     <input type="email" name="Email" placeholder="Ingrese el email" />
     <label for="Ciudad">Ciudad</label>
     <select name="Ciudad"></select>
-    <button class="cerrar" (click)="registrarProveedor()">Cerrar</button>
-    <input type="submit" value="Registrar" id="botonRegistrarProveedor" />
-  </div>
-</div>
-
-<div *ngIf="ConfirmarProducto" class="overlay">
-  <div class="modal producto">
-    <h2>Confirmar Producto</h2>
-    <div class="izquierdaConfirmacion">
-      <label for="Marca">Marca</label>
-      <input type="text" name="Marca" />
-      <label for="Categoria">Categoria</label>
-      <input type="text" name="Categoria" />
-      <label for="Descripcion">Descripcion</label>
-      <input type="text" name="Descripcion" />
+    <div class="divBotonesRegistroMP">
+      <button type="button" class="botonGrande" (click)="registrarProveedor()">
+        Cerrar
+      </button>
+      <button type="submit" class="botonGrande">Registrar</button>
     </div>
-    <div class="derecha">
-      <label for="Codigo">Codigo</label>
-      <input type="text" name="Codigo" id="Codigo" />
-      <label for="StockMinimo">Stock Minimo</label>
-      <input type="text" name="StockMinimo" id="StockMinimo" />
-      <label for="Proveedor">Proveedor</label>
-      <input type="text" name="Proveedor" id="Proveedor" />
-    </div>
-    <div class="botonesConfirmacion">
-      <button class="cerrar" (click)="confirmarProducto()">Cerrar</button>
-      <input type="submit" value="Confirmar" id="botonConfirmarProducto" />
-    </div>
-  </div>
+  </form>
 </div>

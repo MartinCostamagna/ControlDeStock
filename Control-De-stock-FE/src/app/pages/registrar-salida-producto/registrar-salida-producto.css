@@ -23,8 +23,8 @@ h1 {
     color: #000000;
 }
 
-/* div para buscar producto por codigo */
-.busquedaProducto {
+/* form para buscar producto por codigo */
+.formBusquedaProducto {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,19 +33,18 @@ h1 {
     flex-wrap: wrap;
 }
 
+/* div que contiene input y label de codigo de busqueda */
 .divCodigoBusqueda {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-
 }
 
+/* div que contiene el boton de busqueda */
 .divBoton {
-    display: flex;
     align-self: flex-end;
 }
 
-#botonBusqueda {
+.botonChico {
     height: 30px;
     width: 90px;
     margin-bottom: 4px;
@@ -61,6 +60,7 @@ h1 {
     flex-wrap: wrap;
 }
 
+/* Divs individuales de cada input y su label */
 .divInputsLabels {
     display: flex;
     flex: 1;
@@ -72,15 +72,11 @@ h1 {
 
 #divBotonAgregar {
     align-items: flex-start;
+    align-self: flex-end;
 }
 
-#botonAgregar {
-    height: 30px;
-    width: 90px;
-    margin-top: 18px;
-}
-
-input[type="text"] {
+input[type="text"],
+input[type="number"] {
     width: 150px;
     height: 20px;
     border-radius: 6px;
@@ -91,11 +87,18 @@ input[type="text"] {
     margin-bottom: 2%;
 }
 
+/* Saca flechitas del imput number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 label {
     font-size: 15px;
 }
 
-button, input[type=button] {
+button {
     display: block;
     font-family: 'Ubuntu', sans-serif;
     width: 160px;
@@ -108,16 +111,27 @@ button, input[type=button] {
     cursor: pointer;
 }
 
+/* tabla de productos */
 table {
     background-color: #FFFFFF;
+    width: 90%;
+    border-collapse: collapse;
+    font-size: 18px;
+    border-radius: 6px;
     margin: auto;
 }
 
-thead {
-    width: 90%;
+/* Encabezado */
+th {
     background-color: #FF9E01;
     color: #FFFFFF;
-    border-radius: 6px;
+    border: #9a9a9a 2px solid;
+}
+
+/* Filas y columnas */
+tr,
+td {
+    border: #9a9a9a 2px solid;
 }
 
 
@@ -128,4 +142,26 @@ thead {
     justify-content: center;
     gap: 2%;
     margin-top: 5%;
+}
+
+@media screen and (max-width: 600px) {
+    /* form para buscar producto por codigo */
+    .formBusquedaProducto {
+        flex-direction: column;
+    }
+
+    .divBoton {
+        align-self: center;
+    }
+
+    .botonChico {
+        height: 30px;
+        width: 160px;
+        margin-bottom: 4px;
+    }
+
+    #divBotonAgregar {
+        align-items: center;
+        margin-top: 15px;
+    }
 }

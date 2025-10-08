@@ -5,57 +5,54 @@
     routerLink="/inicio"
   />
 </div>
+
 <h1>Salida de Producto</h1>
-<div class="busquedaProducto">
+<form class="formBusquedaProducto">
   <div class="divCodigoBusqueda">
     <label for="CodigoDeBarra">Código de Barras</label>
     <input
-      type="text"
+      type="number"
       id="CodigoDeBarra"
-      name="CodigoDeBarra"
       placeholder="Ingrese el código"
       class="codigoBusqueda"
     />
   </div>
   <div class="divBoton">
-    <input
-      type="button"
-      value="Buscar"
-      class="botonBusqueda"
-      id="botonBusqueda"
-    />
+    <button type="submit" class="botonChico">Buscar</button>
   </div>
-</div>
+</form>
+
 <div class="divdatos">
   <div class="divInputsLabels">
-    <label class="labeldatos" for="Marca">Marca</label>
-    <input type="text" name="Marca" />
+    <label for="Marca">Marca</label>
+    <input type="text" id="Marca" />
   </div>
   <div class="divInputsLabels">
-    <label class="labeldatos" for="Categoria">Categoria</label>
-    <input type="text" name="Categoria" />
+    <label for="Categoria">Categoria</label>
+    <input type="text" id="Categoria" />
   </div>
   <div class="divInputsLabels">
-    <label class="labeldatos" for="Descripcion">Descripcion</label>
-    <input type="text" name="Descripcion" />
+    <label for="Descripcion">Descripcion</label>
+    <input type="text" id="Descripcion" />
   </div>
   <div class="divInputsLabels">
-    <label class="labeldatos" for="Stock">Stock</label>
-    <input type="text" name="Stock" />
+    <label for="Stock">Stock</label>
+    <input type="text" id="Stock" />
   </div>
   <div class="divInputsLabels">
-    <label class="labeldatos" for="Proveedor">Proveedor</label>
-    <input type="text" name="Proveedor" />
+    <label for="Proveedor">Proveedor</label>
+    <input type="text" id="Proveedor" />
   </div>
   <div class="divInputsLabels">
     <label for="Cantidad">Cantidad que sale</label>
-    <input type="text" name="Cantidad" placeholder="Ingrese la cantidad" />
+    <input type="text" id="Cantidad" placeholder="Ingrese la cantidad" />
   </div>
   <div class="divInputsLabels" id="divBotonAgregar">
-    <input type="button" value="Agregar" id="botonAgregar" />
+    <button type="button" class="botonChico">Agregar</button>
   </div>
 </div>
-<table class="Productos">
+
+<table>
   <thead>
     <th>Código</th>
     <th>Marca</th>
@@ -65,6 +62,7 @@
     <th>Proveedor</th>
   </thead>
 </table>
+
 <div class="divBotones">
   <button routerLink="/inicio">Cancelar</button>
   <button>Confirmar</button>

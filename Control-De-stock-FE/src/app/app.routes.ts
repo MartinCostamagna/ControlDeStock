@@ -10,6 +10,7 @@ import { Proveedores } from './pages/proveedores/proveedores';
 import { Pedidos } from './pages/pedidos/pedidos';
 
 export const routes: Routes = [
+  {path: '', redirectTo: '/inicio', pathMatch: 'full'},
   { path: 'login', component: Login},
   { path: 'inicio', component: Inicio},
   { path: 'registrarProducto', component: RegistrarProducto},

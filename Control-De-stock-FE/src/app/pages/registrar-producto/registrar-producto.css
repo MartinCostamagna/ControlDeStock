@@ -23,23 +23,14 @@ h1 {
     color: #000000;
 }
 
-/*div contenedor del formulario*/
-.registro {
+/*Form contenedor del formulario*/
+.formRegistro {
     display: flex;
     justify-content: center;
     width: 100%;
     margin-top: 70px;
     flex-wrap: wrap;
-}
-
-/*divs internos del formulario*/
-.izquierda,
-.derecha {
-    justify-content: center;
-    margin-top: 0px;
-    margin-bottom: 0;
-    margin-left: 100px;
-    margin-right: 100px;
+    gap: 150px;
 }
 
 /*textos e inputs del formulario*/
@@ -68,7 +59,8 @@ input[type="text"], input[type="email"] {
     font-size: 16px;
 }
 
-.Registrar {
+/* Botones "+" para registrar marca y proveedor*/
+.botonRegistrar {
     font-size: 22px;
     background-color: #FF9E01;
     color: #FFFFFF;
@@ -80,9 +72,8 @@ input[type="text"], input[type="email"] {
     cursor: pointer;
 }
 
-
 /*Div Botones de envio*/
-.botones {
+.divBotones {
     display: flex;
     justify-content: center;
     gap: 70px;
@@ -90,8 +81,8 @@ input[type="text"], input[type="email"] {
     margin-top: 110px;
 }
 
-/*Botones de envio*/
-input[type="submit"] {
+/*Botónes de cancelar y guardar*/
+.botonGrande {
     font-family: 'Ubuntu', sans-serif;
     width: 160px;
     height: 40px;
@@ -128,31 +119,39 @@ input[type="submit"] {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+/* Titulo registro marca/proveedor */
 h2 {
     margin-bottom: 10%;
 }
 
-/*Botón cerrar*/
-.cerrar {
-    font-family: 'Ubuntu', sans-serif;
-    width: 160px;
-    height: 40px;
-    margin-top: 10%;
-    margin-right: 5%;
-    background-color: #FF9E01;
-    color: #FFFFFF;
-    border: none;
-    border-radius: 6px;
-    font-size: 20px;
-    cursor: pointer;
-}
-
+/*Div con componentes del proveedor*/
 .modal.proveedor {
     margin-top: -70px;
 }
 
-.modal.producto {
+/*Div botones cerrar y registrar marca/proveedor*/
+.divBotonesRegistroMP{
     display: flex;
     flex-direction: row;
-    width: 800px;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;;
+}
+
+@media screen and (max-width: 837px) {
+    .formRegistro {
+        flex-direction: column;
+        align-items: center;
+        margin-top:8%;
+        gap: 0px;
+    }
+
+    .overlay {
+        padding-top: 55%;
+    }
+
+    .modal {
+        width: 80%;
+    }
+    
 }
