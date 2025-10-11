@@ -7,7 +7,7 @@ export class Pais {
     @PrimaryGeneratedColumn()
     idPais!: number;
 
-    @Column({type: 'string', nullable: false})
+    @Column({type: 'varchar', nullable: false})
     nombre!: string;
 
     @OneToMany(() => Provincia, (provincia) => provincia.pais)

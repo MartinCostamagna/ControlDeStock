@@ -9,16 +9,16 @@ export class Proveedor {
     @PrimaryGeneratedColumn()
     idProveedor!: number;
 
-    @Column({type: 'string', nullable: false})
+    @Column({type: 'varchar', nullable: false})
     nombre!: string;
 
-    @Column({type: 'string'})
+    @Column({type: 'varchar'})
     direccion!: string;
 
-    @Column({type: 'string'})
+    @Column({type: 'varchar'})
     telefono!: string;
 
-    @Column({type: 'string'})
+    @Column({type: 'varchar'})
     email!: string;
 
     @ManyToOne(() => Ciudad, (ciudad) => ciudad.proveedores)

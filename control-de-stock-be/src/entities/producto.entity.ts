@@ -12,7 +12,7 @@ export class Producto {
     @PrimaryColumn()
     codigoDeBarras!: string;
 
-    @Column({type: 'string', nullable: false})
+    @Column({type: 'varchar', nullable: false})
     descripcion!: string;
 
     @Column({type: 'int', nullable: false, default: 0})

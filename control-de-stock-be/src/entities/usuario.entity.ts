@@ -8,20 +8,20 @@ export class Usuario {
     @PrimaryGeneratedColumn()
     idUsuario!: number;
 
-    @Column({type: 'string', nullable: false})
+    @Column({type: 'varchar', nullable: false})
     nombre!: string;
 
-    @Column({type: 'string', nullable: false})
+    @Column({type: 'varchar', nullable: false})
     apellido!: string;
 
-    @Column({type: 'string', nullable: false})
+    @Column({type: 'varchar', nullable: false})
     email!: string;
 
-    @Column({type: 'string', nullable: false})
+    @Column({type: 'varchar', nullable: false})
     @Exclude()
     contraseña!: string;
 
-    @Column({type: 'string', nullable: false, default: 'USER'})
+    @Column({type: 'varchar', nullable: false, default: 'USER'})
     role!: string;
 
     @ManyToOne(() => Ciudad, (ciudad) => ciudad.usuarios, {nullable: false})

@@ -8,7 +8,7 @@ export class Provincia {
     @PrimaryGeneratedColumn()
     idProvincia!: number;
 
-    @Column({type: 'string', nullable: false})
+    @Column({type: 'varchar', nullable: false})
     nombre!: string;
 
     @Column({ type: 'double precision', nullable: false })
