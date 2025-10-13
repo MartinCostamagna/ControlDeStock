@@ -35,7 +35,6 @@ export class AuthService {
     const payload: JwtPayload = {
       sub: usuario.idUsuario,
       email: usuario.email,
-      role: usuario.role,
     };
     this.logger.log(`Login exitoso para: ${email}. Generando token.`);
     return {
@@ -63,7 +62,6 @@ export class AuthService {
       apellido: usuarioData.apellido,
       email: usuarioData.email,
       contraseña: usuarioData.contraseña,
-      role: 'USER', // Default role
       idCiudad: cityIdToAssign,
     };
 

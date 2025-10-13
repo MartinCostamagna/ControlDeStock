@@ -49,6 +49,27 @@ export class ProvinciaService {
     return provincia;
   }
 
+    async findOneByNameAndPaisId(
+    name: string, 
+    paisId: number, 
+    throwError: boolean = true, 
+    returnNull: boolean = false
+  ): Promise<Provincia | null> {
+    const nombreLower = name.toLowerCase();
+    const provincia = await this.provinciaRepository
+      .createQueryBuilder('provincia')
+      .where('LOWER(provincia.nombre) = :nombre', { nombre: nombreLower })
+      .andWhere('provincia.paisId = :paisId', { paisId })
+      .getOne();
+    if (!provincia && throwError) {
+      throw new NotFoundException(`Provincia con nombre '${name}' no encontrada en el país ${paisId}.`);
+    }
+    if (!provincia && returnNull) {
+        return null;
+    }
+    return provincia || null;
+  }
+
   async update(id: number, updateProvinciaDto: UpdateProvinciaDto): Promise<Provincia> {
     const provincia = await this.findOne(id);
 

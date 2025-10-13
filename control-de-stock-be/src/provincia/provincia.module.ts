@@ -11,5 +11,6 @@ import { ProvinciaController } from './provincia.controller';
   ],
   controllers: [ProvinciaController],
   providers: [ProvinciaService],
+  exports: [ProvinciaService],
 })
 export class ProvinciaModule {}

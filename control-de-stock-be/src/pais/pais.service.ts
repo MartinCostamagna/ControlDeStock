@@ -39,6 +39,21 @@ export class PaisService {
     return pais;
   }
 
+  async findOneByName(name: string, throwError = true, returnNull = false): Promise<Pais | null> {
+    const nombreLower = name.toLowerCase();
+    const pais = await this.paisRepository
+      .createQueryBuilder('pais')
+      .where('LOWER(pais.nombre) = :nombre', { nombre: nombreLower })
+      .getOne();
+    if (!pais && throwError) {
+      throw new NotFoundException(`País con nombre '${name}' no encontrado.`);
+    }
+    if (!pais && returnNull) {
+        return null;
+    }
+    return pais || null;
+  }
+
   async update(id: number, updatePaisDto: UpdatePaisDto): Promise<Pais> {
     const pais = await this.findOne(id);
 

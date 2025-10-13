@@ -10,5 +10,6 @@ import { PaisController } from './pais.controller';
   ],
   controllers: [PaisController],
   providers: [PaisService],
+  exports: [PaisService],
 })
 export class PaisModule {}

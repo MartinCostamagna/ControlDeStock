@@ -17,6 +17,7 @@ import { ProductoModule } from './producto/producto.module';
 import { MarcaModule } from './marca/marca.module';
 import { ProveedorModule } from './proveedor/proveedor.module';
 import { SalidaModule } from './salida/salida.module';
+import { DataSeedingModule } from './database/data-seeding/data-seeding.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { SalidaModule } from './salida/salida.module';
     MarcaModule,
     ProveedorModule,
     SalidaModule,
+    DataSeedingModule
   ],
   controllers: [AppController],
   providers: [AppService],

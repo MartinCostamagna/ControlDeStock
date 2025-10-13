@@ -11,5 +11,6 @@ import { CiudadController } from './ciudad.controller';
   ],
   controllers: [CiudadController],
   providers: [CiudadService],
+  exports: [CiudadService],
 })
 export class CiudadModule {}

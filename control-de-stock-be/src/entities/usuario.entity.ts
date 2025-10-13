@@ -21,9 +21,6 @@ export class Usuario {
     @Exclude()
     contraseña!: string;
 
-    @Column({type: 'varchar', nullable: false, default: 'USER'})
-    role!: string;
-
     @ManyToOne(() => Ciudad, (ciudad) => ciudad.usuarios, {nullable: false})
     @JoinColumn({name: "idCiudad"})
     ciudad!: Ciudad
