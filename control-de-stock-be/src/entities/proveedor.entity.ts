@@ -21,7 +21,7 @@ export class Proveedor {
     @Column({type: 'varchar'})
     email!: string;
 
-    @ManyToOne(() => Ciudad, (ciudad) => ciudad.proveedores)
+    @ManyToOne(() => Ciudad, {nullable: false})
     @JoinColumn({name: 'idCiudad'})
     ciudad!: Ciudad;
 

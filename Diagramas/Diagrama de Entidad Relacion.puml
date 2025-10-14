@@ -1,4 +1,5 @@
 @startuml Diagrama de Entidad Relacion
+left to right direction
 entity Producto {
     codigoDeBarras: int <<PK>>
     descripcion: String

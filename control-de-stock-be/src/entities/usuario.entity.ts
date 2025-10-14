@@ -21,7 +21,7 @@ export class Usuario {
     @Exclude()
     contraseña!: string;
 
-    @ManyToOne(() => Ciudad, (ciudad) => ciudad.usuarios, {nullable: false})
+    @ManyToOne(() => Ciudad, {nullable: false})
     @JoinColumn({name: "idCiudad"})
     ciudad!: Ciudad
 }
