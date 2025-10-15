@@ -1,8 +1,16 @@
 <div class="barraSuperior"></div>
-<form class="login">
+
+<form class="login" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
   <h1>Iniciar Sesión</h1>
+  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
   <label for="Email">Email</label>
-  <input type="email" id="Email" required placeholder="Ingrese su email" />
+  <input
+    type="email"
+    id="Email"
+    required
+    placeholder="Ingrese su email"
+    formControlName="email"
+  />
   <label for="Contraseña">Contraseña</label>
   <input
     type="password"
@@ -10,7 +18,8 @@
     id="Contraseña"
     required
     placeholder="Ingrese su contraseña"
+    formControlName="password"
   />
-  <button type="submit">Ingresar</button>
+  <button type="submit" [disabled]="loginForm.invalid">Ingresar</button>
 </form>
 <img src="imagenes/changuito.png" alt="Icono de login" />
