@@ -6,17 +6,20 @@ import { Provincia } from "./provincia.entity";
 export class Ciudad {
     @PrimaryGeneratedColumn()
     idCiudad!: number;
-    
-    @Column({type: 'varchar', nullable: false})
+
+    @Column({ type: 'varchar', nullable: false })
     nombre!: string;
-    
+
     @Column({ type: 'double precision', nullable: false })
     latitud!: number;
-    
+
     @Column({ type: 'double precision', nullable: false })
     longitud!: number;
 
-    @ManyToOne(() => Provincia, (provincia) => provincia.ciudades, {nullable: false})
-    @JoinColumn({name: 'idProvincia'})
+    @Column({ name: 'idProvincia', nullable: false })
+    idProvincia!: number;
+
+    @ManyToOne(() => Provincia, (provincia) => provincia.ciudades, { nullable: false })
+    @JoinColumn({ name: 'idProvincia' })
     provincia!: Provincia;
 }

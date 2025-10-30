@@ -6,7 +6,7 @@ import { GeorefService } from './georef.service';
 @Module({
   imports: [
     HttpModule.register({
-      baseURL: 'https://apis.datos.gob.ar/georef/api',
+      baseURL: 'https://apis.datos.gob.ar/georef/api/v2.0',
       timeout: 15000,
       headers: { 'Accept': 'application/json' },
     }),

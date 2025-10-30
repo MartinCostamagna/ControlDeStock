@@ -14,7 +14,7 @@ export class CiudadService {
 
     @InjectRepository(Provincia)
     private readonly provinciaRepository: Repository<Provincia>,
-  ) {}
+  ) { }
 
   async create(createCiudadDto: CreateCiudadDto): Promise<Ciudad> {
     const { idProvincia } = createCiudadDto;
@@ -50,9 +50,9 @@ export class CiudadService {
   }
 
   async findOneByNameAndProvinceId(
-    name: string, 
-    provinceId: number, 
-    throwError: boolean = true, 
+    name: string,
+    provinceId: number,
+    throwError: boolean = true,
     returnNull: boolean = false
   ): Promise<Ciudad | null> {
     const nombreLower = name.toLowerCase();
@@ -65,9 +65,18 @@ export class CiudadService {
       throw new NotFoundException(`Ciudad con nombre '${name}' no encontrada en la provincia ${provinceId}.`);
     }
     if (!ciudad && returnNull) {
-        return null;
+      return null;
     }
     return ciudad || null;
+  }
+
+  async findByProvinciaId(idProvincia: number): Promise<Ciudad[]> {
+    const ciudades = await this.ciudadRepository.find({
+      where: { idProvincia: idProvincia },
+      order: { nombre: 'ASC' },
+    });
+
+    return ciudades || [];
   }
 
   async update(id: number, updateCiudadDto: UpdateCiudadDto): Promise<Ciudad> {

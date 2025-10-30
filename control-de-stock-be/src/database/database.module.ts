@@ -27,7 +27,7 @@ import { DetalleSalida } from '../entities/detalle-salida.entity';
         username: configService.get<string>('DB_USERNAME', 'postgres'),
         password: configService.get<string>('DB_PASSWORD', 'postgres'),
         database: configService.get<string>('DB_DATABASE', 'control_stock_db'),
-        
+
         entities: [
           Producto,
           Marca,
@@ -44,9 +44,9 @@ import { DetalleSalida } from '../entities/detalle-salida.entity';
           Salida,
           DetalleSalida,
         ],
-        
-        synchronize: true,
-        
+
+        synchronize: false,
+
         logging: configService.get('NODE_ENV') === 'development',
         ssl: configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
       }),
@@ -71,4 +71,4 @@ import { DetalleSalida } from '../entities/detalle-salida.entity';
   ],
   exports: [TypeOrmModule],
 })
-export class DatabaseModule {}
+export class DatabaseModule { }

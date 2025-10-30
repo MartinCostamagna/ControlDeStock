@@ -28,7 +28,7 @@ export class DetallePedidoService {
       throw new NotFoundException(`Pedido con ID '${idPedido}' no encontrado.`);
     }
 
-    const producto = await this.productoRepository.findOneBy({ codigoDeBarras: idProducto.toString() });
+    const producto = await this.productoRepository.findOneBy({ codigoDeBarras: idProducto });
     if (!producto) {
       throw new NotFoundException(`Producto con código de barras '${idProducto}' no encontrado.`);
     }
@@ -75,7 +75,7 @@ export class DetallePedidoService {
     }
 
     if (updateDetallePedidoDto.idProducto) {
-      const producto = await this.productoRepository.findOneBy({ codigoDeBarras: updateDetallePedidoDto.idProducto.toString() });
+      const producto = await this.productoRepository.findOneBy({ codigoDeBarras: updateDetallePedidoDto.idProducto });
       if (!producto) {
         throw new NotFoundException(`Producto con código de barras '${updateDetallePedidoDto.idProducto}' no encontrado.`);
       }

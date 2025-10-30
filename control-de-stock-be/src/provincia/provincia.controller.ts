@@ -6,7 +6,7 @@ import { Provincia } from '../entities/provincia.entity';
 
 @Controller('provincia')
 export class ProvinciaController {
-  constructor(private readonly provinciaService: ProvinciaService) {}
+  constructor(private readonly provinciaService: ProvinciaService) { }
 
   @Post()
   create(@Body() createProvinciaDto: CreateProvinciaDto): Promise<Provincia> {
@@ -21,6 +21,11 @@ export class ProvinciaController {
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number): Promise<Provincia> {
     return this.provinciaService.findOne(id);
+  }
+
+  @Get('by-pais/:idPais')
+  findByPais(@Param('idPais') idPais: number) {
+    return this.provinciaService.findByPaisId(idPais);
   }
 
   @Patch(':id')

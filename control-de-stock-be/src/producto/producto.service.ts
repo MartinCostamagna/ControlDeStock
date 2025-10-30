@@ -22,7 +22,7 @@ export class ProductoService {
 
     @InjectRepository(Proveedor)
     private readonly proveedorRepository: Repository<Proveedor>,
-  ) {}
+  ) { }
 
   async create(createProductoDto: CreateProductoDto): Promise<Producto> {
     const { codigoDeBarras, descripcion, stock, stockMinimo, idMarca, idCategoria, idProveedor } = createProductoDto;

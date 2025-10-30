@@ -1,81 +1,103 @@
 <div class="barraSuperior">
-  <img
-    src="imagenes/CasaBarra.png"
-    alt="Ir a la página de inicio"
-    routerLink="/inicio"
-  />
+  <img src="imagenes/CasaBarra.png" alt="Ir a la página de inicio" routerLink="/inicio" />
 </div>
 
 <h1>Registrar producto</h1>
-<form class="formRegistro">
+<form class="formRegistro" [formGroup]="productoForm" (ngSubmit)="submitProducto()">
   <div class="izquierda">
     <label for="Marca">Marca</label>
-    <select name="Marcas" id="Marca"></select>
-    <button type="button" class="botonRegistrar" (click)="registrarMarca()">
-      +
-    </button>
+    <select name="Marcas" id="Marca" formControlName="idMarca">
+      <option [ngValue]="null">Seleccione una Marca</option>
+      <option *ngFor="let marca of marcas" [ngValue]="marca.idMarca">{{ marca.nombre }}</option>
+    </select>
+    <button type="button" class="botonRegistrar" (click)="registrarMarca()">+</button>
     <label for="Categoria">Categoria</label>
-    <select name="Categorias" id="Categoria"></select>
+    <select name="Categorias" id="Categoria" formControlName="idCategoria">
+      <option [ngValue]="null">Seleccione una Categoria</option>
+      <option *ngFor="let categoria of categorias" [ngValue]="categoria.idCategoria">{{ categoria.nombre }}</option>
+    </select>
+    <button type="button" class="botonRegistrar" (click)="registrarCategoria()">+</button>
     <label for="Descripcion">Descripcion</label>
-    <input type="text" name="Descripcion" id="Descripcion" />
+    <input type="text" name="Descripcion" id="Descripcion" placeholder="Ingrese una Descripción"
+      formControlName="descripcion" />
   </div>
   <div class="derecha">
     <label for="Codigo">Codigo</label>
-    <input type="text" name="Codigo" id="Codigo" />
+    <input type="number" name="Codigo" id="Codigo" placeholder="Ingrese el Codigo" formControlName="codigoDeBarras" />
     <label for="StockMinimo">Stock Minimo</label>
-    <input type="text" name="StockMinimo" id="StockMinimo" />
+    <input type="number" name="StockMinimo" id="StockMinimo" placeholder="Ingrese el Stock Minimo"
+      formControlName="stockMinimo" />
     <label for="Proveedor">Proveedor</label>
-    <select name="Proveedores" id="Proveedor"></select>
-    <button type="button" class="botonRegistrar" (click)="registrarProveedor()">
-      +
-    </button>
+    <select name="Proveedores" id="Proveedor" formControlName="idProveedor">
+      <option [ngValue]="null">Seleccione un Proveedor</option>
+      <option *ngFor="let proveedor of proveedores" [ngValue]="proveedor.idProveedor">{{ proveedor.nombre }}</option>
+    </select>
+    <button type="button" class="botonRegistrar" (click)="registrarProveedor()">+</button>
+  </div>
+  <div class="divBotones">
+    <button type="button" class="botonGrande" routerLink="/inicio">Cancelar</button>
+    <button type="submit" class="botonGrande" [disabled]="productoForm.invalid">Guardar</button>
   </div>
 </form>
 
-<div class="divBotones">
-  <button type="button" class="botonGrande" routerLink="/inicio">
-    Cancelar
-  </button>
-  <button type="button" class="botonGrande">Guardar</button>
+<div *ngIf="RegistrarMarca" class="overlay">
+  <form class="modal" [formGroup]="marcaForm" (ngSubmit)="submitMarca()">
+    <h2>Registrar Marca</h2>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <label for="regMarca">Marca</label>
+    <input type="text" name="regMarca" id="regMarca" placeholder="Ingrese el nombre" formControlName="nombre" />
+    <div class="divBotonesRegistroMP">
+      <button type="button" class="botonGrande" (click)="registrarMarca()">Cerrar</button>
+      <button type="submit" class="botonGrande" [disabled]="marcaForm.invalid">Registrar</button>
+    </div>
+  </form>
 </div>
 
-<div *ngIf="RegistrarMarca" class="overlay">
-  <form class="modal">
-    <h2>Registrar Marca</h2>
-    <label for="regMarca">Marca</label>
-    <input
-      type="text"
-      name="regMarca"
-      id="regMarca"
-      placeholder="Ingrese el nombre"
-    />
+<div *ngIf="RegistrarCategoria" class="overlay">
+  <form class="modal" [formGroup]="categoriaForm" (ngSubmit)="submitCategoria()">
+    <h2>Registrar Categoria</h2>
+    <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+    <label for="regCategoria">Categoria</label>
+    <input type="text" name="regCategoria" id="regCategoria" placeholder="Ingrese el nombre" formControlName="nombre" />
     <div class="divBotonesRegistroMP">
-      <button type="button" class="botonGrande" (click)="registrarMarca()">
-        Cerrar
-      </button>
-      <button type="submit" class="botonGrande">Registrar</button>
+      <button type="button" class="botonGrande" (click)="registrarCategoria()">Cerrar</button>
+      <button type="submit" class="botonGrande" [disabled]="categoriaForm.invalid">Registrar</button>
     </div>
   </form>
 </div>
 
 <div *ngIf="RegistrarProveedor" class="overlay">
-  <form class="modal proveedor">
+  <form class="modal proveedor" [formGroup]="proveedorForm" (ngSubmit)="submitProveedor()">
     <h2>Registrar Proveedor</h2>
     <label for="Nombre">Nombre</label>
-    <input type="text" name="Nombre" placeholder="Ingrese el nombre" />
-    <label for="Direccion">Dirección</label>
-    <input type="text" name="Direccion" placeholder="Ingrese la direccion" />
+    <input type="text" name="Nombre" placeholder="Ingrese el nombre" formControlName="nombre" />
     <label for="Telefono">Telefono</label>
-    <input type="text" name="Telefono" placeholder="Ingrese el telefono" />
+    <input type="text" name="Telefono" placeholder="Ingrese el telefono" formControlName="telefono" />
     <label for="Email">Email</label>
-    <input type="email" name="Email" placeholder="Ingrese el email" />
+    <input type="email" name="Email" placeholder="Ingrese el email" formControlName="email" />
+    <label for="Pais">Pais</label>
+    <select name="Pais" id="Pais" [(ngModel)]="selectedPaisId" (change)="onPaisChange(selectedPaisId)"
+      [ngModelOptions]="{standalone: true}">
+      <option [ngValue]="null">Seleccione un País</option>
+      <option *ngFor="let pais of paises" [ngValue]="pais.idPais">{{ pais.nombre }}</option>
+    </select>
+    <label for="Provincia">Provincia</label>
+    <select name="Provincia" id="Provincia" [(ngModel)]="selectedProvinciaId"
+      (change)="onProvinciaChange(selectedProvinciaId)" [ngModelOptions]="{standalone: true}"
+      [disabled]="!selectedPaisId">
+      <option [ngValue]="null">Seleccione una Provincia</option>
+      <option *ngFor="let provincia of provincias" [ngValue]="provincia.idProvincia">{{ provincia.nombre }}</option>
+    </select>
     <label for="Ciudad">Ciudad</label>
-    <select name="Ciudad"></select>
+    <select name="Ciudad" id="Ciudad" formControlName="idCiudad">
+      <option [ngValue]="null">Seleccione una Ciudad</option>
+      <option *ngFor="let ciudad of ciudades" [ngValue]="ciudad.idCiudad">{{ ciudad.nombre }}</option>
+    </select>
+    <label for="Direccion">Dirección</label>
+    <input type="text" name="Direccion" placeholder="Ingrese la direccion" formControlName="direccion" />
     <div class="divBotonesRegistroMP">
-      <button type="button" class="botonGrande" (click)="registrarProveedor()">
-        Cerrar
-      </button>
-      <button type="submit" class="botonGrande">Registrar</button>
+      <button type="button" class="botonGrande" (click)="registrarProveedor()">Cerrar</button>
+      <button type="submit" class="botonGrande" [disabled]="proveedorForm.invalid">Registrar</button>
     </div>
   </form>
 </div>

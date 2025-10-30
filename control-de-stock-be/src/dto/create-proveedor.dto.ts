@@ -2,7 +2,6 @@
 import { IsEmail, IsNotEmpty, IsString, MaxLength, IsInt  } from "class-validator";
 
 export class CreateProveedorDto {
-
     @IsNotEmpty({ message: 'El nombre del proveedor no puede estar vacío.' })
     @IsString({ message: 'El nombre del proveedor debe ser una cadena de texto.' })
     @MaxLength(50, { message: 'El nombre del proveedor no debe exceder los 50 caracteres.' })

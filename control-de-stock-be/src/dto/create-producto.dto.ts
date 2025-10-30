@@ -2,7 +2,7 @@
 import { IsInt, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 export class CreateProductoDto {
     @IsNotEmpty({ message: 'El código de barras es requerido.' })
-    @IsInt({ message: 'El código de barras debe ser un número entero.' })
+    @IsString({ message: 'El código de barras debe ser una cadena de texto.' })
     codigoDeBarras!: string;
 
     @IsNotEmpty({ message: 'La descripción del producto no puede estar vacío.' })

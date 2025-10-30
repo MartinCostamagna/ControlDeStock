@@ -8,7 +8,7 @@ export class Provincia {
     @PrimaryGeneratedColumn()
     idProvincia!: number;
 
-    @Column({type: 'varchar', nullable: false})
+    @Column({ type: 'varchar', nullable: false })
     nombre!: string;
 
     @Column({ type: 'double precision', nullable: false })
@@ -17,8 +17,11 @@ export class Provincia {
     @Column({ type: 'double precision', nullable: false })
     longitud!: number;
 
-    @ManyToOne(() => Pais, (pais) => pais.provincias, {nullable: false})
-    @JoinColumn({name: 'idPais'})
+    @Column({ name: 'idPais', nullable: false })
+    idPais!: number;
+
+    @ManyToOne(() => Pais, (pais) => pais.provincias, { nullable: false })
+    @JoinColumn({ name: 'idPais' })
     pais!: Pais;
 
     @OneToMany(() => Ciudad, (ciudad) => ciudad.provincia)

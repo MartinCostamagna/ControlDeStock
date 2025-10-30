@@ -9,28 +9,28 @@ import { DetalleSalida } from "./detalle-salida.entity";
 
 @Entity('productos')
 export class Producto {
-    @PrimaryColumn()
+    @PrimaryColumn({ type: 'varchar', length: 15 })
     codigoDeBarras!: string;
 
-    @Column({type: 'varchar', nullable: false})
+    @Column({ type: 'varchar', nullable: false })
     descripcion!: string;
 
-    @Column({type: 'int', nullable: false, default: 0})
+    @Column({ type: 'int', nullable: false, default: 0 })
     stock!: number;
 
-    @Column({type: 'int', nullable: false})
+    @Column({ type: 'int', nullable: false })
     stockMinimo!: number;
 
-    @ManyToOne(() => Marca, (marca) => marca.productos, {nullable: false})
-    @JoinColumn({name: 'idMarca'})
+    @ManyToOne(() => Marca, (marca) => marca.productos, { nullable: false })
+    @JoinColumn({ name: 'idMarca' })
     marca!: Marca;
 
-    @ManyToOne(() => Categoria, (categoria) => categoria.productos, {nullable: false})
-    @JoinColumn({name: 'idCategoria'})
+    @ManyToOne(() => Categoria, (categoria) => categoria.productos, { nullable: false })
+    @JoinColumn({ name: 'idCategoria' })
     categoria!: Categoria;
 
-    @ManyToOne(() => Proveedor, (proveedor) => proveedor.productos, {nullable: false})
-    @JoinColumn({name: 'idProveedor'})
+    @ManyToOne(() => Proveedor, (proveedor) => proveedor.productos, { nullable: false })
+    @JoinColumn({ name: 'idProveedor' })
     proveedor!: Proveedor;
 
     @OneToMany(() => DetallePedido, (detallePedido) => detallePedido.producto)

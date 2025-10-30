@@ -6,7 +6,7 @@ import { Producto } from '../entities/producto.entity';
 
 @Controller('producto')
 export class ProductoController {
-  constructor(private readonly productoService: ProductoService) {}
+  constructor(private readonly productoService: ProductoService) { }
 
   @Post()
   create(@Body() createProductoDto: CreateProductoDto): Promise<Producto> {
