@@ -1,44 +1,39 @@
 <div class="barraSuperior">
-  <img
-    src="imagenes/CasaBarra.png"
-    alt="Ir a la página de inicio"
-    routerLink="/inicio"
-  />
+  <img src="imagenes/CasaBarra.png" alt="Ir a la página de inicio" routerLink="/inicio" />
 </div>
 <h1>Proveedores</h1>
 <div class="divTabla">
-  <table class="Proveedores">
+  <p *ngIf="isLoading">Cargando proveedores...</p>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <table class="Proveedores" *ngIf="!isLoading && proveedores.length > 0">
     <thead>
-      <tr>
-        <th>Código</th>
-        <th>Nombre</th>
-        <th>Dirección</th>
-        <th>Telefono</th>
-        <th>Email</th>
-        <th>Ciudad</th>
-      </tr>
+      <th></th>
+      <th>Nombre</th>
+      <th>Telefono</th>
+      <th>Email</th>
+      <th>Pais</th>
+      <th>Provincia</th>
+      <th>Ciudad</th>
+      <th>Dirección</th>
     </thead>
     <tbody>
-      <tr>
-        <td>PROV-001</td>
-        <td>Distribuidora Central</td>
-        <td>Av. Siempre Viva 742</td>
-        <td>351-1234567</td>
-        <td>contacto@distribuidora.com</td>
-        <td>Córdoba</td>
-      </tr>
-      <tr>
-        <td>PROV-002</td>
-        <td>Insumos del Sur</td>
-        <td>Calle Falsa 123</td>
-        <td>358-7654321</td>
-        <td>ventas@insumosdelsur.com</td>
-        <td>Río Cuarto</td>
+      <tr *ngFor="let prov of proveedores">
+        <td>
+          <input type="radio" name="proveedorSelector" [value]="prov.idProveedor" (change)="onSelectProveedor(prov)" />
+        </td>
+        <td>{{ prov.nombre }}</td>
+        <td>{{ prov.telefono }}</td>
+        <td>{{ prov.email }}</td>
+        <td>{{ prov.ciudad.provincia.pais.nombre }}</td>
+        <td>{{ prov.ciudad.provincia.nombre }}</td>
+        <td>{{ prov.ciudad.nombre }}</td>
+        <td>{{ prov.direccion }}</td>
       </tr>
     </tbody>
   </table>
+  <p *ngIf="!isLoading && proveedores.length === 0">No hay proveedores registrados.</p>
 </div>
 <div class="divBotones">
   <button type="button" routerLink="/inicio">Volver</button>
-  <button type="button" routerLink="/editarProveedor">Editar</button>
+  <button type="button" routerLink="/editarProveedor" [disabled]="!selectedProveedor">Editar</button>
 </div>

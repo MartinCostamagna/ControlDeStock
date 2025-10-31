@@ -14,7 +14,7 @@ export class ProveedorService {
 
     @InjectRepository(Ciudad)
     private readonly ciudadRepository: Repository<Ciudad>,
-  ) {}
+  ) { }
 
   async create(createProveedorDto: CreateProveedorDto): Promise<Proveedor> {
     const { idCiudad } = createProveedorDto;
@@ -34,7 +34,7 @@ export class ProveedorService {
 
   async findAll(): Promise<Proveedor[]> {
     return this.proveedorRepository.find({
-      relations: ['ciudad', 'productos', 'pedidos'],
+      relations: ['ciudad', 'ciudad.provincia', 'ciudad.provincia.pais', 'productos', 'pedidos'],
     });
   }
 

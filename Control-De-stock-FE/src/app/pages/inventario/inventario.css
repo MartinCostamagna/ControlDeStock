@@ -30,7 +30,7 @@ h1 {
 }
 
 /* tabla de productos */
-table{
+table {
     background-color: #FFFFFF;
     width: 90%;
     border-collapse: collapse;
@@ -43,15 +43,17 @@ th {
     background-color: #FF9E01;
     color: #FFFFFF;
     border: #9a9a9a 2px solid;
+    align-items: center;
 }
 
 /* Filas y columnas */
 tr,
 td {
     border: #9a9a9a 2px solid;
+    justify-content: center;
 }
 
-.divBotones{
+.divBotones {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -70,4 +72,9 @@ button {
     font-size: 20px;
     cursor: pointer;
     align-items: center;
+}
+
+button:disabled {
+    background-color: #efbb69;
+    cursor: not-allowed;
 }

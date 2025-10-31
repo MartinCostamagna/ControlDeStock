@@ -1,14 +1,13 @@
 <div class="barraSuperior">
-  <img
-    src="imagenes/CasaBarra.png"
-    alt="Ir a la página de inicio"
-    routerLink="/inicio"
-  />
+  <img src="imagenes/CasaBarra.png" alt="Ir a la página de inicio" routerLink="/inicio" />
 </div>
 <h1>Inventario</h1>
 <div class="divTabla">
-  <table class="Inventario">
+  <p *ngIf="isLoading">Cargando inventario...</p>
+  <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+  <table class="Inventario" *ngIf="!isLoading && productos.length > 0">
     <thead>
+      <th></th>
       <th>Codigo</th>
       <th>Marca</th>
       <th>Categoria</th>
@@ -18,28 +17,25 @@
       <th>Proveedor</th>
     </thead>
     <tbody>
-      <tr>
-        <td>11111</td>
-        <td>Coca Cola</td>
-        <td>Bebida</td>
-        <td>Coca cola 1L original</td>
-        <td>25</td>
-        <td>10</td>
-        <td>Coca Cola</td>
-      </tr>
-      <tr>
-        <td>222222</td>
-        <td>Oreo</td>
-        <td>Masitas</td>
-        <td>Oreo 120grs</td>
-        <td>17</td>
-        <td>5</td>
-        <td>Arcor</td>
+      <tr *ngFor="let prod of productos">
+        <td>
+          <input type="radio" name="productoSelector" [value]="prod.codigoDeBarras" (change)="onSelectProducto(prod)" />
+        </td>
+        <td>{{ prod.codigoDeBarras }}</td>
+        <td>{{ prod.marca.nombre }}</td>
+        <td>{{ prod.categoria.nombre }}</td>
+        <td>{{ prod.descripcion }}</td>
+        <td>{{ prod.stock }}</td>
+        <td>{{ prod.stockMinimo }}</td>
+        <td>{{ prod.proveedor.nombre }}</td>
       </tr>
     </tbody>
   </table>
+  <p *ngIf="!isLoading && productos.length === 0">No hay productos registrados en el inventario.</p>
 </div>
 <div class="divBotones">
   <button type="button" routerLink="/inicio">Volver</button>
   <button type="button" routerLink="/registrarProducto">Registrar</button>
+  <button type="button" routerLink="/editarProducto" [disabled]="!selectedProducto">Editar
+    Producto</button>
 </div>

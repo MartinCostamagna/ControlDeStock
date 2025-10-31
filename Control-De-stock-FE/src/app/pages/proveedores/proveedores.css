@@ -43,10 +43,12 @@ th {
     background-color: #FF9E01;
     color: #FFFFFF;
     border: #9a9a9a 2px solid;
+    align-items: center;
 }
 
 /* Filas y columnas */
-tr, td {
+tr,
+td {
     border: #9a9a9a 2px solid;
 }
 
@@ -68,4 +70,9 @@ button {
     font-size: 20px;
     cursor: pointer;
     align-items: center;
+}
+
+button:disabled {
+    background-color: #efbb69;
+    cursor: not-allowed;
 }

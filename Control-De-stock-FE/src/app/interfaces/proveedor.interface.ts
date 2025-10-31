@@ -4,5 +4,16 @@ export interface Proveedor {
     direccion: string;
     telefono: string;
     email: string;
-    idCiudad: number;
+    ciudad: {
+        idCiudad: number;
+        nombre: string;
+        provincia: {
+            idProvincia: number;
+            nombre: string;
+            pais: {
+                idPais: number;
+                nombre: string;
+            }
+        }
+    };
 }
