@@ -6,6 +6,7 @@ import { Salida } from '../entities/salida.entity';
 import { Producto } from '../entities/producto.entity';
 import { CreateDetalleSalidaDto } from '../dto/create-detalle-salida.dto';
 import { UpdateDetalleSalidaDto } from '../dto/update-detalle-salida.dto';
+import { NotificacionesService } from '../notificaciones/notificaciones.service';
 
 @Injectable()
 export class DetalleSalidaService {
@@ -18,6 +19,8 @@ export class DetalleSalidaService {
 
     @InjectRepository(Producto)
     private readonly productoRepository: Repository<Producto>,
+
+    private readonly notificacionesService: NotificacionesService,
   ) {}
 
   async create(createDetalleSalidaDto: CreateDetalleSalidaDto): Promise<DetalleSalida> {
@@ -44,6 +47,9 @@ export class DetalleSalidaService {
     // Actualizar stock del producto
     producto.stock -= cantidad;
     await this.productoRepository.save(producto);
+
+    // Verificar si se debe generar una notificación de stock bajo
+    await this.notificacionesService.verificarStockBajo(producto);
 
     const nuevoDetalleSalida = this.detalleSalidaRepository.create({
       cantidad,
@@ -102,6 +108,9 @@ export class DetalleSalidaService {
       }
       detalleSalida.producto.stock -= diferencia;
       await this.productoRepository.save(detalleSalida.producto);
+
+      // Verificar si se debe generar una notificación de stock bajo
+      await this.notificacionesService.verificarStockBajo(detalleSalida.producto);
     }
 
     const detalleSalidaActualizado = this.detalleSalidaRepository.merge(detalleSalida, updateDetalleSalidaDto);

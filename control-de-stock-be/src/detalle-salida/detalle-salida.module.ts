@@ -5,10 +5,12 @@ import { Salida } from '../entities/salida.entity';
 import { Producto } from '../entities/producto.entity';
 import { DetalleSalidaService } from './detalle-salida.service';
 import { DetalleSalidaController } from './detalle-salida.controller';
+import { NotificacionesModule } from '../notificaciones/notificaciones.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([DetalleSalida, Salida, Producto])
+    TypeOrmModule.forFeature([DetalleSalida, Salida, Producto]),
+    NotificacionesModule
   ],
   controllers: [DetalleSalidaController],
   providers: [DetalleSalidaService],

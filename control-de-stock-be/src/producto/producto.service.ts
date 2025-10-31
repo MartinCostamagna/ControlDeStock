@@ -7,6 +7,7 @@ import { Categoria } from '../entities/categoria.entity';
 import { Proveedor } from '../entities/proveedor.entity';
 import { CreateProductoDto } from '../dto/create-producto.dto';
 import { UpdateProductoDto } from '../dto/update-producto.dto';
+import { NotificacionesService } from '../notificaciones/notificaciones.service';
 
 @Injectable()
 export class ProductoService {
@@ -22,6 +23,8 @@ export class ProductoService {
 
     @InjectRepository(Proveedor)
     private readonly proveedorRepository: Repository<Proveedor>,
+
+    private readonly notificacionesService: NotificacionesService,
   ) { }
 
   async create(createProductoDto: CreateProductoDto): Promise<Producto> {
@@ -105,7 +108,12 @@ export class ProductoService {
     }
 
     const productoActualizado = this.productoRepository.merge(producto, updateProductoDto);
-    return this.productoRepository.save(productoActualizado);
+    const productoGuardado = await this.productoRepository.save(productoActualizado);
+
+    // Verificar si se debe generar una notificación de stock bajo
+    await this.notificacionesService.verificarStockBajo(productoGuardado);
+
+    return productoGuardado;
   }
 
   async remove(codigoDeBarras: string): Promise<void> {

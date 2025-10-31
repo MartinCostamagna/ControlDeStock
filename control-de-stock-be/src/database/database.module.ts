@@ -15,6 +15,7 @@ import { Entrada } from '../entities/entrada.entity';
 import { DetalleEntrada } from '../entities/detalle-entrada.entity';
 import { Salida } from '../entities/salida.entity';
 import { DetalleSalida } from '../entities/detalle-salida.entity';
+import { Notificacion } from '../entities/notificacion.entity';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { DetalleSalida } from '../entities/detalle-salida.entity';
           DetalleEntrada,
           Salida,
           DetalleSalida,
+          Notificacion,
         ],
 
         synchronize: false,
@@ -67,6 +69,7 @@ import { DetalleSalida } from '../entities/detalle-salida.entity';
       DetalleEntrada,
       Salida,
       DetalleSalida,
+      Notificacion,
     ]),
   ],
   exports: [TypeOrmModule],

@@ -19,6 +19,7 @@ import { ProveedorModule } from './proveedor/proveedor.module';
 import { SalidaModule } from './salida/salida.module';
 import { DataSeedingModule } from './database/data-seeding/data-seeding.module';
 import { AuthModule } from './auth/auth.module';
+import { NotificacionesModule } from './notificaciones/notificaciones.module';
 
 @Module({
   imports: [
@@ -41,7 +42,8 @@ import { AuthModule } from './auth/auth.module';
     ProveedorModule,
     SalidaModule,
     DataSeedingModule,
-    AuthModule
+    AuthModule,
+    NotificacionesModule
   ],
   controllers: [AppController],
   providers: [AppService],
