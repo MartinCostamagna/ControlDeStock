@@ -8,17 +8,23 @@ import { RegistrarIngresoProducto } from './pages/registrar-ingreso-producto/reg
 import { Inventario } from './pages/inventario/inventario';
 import { Proveedores } from './pages/proveedores/proveedores';
 import { Pedidos } from './pages/pedidos/pedidos';
+import { EditarProveedor } from './pages/editar-proveedor/editar-proveedor';
+import { EditarProducto } from './pages/editar-producto/editar-producto';
+import { Venta } from './pages/venta/venta';
 
 export const routes: Routes = [
-  {path: '', redirectTo: '/login', pathMatch: 'full'},
-  { path: 'login', component: Login},
-  { path: 'inicio', component: Inicio},
-  { path: 'registrarProducto', component: RegistrarProducto},
-  { path: 'registrarSalidaDeProducto', component: RegistrarSalidaProducto},
-  { path: 'registrarIngresoDeProducto', component: RegistrarIngresoProducto},
-  { path: 'inventario', component: Inventario},
-  { path: 'proveedores', component: Proveedores},
-  { path: 'pedidos', component: Pedidos},
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: Login },
+  { path: 'inicio', component: Inicio },
+  { path: 'registrarProducto', component: RegistrarProducto },
+  { path: 'registrarSalidaDeProducto', component: RegistrarSalidaProducto },
+  { path: 'registrarIngresoDeProducto', component: RegistrarIngresoProducto },
+  { path: 'inventario', component: Inventario },
+  { path: 'proveedores', component: Proveedores },
+  { path: 'pedidos', component: Pedidos },
+  { path: 'editarProveedor/:id', component: EditarProveedor },
+  { path: 'editarProducto/:id', component: EditarProducto },
+  { path: 'venta', component: Venta }
 
 ];
 

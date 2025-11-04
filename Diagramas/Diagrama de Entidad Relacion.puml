@@ -3,6 +3,8 @@ left to right direction
 entity Producto {
     codigoDeBarras: int <<PK>>
     descripcion: String
+    precioCosto: decimal
+    porcentajeGanancia: decimal
     stock: int
     stockMinimo: int
     idMarca: int <<FK>>
@@ -96,6 +98,27 @@ entity Usuario {
     ciudad: int <<FK>>
 }
 
+entity Venta {
+    idVenta: int <<PK>>
+    fecha: date
+}
+
+entity DetalleVenta {
+    idDetalleVenta: int <<PK>>
+    cantidad: int
+    precioUnitario: int
+    subtotal: int
+    idVenta: int
+    idProducto: int
+}
+
+entity Notificacion {
+    idNotificacion: int <<PK>>
+    mensaje: String
+    fechaYHora: date
+    idProducto: int <<FK>>
+}
+
 Producto }|--|| Marca
 Producto }|--|| Categoria
 Producto }|--|| Proveedor
@@ -110,5 +133,8 @@ DetalleEntrada }|--|| Entrada
 DetalleEntrada }|--|| Producto
 DetalleSalida }|--|| Salida
 DetalleSalida }|--|| Producto
+DetalleVenta }|--|| Venta
+DetalleVenta }|--|| Producto
+Notificacion }|--|| Producto
 
 @enduml

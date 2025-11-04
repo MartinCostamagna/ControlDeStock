@@ -98,6 +98,22 @@ label {
     font-size: 15px;
 }
 
+.SelectorDescripcion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+select {
+    width: 200px;
+    height: 40px;
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+}
+
 button {
     display: block;
     font-family: 'Ubuntu', sans-serif;
@@ -145,6 +161,7 @@ td {
 }
 
 @media screen and (max-width: 600px) {
+
     /* form para buscar producto por codigo */
     .formBusquedaProducto {
         flex-direction: column;

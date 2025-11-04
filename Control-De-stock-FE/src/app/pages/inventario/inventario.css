@@ -50,7 +50,7 @@ th {
 tr,
 td {
     border: #9a9a9a 2px solid;
-    justify-content: center;
+    text-align: center;
 }
 
 .divBotones {

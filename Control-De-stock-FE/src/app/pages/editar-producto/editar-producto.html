@@ -1,0 +1,36 @@
+<div class="barraSuperior">
+    <img src="imagenes/CasaBarra.png" alt="Ir a la página de inicio" routerLink="/inicio" />
+</div>
+
+<h1>Editar producto</h1>
+<!--<form class="formEditarProducto" [formGroup]="productoForm" (ngSubmit)="submitProductoEditado()">
+    <div class="izquierda">
+        <label for="Marca">Marca</label>
+        <select name="Marcas" id="Marca" formControlName="idMarca">
+            <option *ngFor="let marca of marcas" [ngValue]="marca.idMarca">{{ marca.nombre }}</option>
+        </select>
+        <button type="button" class="botonRegistrar" (click)="registrarMarca()">+</button>
+        <label for="Categoria">Categoria</label>
+        <select name="Categorias" id="Categoria" formControlName="idCategoria">
+            <option *ngFor="let categoria of categorias" [ngValue]="categoria.idCategoria">{{ categoria.nombre }}
+            </option>
+        </select>
+        <label for="Descripcion">Descripcion</label>
+        <input type="text" name="Descripcion" id="Descripcion" formControlName="descripcion" />
+    </div>
+    <div class="derecha">
+        <label for="Codigo">Codigo</label>
+        <input type="number" name="Codigo" id="Codigo" formControlName="codigoDeBarras" [attr.disabled]="true" />
+        <label for="StockMinimo">Stock Minimo</label>
+        <input type="number" name="StockMinimo" id="StockMinimo" formControlName="stockMinimo" />
+        <label for="Proveedor">Proveedor</label>
+        <select name="Proveedores" id="Proveedor" formControlName="idProveedor">
+            <option *ngFor="let proveedor of proveedores" [ngValue]="proveedor.idProveedor">{{ proveedor.nombre }}
+            </option>
+        </select>
+    </div>
+    <div class="divBotones">
+        <button type="button" class="botonGrande" routerLink="/inicio">Cancelar</button>
+        <button type="submit" class="botonGrande" [disabled]="productoForm.invalid">Guardar</button>
+    </div>
+</form>-->

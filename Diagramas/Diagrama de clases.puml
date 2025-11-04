@@ -6,6 +6,8 @@ class Producto{
     -descripcion: String
     -categoria: Categoria
     -proveedor: Proveedor
+    -precioCosto: decimal
+    -porcentajeGanancia: decimal
     -stock: int
     -stockMinimo: int
 }
@@ -101,6 +103,20 @@ class Usuario{
     -role: String
 }
 
+class Venta {
+    -idVenta: int
+    -detalleVenta: DetalleVenta
+    -fecha: date
+}
+
+class DetalleVenta{
+    -idDetalleVenta: int
+    -producto: Producto
+    -cantidad: int
+    -precioUnitario: int
+    -subtotal: int
+}
+
 Producto "0..*" --> "1" Marca
 Producto "0..*" --> "1" Categoria
 Producto "0..*" --> "1" Proveedor
@@ -116,5 +132,7 @@ Salida "1" *-- "1..*" DetalleSalida
 DetalleSalida "0..*" --> "1" Producto
 Notificacion "0..*" --> "1" Producto
 Usuario "0..*" --> "1" Ciudad
+Venta "1" *-- "1..*" DetalleVenta
+DetalleVenta "0..*" --> "1" Producto
 
 @enduml

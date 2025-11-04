@@ -35,5 +35,6 @@
 </div>
 <div class="divBotones">
   <button type="button" routerLink="/inicio">Volver</button>
-  <button type="button" routerLink="/editarProveedor" [disabled]="!selectedProveedor">Editar</button>
+  <button type="button" routerLink="/editarProveedor/:{selectedProveedor.codigoDeBarras}"
+    [disabled]="!selectedProveedor">Editar</button>
 </div>
