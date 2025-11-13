@@ -17,4 +17,12 @@ export class ProveedorService {
   obtenerProveedores(): Observable<Proveedor[]> {
     return this.http.get<Proveedor[]>(this.baseUrl);
   }
+
+  editarProveedor(id: number, proveedorData: CreateProveedor): Observable<any> {
+    return this.http.patch(`${this.baseUrl}/${id}`, proveedorData);
+  }
+
+  obtenerProveedorPorId(id: number): Observable<Proveedor> {
+    return this.http.get<Proveedor>(`${this.baseUrl}/${id}`);
+  }
 }

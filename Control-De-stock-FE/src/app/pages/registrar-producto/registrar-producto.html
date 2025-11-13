@@ -5,12 +5,20 @@
 <h1>Registrar producto</h1>
 <form class="formRegistro" [formGroup]="productoForm" (ngSubmit)="submitProducto()">
   <div class="izquierda">
+
     <label for="Marca">Marca</label>
-    <select name="Marcas" id="Marca" formControlName="idMarca">
-      <option [ngValue]="null">Seleccione una Marca</option>
-      <option *ngFor="let marca of marcas" [ngValue]="marca.idMarca">{{ marca.nombre }}</option>
-    </select>
-    <button type="button" class="botonRegistrar" (click)="registrarMarca()">+</button>
+    <div class="typeahead-container">
+      <input type="text" id="Marca" placeholder="Seleccione una Marca " [formControl]="marcaSearchControl"
+        (focus)="showMarcaDropdown = true" (blur)="onMarcaBlur()" class="autocomplete-input" />
+      <button type="button" class="botonRegistrar" (click)="registrarMarca()">+</button>
+      <ul *ngIf="showMarcaDropdown && filteredMarcas.length > 0" class="autocomplete-list">
+        <li *ngFor="let marca of filteredMarcas" (mousedown)="selectMarca(marca)">
+          {{ marca.nombre }}
+        </li>
+      </ul>
+    </div>
+
+    <input type="hidden" formControlName="idMarca" />
     <label for="Categoria">Categoria</label>
     <select name="Categorias" id="Categoria" formControlName="idCategoria">
       <option [ngValue]="null">Seleccione una Categoria</option>
@@ -20,10 +28,16 @@
     <label for="Descripcion">Descripcion</label>
     <input type="text" name="Descripcion" id="Descripcion" placeholder="Ingrese una Descripción"
       formControlName="descripcion" />
-  </div>
-  <div class="derecha">
     <label for="Codigo">Codigo</label>
     <input type="number" name="Codigo" id="Codigo" placeholder="Ingrese el Codigo" formControlName="codigoDeBarras" />
+  </div>
+  <div class="derecha">
+    <label for="PrecioCosto">Precio de Costo</label>
+    <input type="number" name="PrecioCosto" id="PrecioCosto" placeholder="Ingrese el Precio de Costo"
+      formControlName="precioCosto" />
+    <label for="PorcentajeGanancia">Porcentaje de Ganancia</label>
+    <input type="number" name="PorcentajeGanancia" id="PorcentajeGanancia"
+      placeholder="Ingrese el Porcentaje de Ganancia" formControlName="porcentajeGanancia" />
     <label for="StockMinimo">Stock Minimo</label>
     <input type="number" name="StockMinimo" id="StockMinimo" placeholder="Ingrese el Stock Minimo"
       formControlName="stockMinimo" />

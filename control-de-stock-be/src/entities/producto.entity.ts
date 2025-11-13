@@ -1,11 +1,12 @@
 //src\entities\producto.entity.ts
-import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn, OneToMany, Double } from "typeorm";
 import { Marca } from './marca.entity'
 import { Categoria } from './categoria.entity'
 import { Proveedor } from './proveedor.entity'
 import { DetallePedido } from "./detalle-pedido.entity";
 import { DetalleEntrada } from "./detalle-entrada.entity";
 import { DetalleSalida } from "./detalle-salida.entity";
+import { DetalleVenta } from "./detalle-venta.entity";
 
 @Entity('productos')
 export class Producto {
@@ -14,6 +15,12 @@ export class Producto {
 
     @Column({ type: 'varchar', nullable: false })
     descripcion!: string;
+
+    @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
+    precioCosto!: number;
+
+    @Column({ type: 'decimal', precision: 5, scale: 2, nullable: false })
+    porcentajeGanancia!: number;
 
     @Column({ type: 'int', nullable: false, default: 0 })
     stock!: number;
@@ -41,4 +48,7 @@ export class Producto {
 
     @OneToMany(() => DetalleSalida, (detalleSalida) => detalleSalida.producto)
     detallesSalida!: DetalleSalida[]
+
+    @OneToMany(() => DetalleVenta, (detalleVenta) => detalleVenta.producto)
+    detallesVenta!: DetalleVenta[]
 }

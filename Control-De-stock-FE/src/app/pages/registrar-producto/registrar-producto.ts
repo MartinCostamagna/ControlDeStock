@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, FormControl } from '@angular/forms';
 // sevices
 import { MarcaService } from '../../services/marca.service';
 import { CategoriaService } from '../../services/categoria.service';
@@ -30,6 +30,8 @@ export class RegistrarProducto implements OnInit {
   productoForm!: FormGroup;
   //formulario registro marca
   marcaForm!: FormGroup;
+  // Control para la entrada de texto del autocomplete de Marca
+  marcaSearchControl = new FormControl('');
   //formulario registro categoria
   categoriaForm!: FormGroup;
   //formulario registro proveedor
@@ -40,13 +42,15 @@ export class RegistrarProducto implements OnInit {
   // pais y provincias seleccionados para filtro
   selectedPaisId: number | null = null;
   selectedProvinciaId: number | null = null;
-  // listas para marcas, categorias y proveedores
+  // listas para objetos
   marcas: Marca[] = [];
+  filteredMarcas: Marca[] = [];
   categorias: Categoria[] = [];
   proveedores: Proveedor[] = [];
   paises: Pais[] = [];
   provincias: Provincia[] = [];
   ciudades: Ciudad[] = [];
+  showMarcaDropdown: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -64,6 +68,8 @@ export class RegistrarProducto implements OnInit {
     this.productoForm = this.fb.group({
       codigoDeBarras: ['', Validators.required],
       descripcion: ['', Validators.required],
+      precioCosto: ['', [Validators.required, Validators.min(0)]],
+      porcentajeGanancia: ['', [Validators.required, Validators.min(0)]],
       stock: [0, [Validators.min(0)]],
       stockMinimo: ['', [Validators.required, Validators.min(0)]],
       idMarca: [null, Validators.required],
@@ -77,6 +83,11 @@ export class RegistrarProducto implements OnInit {
     // inicializa el formulario registro marca
     this.marcaForm = this.fb.group({
       nombre: ['', Validators.required]
+    });
+
+    // Suscribe a los cambios del input de búsqueda de marca
+    this.marcaSearchControl.valueChanges.subscribe(value => {
+      this.filterMarcas(value);
     });
 
     // inicializa el formulario registro categoria
@@ -98,7 +109,7 @@ export class RegistrarProducto implements OnInit {
   cargarDatosIniciales(): void {
     // Cargar Marcas
     this.marcaService.obtenerMarcas().subscribe({
-      next: data => { this.marcas = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); },
+      next: data => { this.filteredMarcas = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); },
       error: err => console.error('Error al cargar marcas:', err)
     });
 
@@ -273,5 +284,46 @@ export class RegistrarProducto implements OnInit {
         this.errorMessage = `Error al registrar: ${err.error?.message || 'Error de conexión.'}`;
       }
     });
+  }
+
+  filterMarcas(searchText: string | null): void {
+    const lowerCaseSearch = (searchText || '').toLowerCase();
+    if (!lowerCaseSearch) {
+      this.filteredMarcas = this.marcas;
+    } else {
+      this.filteredMarcas = this.marcas.filter(marca =>
+        marca.nombre.toLowerCase().includes(lowerCaseSearch)
+      );
+    }
+    this.showMarcaDropdown = true;
+  }
+
+  selectMarca(marca: Marca): void {
+    this.marcaSearchControl.setValue(marca.nombre, { emitEvent: false });
+    this.productoForm.get('idMarca')!.setValue(marca.idMarca);
+    this.showMarcaDropdown = false;
+    this.productoForm.get('idMarca')!.markAsTouched();
+  }
+
+  onMarcaBlur(): void {
+    setTimeout(() => {
+      this.showMarcaDropdown = false;
+      const selectedId = this.productoForm.get('idMarca')!.value;
+      const currentName = this.marcaSearchControl.value;
+
+      if (selectedId) {
+        const actualMarca = this.marcas.find(m => m.idMarca === selectedId);
+        /*if (actualMarca && actualMarca.nombre !== currentName) {
+          this.marcaSearchControl.setValue(actualMarca.nombre, { emitEvent: false });
+        }*/
+      } else if (currentName && currentName.trim() !== '') {
+        // Si hay texto pero no hay ID seleccionado (no se seleccionó de la lista)
+        // Borra el texto para forzar la selección o el vacío
+        this.marcaSearchControl.setValue(null, { emitEvent: false });
+        // Y el ID debe estar en null
+        this.productoForm.get('idMarca')!.setValue(null);
+        this.productoForm.get('idMarca')!.markAsTouched();
+      }
+    }, 200); // 200ms de retraso
   }
 }

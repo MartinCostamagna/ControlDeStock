@@ -41,7 +41,7 @@ export class ProveedorService {
   async findOne(id: number): Promise<Proveedor> {
     const proveedor = await this.proveedorRepository.findOne({
       where: { idProveedor: id },
-      relations: ['ciudad', 'productos', 'pedidos'],
+      relations: ['ciudad', 'ciudad.provincia', 'ciudad.provincia.pais', 'productos', 'pedidos'],
     });
     if (!proveedor) {
       throw new NotFoundException(`Proveedor con ID '${id}' no encontrado.`);

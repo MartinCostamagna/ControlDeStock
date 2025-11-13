@@ -28,7 +28,7 @@ export class ProductoService {
   ) { }
 
   async create(createProductoDto: CreateProductoDto): Promise<Producto> {
-    const { codigoDeBarras, descripcion, stock, stockMinimo, idMarca, idCategoria, idProveedor } = createProductoDto;
+    const { codigoDeBarras, descripcion, precioCosto, porcentajeGanancia, stock, stockMinimo, idMarca, idCategoria, idProveedor } = createProductoDto;
 
     const productoExistente = await this.productoRepository.findOneBy({ codigoDeBarras });
     if (productoExistente) {
@@ -53,6 +53,8 @@ export class ProductoService {
     const nuevoProducto = this.productoRepository.create({
       codigoDeBarras,
       descripcion,
+      precioCosto,
+      porcentajeGanancia,
       stock,
       stockMinimo,
       marca,

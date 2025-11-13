@@ -2,4 +2,42 @@
     <img src="imagenes/CasaBarra.png" alt="Ir a la página de inicio" routerLink="/inicio" />
 </div>
 
-<h1>Registrar proveedor</h1>
+<h1>Editar proveedor</h1>
+<form [formGroup]="proveedorForm" (ngSubmit)="submitProveedor()">
+    <div class="izquierda">
+        <label for="nombre">Nombre</label>
+        <input type="text" name="nombre" id="nombre" placeholder="Ingrese el Nombre" formControlName="nombre">
+        <label for="telefono">Telefono</label>
+        <input type="text" name="telefono" id="telefono" placeholder="Ingrese el Telefono" formControlName="telefono">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Ingrese el Email" formControlName="email">
+    </div>
+    <div class="derecha">
+        <label for="Pais">Pais</label>
+        <select name="Pais" id="Pais" [(ngModel)]="selectedPaisId" (change)="onPaisChange()"
+            [ngModelOptions]="{standalone: true}">
+            <option [ngValue]="null">Seleccione un País</option>
+            <option *ngFor="let pais of paises" [ngValue]="pais.idPais">{{ pais.nombre }}</option>
+        </select>
+        <label for="Provincia">Provincia</label>
+        <select name="Provincia" id="Provincia" [(ngModel)]="selectedProvinciaId" (change)="onProvinciaChange()"
+            [disabled]="!selectedPaisId" [ngModelOptions]="{standalone: true}">
+            <option [ngValue]="null">Seleccione una Provincia</option>
+            <option *ngFor="let provincia of provincias" [ngValue]="provincia.idProvincia">{{ provincia.nombre }}
+            </option>
+        </select>
+        <label for="Ciudad">Ciudad</label>
+        <select name="Ciudad" id="Ciudad" formControlName="idCiudad">
+            <option [ngValue]="null">Seleccione una Ciudad</option>
+            <option *ngFor="let ciudad of ciudades" [ngValue]="ciudad.idCiudad">{{
+                ciudad.nombre }}</option>
+        </select>
+        <label for="direccion">Dirección</label>
+        <input type="text" name="direccion" id="direccion" placeholder="Ingrese la Dirección"
+            formControlName="direccion">
+    </div>
+    <div class="divBotones">
+        <button type="button" routerLink="/proveedores">Cancelar</button>
+        <button type="submit" [disabled]="proveedorForm.invalid">Guardar</button>
+    </div>
+</form>

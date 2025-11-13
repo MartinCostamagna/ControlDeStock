@@ -20,6 +20,8 @@ import { SalidaModule } from './salida/salida.module';
 import { DataSeedingModule } from './database/data-seeding/data-seeding.module';
 import { AuthModule } from './auth/auth.module';
 import { NotificacionesModule } from './notificaciones/notificaciones.module';
+import { VentaModule } from './venta/venta.module';
+import { DetalleVentaModule } from './detalle-venta/detalle-venta.module';
 
 @Module({
   imports: [
@@ -43,7 +45,9 @@ import { NotificacionesModule } from './notificaciones/notificaciones.module';
     SalidaModule,
     DataSeedingModule,
     AuthModule,
-    NotificacionesModule
+    NotificacionesModule,
+    VentaModule,
+    DetalleVentaModule
   ],
   controllers: [AppController],
   providers: [AppService],

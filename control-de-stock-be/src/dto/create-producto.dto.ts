@@ -1,5 +1,5 @@
 //src\dto\create-producto.dto.ts
-import { IsInt, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsInt, IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator';
 export class CreateProductoDto {
     @IsNotEmpty({ message: 'El código de barras es requerido.' })
     @IsString({ message: 'El código de barras debe ser una cadena de texto.' })
@@ -9,6 +9,14 @@ export class CreateProductoDto {
     @IsString({ message: 'La descripción del producto debe ser una cadena de texto.' })
     @MaxLength(100, { message: 'La descripción del producto no debe exceder los 100 caracteres.' })
     descripcion!: string;
+
+    @IsNotEmpty({ message: 'El precio de costo es requerido.' })
+    @IsNumber({}, { message: 'El precio de costo debe ser un número.' })
+    precioCosto!: number;
+
+    @IsNotEmpty({ message: 'El porcentaje de ganancia es requerido.' })
+    @IsNumber({}, { message: 'El porcentaje de ganancia debe ser un número.' })
+    porcentajeGanancia!: number;
 
     @IsNotEmpty({ message: 'El campo no debe estar vacío.' })
     @IsInt({ message: 'El valor debe ser un número entero.' })

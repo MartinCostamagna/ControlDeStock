@@ -28,7 +28,7 @@ h1 {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 70px;
+    margin-top: 50px;
     flex-wrap: wrap;
     column-gap: 150px;
     row-gap: 75px;
@@ -149,6 +149,55 @@ h2 {
     margin-top: 25px;
     ;
 }
+
+/* Estilo del contenedor del Autocomplete */
+.typeahead-container {
+    position: relative;
+    /* Clave para posicionar la lista desplegable */
+    display: flex;
+    align-items: center;
+    /* Alinea el input y el botón + */
+}
+
+/* Estilo del input de Autocomplete */
+.autocomplete-input {
+    width: 240px;
+    height: 30px;
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+    box-sizing: content-box;
+}
+
+/* Lista desplegable del Autocomplete */
+.autocomplete-list {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 1000;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 250px;
+    max-height: 200px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.autocomplete-list li {
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+    color: #000000;
+}
+
+.autocomplete-list li:hover {
+    background-color: #f0f0f0;
+}
+
 
 @media screen and (max-width: 837px) {
     .formRegistro {

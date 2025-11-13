@@ -16,6 +16,8 @@ import { DetalleEntrada } from '../entities/detalle-entrada.entity';
 import { Salida } from '../entities/salida.entity';
 import { DetalleSalida } from '../entities/detalle-salida.entity';
 import { Notificacion } from '../entities/notificacion.entity';
+import { DetalleVenta } from 'src/entities/detalle-venta.entity';
+import { Venta } from 'src/entities/venta.entity';
 
 @Module({
   imports: [
@@ -45,6 +47,8 @@ import { Notificacion } from '../entities/notificacion.entity';
           Salida,
           DetalleSalida,
           Notificacion,
+          Venta,
+          DetalleVenta,
         ],
 
         synchronize: false,
@@ -70,6 +74,8 @@ import { Notificacion } from '../entities/notificacion.entity';
       Salida,
       DetalleSalida,
       Notificacion,
+      Venta,
+      DetalleVenta,
     ]),
   ],
   exports: [TypeOrmModule],
