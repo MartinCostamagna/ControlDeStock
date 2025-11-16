@@ -22,3 +22,74 @@ h1 {
     margin-bottom: 20px;
     color: #000000;
 }
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 10%;
+    margin-top: 3%;
+}
+
+/*textos e inputs del formulario*/
+label {
+    display: block;
+    color: #000000;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 240px;
+    height: 30px;
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+}
+
+/* Saca flechitas del imput number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+select {
+    width: 250px;
+    height: 40px;
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+}
+
+/*Div Botones de envio*/
+.divBotones {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+    text-align: center;
+    margin-top: 5%;
+}
+
+/*Botónes de cancelar y guardar*/
+button {
+    font-family: 'Ubuntu', sans-serif;
+    width: 160px;
+    height: 40px;
+    background-color: #FF9E01;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #efbb69;
+    cursor: not-allowed;
+}

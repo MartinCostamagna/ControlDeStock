@@ -14,6 +14,8 @@
       <th>Descripcion</th>
       <th>Stock Actual</th>
       <th>Stock Minimo</th>
+      <th>Precio de Costo</th>
+      <th>Porcentaje de Ganancia</th>
       <th>Proveedor</th>
     </thead>
     <tbody>
@@ -27,6 +29,8 @@
         <td>{{ prod.descripcion }}</td>
         <td>{{ prod.stock }}</td>
         <td>{{ prod.stockMinimo }}</td>
+        <td>{{ prod.precioCosto }}</td>
+        <td>{{ prod.porcentajeGanancia }}</td>
         <td>{{ prod.proveedor.nombre }}</td>
       </tr>
     </tbody>
@@ -36,7 +40,7 @@
 <div class="divBotones">
   <button type="button" routerLink="/inicio">Volver</button>
   <button type="button" routerLink="/registrarProducto">Registrar</button>
-  <button type="button" routerLink="/editarProducto/:{selectedProducto.codigoDeBarras}"
+  <button type="button" [routerLink]="['/editarProducto', selectedProducto?.codigoDeBarras]"
     [disabled]="!selectedProducto">Editar
     Producto</button>
 </div>

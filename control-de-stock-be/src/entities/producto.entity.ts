@@ -19,7 +19,7 @@ export class Producto {
     @Column({ type: 'decimal', precision: 10, scale: 2, nullable: false })
     precioCosto!: number;
 
-    @Column({ type: 'decimal', precision: 5, scale: 2, nullable: false })
+    @Column({ type: 'int', nullable: false })
     porcentajeGanancia!: number;
 
     @Column({ type: 'int', nullable: false, default: 0 })

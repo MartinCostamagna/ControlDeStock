@@ -313,9 +313,9 @@ export class RegistrarProducto implements OnInit {
 
       if (selectedId) {
         const actualMarca = this.marcas.find(m => m.idMarca === selectedId);
-        /*if (actualMarca && actualMarca.nombre !== currentName) {
+        if (actualMarca && actualMarca.nombre !== currentName) {
           this.marcaSearchControl.setValue(actualMarca.nombre, { emitEvent: false });
-        }*/
+        }
       } else if (currentName && currentName.trim() !== '') {
         // Si hay texto pero no hay ID seleccionado (no se seleccionó de la lista)
         // Borra el texto para forzar la selección o el vacío

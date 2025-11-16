@@ -8,7 +8,7 @@
 
     <label for="Marca">Marca</label>
     <div class="typeahead-container">
-      <input type="text" id="Marca" placeholder="Seleccione una Marca " [formControl]="marcaSearchControl"
+      <input type="text" id="Marca" placeholder="Seleccione una Marca" [formControl]="marcaSearchControl"
         (focus)="showMarcaDropdown = true" (blur)="onMarcaBlur()" class="autocomplete-input" />
       <button type="button" class="botonRegistrar" (click)="registrarMarca()">+</button>
       <ul *ngIf="showMarcaDropdown && filteredMarcas.length > 0" class="autocomplete-list">
@@ -17,8 +17,8 @@
         </li>
       </ul>
     </div>
-
     <input type="hidden" formControlName="idMarca" />
+
     <label for="Categoria">Categoria</label>
     <select name="Categorias" id="Categoria" formControlName="idCategoria">
       <option [ngValue]="null">Seleccione una Categoria</option>

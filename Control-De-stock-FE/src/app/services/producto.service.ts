@@ -21,4 +21,8 @@ export class ProductoService {
     obtenerProductoPorId(id: string): Observable<Producto> {
         return this.http.get<Producto>(`${this.baseUrl}/${id}`);
     }
+
+    editarProducto(id: string, productoData: CreateProducto): Observable<any> {
+        return this.http.patch(`${this.baseUrl}/${id}`, productoData);
+    }
 }

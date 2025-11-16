@@ -26,7 +26,7 @@ export class EditarProveedor implements OnInit {
   // ID del proveedor que se está editando
   proveedorId!: number;
   proveedor!: Proveedor;
-  //formulario registro proveedor
+  //formulario edicion proveedor
   proveedorForm!: FormGroup;
   // mensajes de exito y error
   errorMessage: string | null = null;
