@@ -82,6 +82,18 @@ export class ProductoService {
     return producto;
   }
 
+  async findByProveedorId(idProveedor: number): Promise<Producto[]> {
+    const productos = await this.productoRepository
+      .createQueryBuilder('producto')
+      .innerJoin('producto.proveedor', 'proveedor')
+      .where('proveedor.idProveedor = :idProveedor', { idProveedor })
+      .leftJoinAndSelect('producto.marca', 'marca')
+      .leftJoinAndSelect('producto.categoria', 'categoria')
+      .leftJoinAndSelect('producto.proveedor', 'proveedorCompleto')
+      .getMany();
+    return productos || [];
+  }
+
   async update(codigoDeBarras: string, updateProductoDto: UpdateProductoDto): Promise<Producto> {
     const producto = await this.findOne(codigoDeBarras);
 

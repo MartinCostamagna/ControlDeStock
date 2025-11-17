@@ -1,21 +1,47 @@
 <div class="barraSuperior">
-  <img
-    src="imagenes/CasaBarra.png"
-    alt="Ir a la página de inicio"
-    routerLink="/inicio"
-  />
+  <img src="imagenes/CasaBarra.png" alt="Ir a la página de inicio" routerLink="/inicio" />
 </div>
 <h1>Generar Listado Para Pedido</h1>
-<div class="seleccionDeProveedor">
-  <label for="selectorProveedor">Seleccione el proveedor</label>
-  <select name="selectorProveedor"></select>
-</div>
+<form class="seleccionDeProveedor" [formGroup]="busquedaProveedorForm">
+  <label for="Proveedor">Proveedor</label>
+  <select name="Proveedores" id="Proveedor" formControlName="idProveedor">
+    <option [ngValue]="null">Seleccione un Proveedor</option>
+    <option *ngFor="let proveedor of proveedores" [ngValue]="proveedor.idProveedor">{{ proveedor.nombre }}</option>
+  </select>
+</form>
 <table>
-  <th>Código</th>
-  <th>Marca</th>
-  <th>Categoria</th>
-  <th>Descripcion</th>
-  <th>Stock</th>
+  <thead>
+    <th></th>
+    <th>Codigo</th>
+    <th>Marca</th>
+    <th>Categoria</th>
+    <th>Descripcion</th>
+    <th>Stock Actual</th>
+    <th>Stock Minimo</th>
+    <th>Precio de Costo</th>
+    <th>Porcentaje de Ganancia</th>
+    <th>Proveedor</th>
+    <th>Cantidad a Pedir</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prod of productos">
+      <td>
+        <input type="checkbox" name="productoSelector" [value]="prod.codigoDeBarras" />
+      </td>
+      <td>{{ prod.codigoDeBarras }}</td>
+      <td>{{ prod.marca.nombre }}</td>
+      <td>{{ prod.categoria.nombre }}</td>
+      <td>{{ prod.descripcion }}</td>
+      <td>{{ prod.stock }}</td>
+      <td>{{ prod.stockMinimo }}</td>
+      <td>{{ prod.precioCosto }}</td>
+      <td>{{ prod.porcentajeGanancia }}</td>
+      <td>{{ prod.proveedor.nombre }}</td>
+      <td>
+        <input type="number" name="cantidadProducto">
+      </td>
+    </tr>
+  </tbody>
 </table>
 <div class="divBotones">
   <button routerLink="/inicio">Volver</button>

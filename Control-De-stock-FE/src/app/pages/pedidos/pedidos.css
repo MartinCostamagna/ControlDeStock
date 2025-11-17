@@ -27,17 +27,50 @@ h1 {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    align-items: center;
 }
 
+select {
+    width: 250px;
+    height: 40px;
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+    margin-top: 5px;
+}
+
+/* tabla de productos */
 table {
     background-color: #FFFFFF;
+    width: 90%;
+    border-collapse: collapse;
+    font-size: 18px;
+    border-radius: 6px;
+    margin: auto;
+    margin-top: 3%;
 }
 
+/* Encabezado */
 th {
-    width: 90%;
     background-color: #FF9E01;
     color: #FFFFFF;
-    border-radius: 6px;
+    border: #9a9a9a 2px solid;
+    align-items: center;
+}
+
+/* Filas y columnas */
+tr,
+td {
+    border: #9a9a9a 2px solid;
+    text-align: center;
+}
+
+/* Saca flechitas del imput number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .divBotones {
@@ -47,7 +80,8 @@ th {
     margin-top: 20px;
 }
 
-button, input[type=button] {
+button,
+input[type=button] {
     font-family: 'Ubuntu', sans-serif;
     width: 160px;
     height: 40px;

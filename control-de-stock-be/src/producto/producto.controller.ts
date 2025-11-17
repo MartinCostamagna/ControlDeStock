@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { ProductoService } from './producto.service';
 import { CreateProductoDto } from '../dto/create-producto.dto';
 import { UpdateProductoDto } from '../dto/update-producto.dto';
@@ -21,6 +21,11 @@ export class ProductoController {
   @Get(':codigoDeBarras')
   findOne(@Param('codigoDeBarras') codigoDeBarras: string): Promise<Producto> {
     return this.productoService.findOne(codigoDeBarras);
+  }
+
+  @Get('porProveedor/:idProveedor')
+  findByProveedor(@Param('idProveedor', ParseIntPipe) idProveedor: number) {
+    return this.productoService.findByProveedorId(idProveedor);
   }
 
   @Patch(':codigoDeBarras')
