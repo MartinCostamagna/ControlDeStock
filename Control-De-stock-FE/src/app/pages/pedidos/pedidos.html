@@ -26,7 +26,8 @@
   <tbody>
     <tr *ngFor="let prod of productos">
       <td>
-        <input type="checkbox" name="productoSelector" [value]="prod.codigoDeBarras" />
+        <input type="checkbox" name="productoSelector" [value]="prod.codigoDeBarras"
+          (change)="onSelectProducto(prod, $event.target.checked)" />
       </td>
       <td>{{ prod.codigoDeBarras }}</td>
       <td>{{ prod.marca.nombre }}</td>
@@ -38,12 +39,13 @@
       <td>{{ prod.porcentajeGanancia }}</td>
       <td>{{ prod.proveedor.nombre }}</td>
       <td>
-        <input type="number" name="cantidadProducto">
+        <input type="number" name="cantidadProducto" min="1" [(ngModel)]="cantidades[prod.codigoDeBarras]"
+          [ngModelOptions]="{standalone: true}">
       </td>
     </tr>
   </tbody>
 </table>
 <div class="divBotones">
   <button routerLink="/inicio">Volver</button>
-  <input type="button" value="Generar Pedido" />
+  <button type="button" (click)="generarPDF()">Generar Pedido</button>
 </div>

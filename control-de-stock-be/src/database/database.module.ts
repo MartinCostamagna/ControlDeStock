@@ -51,7 +51,7 @@ import { Venta } from 'src/entities/venta.entity';
           DetalleVenta,
         ],
 
-        synchronize: true,
+        synchronize: false,
 
         logging: configService.get('NODE_ENV') === 'development',
         ssl: configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
