@@ -12,5 +12,6 @@ import { DetalleEntradaController } from './detalle-entrada.controller';
   ],
   controllers: [DetalleEntradaController],
   providers: [DetalleEntradaService],
+  exports: [DetalleEntradaService],
 })
-export class DetalleEntradaModule {}
+export class DetalleEntradaModule { }

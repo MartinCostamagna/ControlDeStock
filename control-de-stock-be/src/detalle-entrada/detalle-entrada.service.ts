@@ -1,3 +1,4 @@
+//src\detalle-entrada\detalle-entrada.service.ts
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -18,36 +19,69 @@ export class DetalleEntradaService {
 
     @InjectRepository(Producto)
     private readonly productoRepository: Repository<Producto>,
-  ) {}
+  ) { }
+
 
   async create(createDetalleEntradaDto: CreateDetalleEntradaDto): Promise<DetalleEntrada> {
-    const { idEntrada, idProducto, cantidad } = createDetalleEntradaDto;
+    const { idEntrada, codigoDeBarras, cantidad } = createDetalleEntradaDto;
 
     const entrada = await this.entradaRepository.findOneBy({ idEntrada });
     if (!entrada) {
       throw new NotFoundException(`Entrada con ID '${idEntrada}' no encontrada.`);
     }
-
-    const producto = await this.productoRepository.findOneBy({ codigoDeBarras: idProducto });
+    const producto = await this.productoRepository.findOneBy({ codigoDeBarras });
     if (!producto) {
-      throw new NotFoundException(`Producto con código de barras '${idProducto}' no encontrado.`);
+      throw new NotFoundException(`Producto con código de barras '${codigoDeBarras}' no encontrado.`);
     }
 
     if (cantidad <= 0) {
       throw new BadRequestException('La cantidad debe ser mayor a 0.');
     }
-
-    // Actualizar stock del producto
     producto.stock += cantidad;
     await this.productoRepository.save(producto);
 
-    const nuevaDetalleEntrada = this.detalleEntradaRepository.create({
+    const nuevoDetalle = this.detalleEntradaRepository.create({
       cantidad,
       entrada,
       producto,
     });
 
-    return this.detalleEntradaRepository.save(nuevaDetalleEntrada);
+    return this.detalleEntradaRepository.save(nuevoDetalle);
+  }
+
+  async createDetails(
+    detallesDto: CreateDetalleEntradaDto[],
+    entrada: Entrada
+  ): Promise<DetalleEntrada[]> {
+    const detallesParaGuardar: DetalleEntrada[] = [];
+    const productosParaActualizar: Producto[] = [];
+
+    for (const detalleDto of detallesDto) {
+      const { codigoDeBarras, cantidad } = detalleDto;
+
+      const producto = await this.productoRepository.findOneBy({ codigoDeBarras });
+      if (!producto) {
+        throw new NotFoundException(`Producto '${codigoDeBarras}' no encontrado.`);
+      }
+
+      if (cantidad <= 0) {
+        throw new BadRequestException(`La cantidad de '${producto.descripcion}' debe ser mayor a 0.`);
+      }
+
+      const nuevoDetalle = this.detalleEntradaRepository.create({
+        cantidad,
+        entrada,
+        producto,
+      });
+
+      producto.stock += cantidad;
+
+      detallesParaGuardar.push(nuevoDetalle);
+      productosParaActualizar.push(producto);
+    }
+
+    await this.productoRepository.save(productosParaActualizar);
+    return this.detalleEntradaRepository.save(detallesParaGuardar);
   }
 
   async findAll(): Promise<DetalleEntrada[]> {
@@ -78,10 +112,10 @@ export class DetalleEntradaService {
       detalleEntrada.entrada = entrada;
     }
 
-    if (updateDetalleEntradaDto.idProducto) {
-      const producto = await this.productoRepository.findOneBy({ codigoDeBarras: updateDetalleEntradaDto.idProducto });
+    if (updateDetalleEntradaDto.codigoDeBarras) {
+      const producto = await this.productoRepository.findOneBy({ codigoDeBarras: updateDetalleEntradaDto.codigoDeBarras });
       if (!producto) {
-        throw new NotFoundException(`Producto con código de barras '${updateDetalleEntradaDto.idProducto}' no encontrado.`);
+        throw new NotFoundException(`Producto con código de barras '${updateDetalleEntradaDto.codigoDeBarras}' no encontrado.`);
       }
       detalleEntrada.producto = producto;
     }

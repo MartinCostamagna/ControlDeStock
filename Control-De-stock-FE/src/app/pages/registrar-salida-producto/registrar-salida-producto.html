@@ -3,69 +3,84 @@
 </div>
 
 <h1>Salida de Producto</h1>
-<form class="formBusquedaProducto">
+<form class="formBusquedaProducto" [formGroup]="busquedaProductoForm" (ngSubmit)="submitBusquedaProducto()">
   <div class="divCodigoBusqueda">
     <label for="CodigoDeBarra">Código de Barras</label>
-    <input type="number" id="CodigoDeBarra" placeholder="Ingrese el código" class="codigoBusqueda" />
+    <input type="text" id="CodigoDeBarra" placeholder="Ingrese el código" class="codigoBusqueda"
+      formControlName="codigoDeBarras" />
   </div>
   <div class="divBoton">
     <button type="submit" class="botonChico">Buscar</button>
   </div>
 </form>
 
-<div class="divdatos">
+<form class="formDatos" [formGroup]="inputsDatosForm" (ngSubmit)="submitAgregarALista()" *ngIf="productoEncontrado">
   <div class="divInputsLabels">
     <label for="Marca">Marca</label>
-    <input type="text" id="Marca" />
+    <input type="text" id="Marca" formControlName="marca" />
   </div>
   <div class="divInputsLabels">
     <label for="Categoria">Categoria</label>
-    <input type="text" id="Categoria" />
+    <input type="text" id="Categoria" formControlName="categoria" />
   </div>
   <div class="divInputsLabels">
     <label for="Descripcion">Descripcion</label>
-    <input type="text" id="Descripcion" />
+    <input type="text" id="Descripcion" formControlName="descripcion" />
   </div>
   <div class="divInputsLabels">
     <label for="Stock">Stock</label>
-    <input type="text" id="Stock" />
+    <input type="text" id="Stock" formControlName="stock" />
   </div>
   <div class="divInputsLabels">
     <label for="Proveedor">Proveedor</label>
-    <input type="text" id="Proveedor" />
+    <input type="text" id="Proveedor" formControlName="proveedor" />
   </div>
   <div class="divInputsLabels">
-    <label for="Cantidad">Cantidad que sale</label>
-    <input type="text" id="Cantidad" placeholder="Ingrese la cantidad" />
+    <label for="Cantidad">Cantidad que Sale</label>
+    <input type="text" id="Cantidad" formControlName="cantidad" placeholder="Ingrese la cantidad" />
   </div>
   <div class="divInputsLabels" id="divBotonAgregar">
-    <button type="button" class="botonChico">Agregar</button>
+    <button type="submit" class="botonChico">Agregar</button>
   </div>
-</div>
+</form>
 
-<table>
-  <thead>
-    <th>Código</th>
-    <th>Marca</th>
-    <th>Categoria</th>
-    <th>Descripcion</th>
-    <th>Stock</th>
-    <th>Proveedor</th>
-  </thead>
-</table>
+<form [formGroup]="registroSalidaForm">
+  <table>
+    <thead>
+      <th>Código</th>
+      <th>Marca</th>
+      <th>Categoria</th>
+      <th>Descripcion</th>
+      <th>Stock</th>
+      <th>Proveedor</th>
+      <th>Cantidad que Sale</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prod of listaProductos">
+        <td>{{ prod.codigoDeBarras }}</td>
+        <td>{{ prod.marca.nombre }}</td>
+        <td>{{ prod.categoria.nombre }}</td>
+        <td>{{ prod.descripcion }}</td>
+        <td>{{ prod.stock }}</td>
+        <td>{{ prod.proveedor.nombre }}</td>
+        <td>{{ prod.cantidadSale }}</td>
+      </tr>
+    </tbody>
+  </table>
 
-<div class="SelectorDescripcion">
-  <label for="descripcion">Motivo de la salida</label>
-  <select name="descripicion" id="descripcion" placeholder="Seleccione el motivo de salida">
-    <option value="Seleccione una opcion">Seleccione una opcion</option>
-    <option value="Consumo Propio">Consumo Propio</option>
-    <option value="Producto Vencido">Producto Vencido</option>
-    <option value="Donacion">Donacion</option>
-    <option value="Otro">Otro</option>
-  </select>
-</div>
+  <div class="SelectorDescripcion">
+    <label for="descripcion">Motivo de la salida</label>
+    <select name="descripicion" id="descripcion" placeholder="Seleccione el motivo de salida">
+      <option value="Seleccione una opcion">Seleccione una opcion</option>
+      <option value="Consumo Propio">Consumo Propio</option>
+      <option value="Producto Vencido">Producto Vencido</option>
+      <option value="Donacion">Donacion</option>
+      <option value="Otro">Otro</option>
+    </select>
+  </div>
 
-<div class="divBotones">
-  <button routerLink="/inicio">Cancelar</button>
-  <button>Confirmar</button>
-</div>
+  <div class="divBotones">
+    <button routerLink="/inicio">Cancelar</button>
+    <button>Confirmar</button>
+  </div>
+</form>

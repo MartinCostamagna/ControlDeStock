@@ -50,8 +50,8 @@ h1 {
     margin-bottom: 4px;
 }
 
-/* div de datos del producto encontrado */
-.divdatos {
+/* form de datos del producto encontrado */
+.formDatos {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,12 +79,22 @@ input[type="text"],
 input[type="number"] {
     width: 150px;
     height: 20px;
+    justify-items: center;
     border-radius: 6px;
     border: none;
     padding: 5px;
     font-size: 16px;
     margin-top: 1%;
     margin-bottom: 2%;
+}
+
+/*Hace que los inputs se vean normal aunque esten deshabilitados*/
+input[type="text"][disabled],
+input[type="number"][disabled] {
+    background-color: #FFFFFF;
+    opacity: 1;
+    cursor: default;
+    color: #000000;
 }
 
 /* Saca flechitas del imput number */
@@ -148,6 +158,7 @@ th {
 tr,
 td {
     border: #9a9a9a 2px solid;
+    text-align: center;
 }
 
 

@@ -40,19 +40,19 @@ h1 {
 }
 
 /* div que contiene el boton de busqueda */
-.divBoton{
+.divBoton {
     align-self: flex-end;
 }
 
 
-.botonChico{
+.botonChico {
     height: 30px;
     width: 90px;
     margin-bottom: 4px;
 }
 
-/* div de datos del producto encontrado */
-.divdatos {
+/* form de datos del producto encontrado */
+.formDatos {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -62,7 +62,7 @@ h1 {
 }
 
 /* Divs individuales de cada input y su label */
-.divInputsLabels{
+.divInputsLabels {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -71,20 +71,31 @@ h1 {
     gap: 3px;
 }
 
-#divBotonAgregar{
+#divBotonAgregar {
     align-items: flex-start;
     align-self: flex-end;
 }
 
-input[type="text"], input[type="number"] {
+input[type="text"],
+input[type="number"] {
     width: 150px;
     height: 20px;
+    justify-items: center;
     border-radius: 6px;
     border: none;
     padding: 5px;
     font-size: 16px;
     margin-top: 1%;
     margin-bottom: 2%;
+}
+
+/*Hace que los inputs se vean normal aunque esten deshabilitados*/
+input[type="text"][disabled],
+input[type="number"][disabled] {
+    background-color: #FFFFFF;
+    opacity: 1;
+    cursor: default;
+    color: #000000;
 }
 
 /* Saca flechitas del imput number */
@@ -132,6 +143,7 @@ th {
 tr,
 td {
     border: #9a9a9a 2px solid;
+    text-align: center;
 }
 
 .divBotones {
@@ -144,11 +156,12 @@ td {
 }
 
 @media screen and (max-width: 600px) {
+
     /* form para buscar producto por codigo */
     .formBusquedaProducto {
         flex-direction: column;
     }
-    
+
     .divBoton {
         align-self: center;
     }
