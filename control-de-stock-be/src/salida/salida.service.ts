@@ -1,20 +1,46 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Salida } from '../entities/salida.entity';
 import { CreateSalidaDto } from '../dto/create-salida.dto';
 import { UpdateSalidaDto } from '../dto/update-salida.dto';
+import { DetalleSalidaService } from '../detalle-salida/detalle-salida.service';
 
 @Injectable()
 export class SalidaService {
   constructor(
     @InjectRepository(Salida)
     private readonly salidaRepository: Repository<Salida>,
-  ) {}
+    private readonly detalleSalidaService: DetalleSalidaService,
+  ) { }
 
   async create(createSalidaDto: CreateSalidaDto): Promise<Salida> {
-    const nuevaSalida = this.salidaRepository.create(createSalidaDto);
-    return this.salidaRepository.save(nuevaSalida);
+    const { detalles, motivo } = createSalidaDto;
+
+    if (!detalles || detalles.length === 0) {
+      throw new BadRequestException('La salida debe contener al menos un producto.');
+    }
+
+    const nuevaSalida = this.salidaRepository.create({
+      fecha: new Date(),
+      motivo: motivo
+    });
+
+    const salidaGuardada = await this.salidaRepository.save(nuevaSalida);
+
+    try {
+      const detallesGuardados = await this.detalleSalidaService.createDetails(
+        detalles,
+        salidaGuardada
+      );
+
+      salidaGuardada.detallesSalida = detallesGuardados;
+      return salidaGuardada;
+
+    } catch (error) {
+      await this.salidaRepository.delete(salidaGuardada.idSalida);
+      throw error;
+    }
   }
 
   async findAll(): Promise<Salida[]> {

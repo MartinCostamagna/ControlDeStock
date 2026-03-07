@@ -21,19 +21,58 @@ export class DetalleSalidaService {
     private readonly productoRepository: Repository<Producto>,
 
     private readonly notificacionesService: NotificacionesService,
-  ) {}
+  ) { }
+
+  async createDetails(detallesDto: CreateDetalleSalidaDto[], salida: Salida): Promise<DetalleSalida[]> {
+    const detallesParaGuardar: DetalleSalida[] = [];
+    const productosParaActualizar: Producto[] = [];
+
+    for (const detalleDto of detallesDto) {
+      const { codigoDeBarras, cantidad } = detalleDto;
+
+      const producto = await this.productoRepository.findOneBy({ codigoDeBarras });
+      if (!producto) {
+        throw new NotFoundException(`Producto '${codigoDeBarras}' no encontrado.`);
+      }
+
+      if (producto.stock < cantidad) {
+        throw new BadRequestException(
+          `Stock insuficiente para '${producto.descripcion}'. Disponible: ${producto.stock}, solicitado: ${cantidad}`
+        );
+      }
+
+      const nuevoDetalle = this.detalleSalidaRepository.create({
+        cantidad,
+        salida,
+        producto,
+      });
+
+      producto.stock -= cantidad;
+
+      detallesParaGuardar.push(nuevoDetalle);
+      productosParaActualizar.push(producto);
+    }
+
+    await this.productoRepository.save(productosParaActualizar);
+
+    for (const p of productosParaActualizar) {
+      await this.notificacionesService.verificarStockBajo(p);
+    }
+
+    return this.detalleSalidaRepository.save(detallesParaGuardar);
+  }
 
   async create(createDetalleSalidaDto: CreateDetalleSalidaDto): Promise<DetalleSalida> {
-    const { idSalida, idProducto, cantidad } = createDetalleSalidaDto;
+    const { idSalida, codigoDeBarras, cantidad } = createDetalleSalidaDto;
 
     const salida = await this.salidaRepository.findOneBy({ idSalida });
     if (!salida) {
       throw new NotFoundException(`Salida con ID '${idSalida}' no encontrada.`);
     }
 
-    const producto = await this.productoRepository.findOneBy({ codigoDeBarras: idProducto });
+    const producto = await this.productoRepository.findOneBy({ codigoDeBarras: codigoDeBarras });
     if (!producto) {
-      throw new NotFoundException(`Producto con código de barras '${idProducto}' no encontrado.`);
+      throw new NotFoundException(`Producto con código de barras '${codigoDeBarras}' no encontrado.`);
     }
 
     if (cantidad <= 0) {
@@ -44,11 +83,9 @@ export class DetalleSalidaService {
       throw new BadRequestException(`No hay suficiente stock para el producto '${producto.descripcion}'. Stock disponible: ${producto.stock}.`);
     }
 
-    // Actualizar stock del producto
     producto.stock -= cantidad;
     await this.productoRepository.save(producto);
 
-    // Verificar si se debe generar una notificación de stock bajo
     await this.notificacionesService.verificarStockBajo(producto);
 
     const nuevoDetalleSalida = this.detalleSalidaRepository.create({
@@ -88,10 +125,10 @@ export class DetalleSalidaService {
       detalleSalida.salida = salida;
     }
 
-    if (updateDetalleSalidaDto.idProducto) {
-      const producto = await this.productoRepository.findOneBy({ codigoDeBarras: updateDetalleSalidaDto.idProducto });
+    if (updateDetalleSalidaDto.codigoDeBarras) {
+      const producto = await this.productoRepository.findOneBy({ codigoDeBarras: updateDetalleSalidaDto.codigoDeBarras });
       if (!producto) {
-        throw new NotFoundException(`Producto con código de barras '${updateDetalleSalidaDto.idProducto}' no encontrado.`);
+        throw new NotFoundException(`Producto con código de barras '${updateDetalleSalidaDto.codigoDeBarras}' no encontrado.`);
       }
       detalleSalida.producto = producto;
     }
@@ -100,7 +137,6 @@ export class DetalleSalidaService {
       throw new BadRequestException('La cantidad debe ser mayor a 0.');
     }
 
-    // Ajustar stock si cambia la cantidad
     if (updateDetalleSalidaDto.cantidad !== undefined) {
       const diferencia = updateDetalleSalidaDto.cantidad - detalleSalida.cantidad;
       if (diferencia > 0 && diferencia > detalleSalida.producto.stock) {

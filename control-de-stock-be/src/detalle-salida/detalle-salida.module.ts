@@ -14,5 +14,6 @@ import { NotificacionesModule } from '../notificaciones/notificaciones.module';
   ],
   controllers: [DetalleSalidaController],
   providers: [DetalleSalidaService],
+  exports: [DetalleSalidaService]
 })
-export class DetalleSalidaModule {}
+export class DetalleSalidaModule { }

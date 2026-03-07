@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 //service
 import { ProductoService } from '../../services/producto.service';
+import { SalidaService } from '../../services/salida.service';
 //interfaces
 import { Producto } from '../../interfaces/producto.interface';
 
@@ -35,7 +36,8 @@ export class RegistrarSalidaProducto implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private ProductoService: ProductoService
+    private ProductoService: ProductoService,
+    private salidaService: SalidaService
   ) { }
 
   ngOnInit(): void {
@@ -75,6 +77,11 @@ export class RegistrarSalidaProducto implements OnInit {
       return;
     }
 
+    if (cantidadSale > this.productoEncontrado.stock) {
+      alert(`No puedes retirar ${cantidadSale} unidades. El stock actual es de ${this.productoEncontrado.stock}.`);
+      return;
+    }
+
     const productoConCantidad: ProductoConCantidad = {
       ...this.productoEncontrado,
       cantidadSale: Number(cantidadSale)
@@ -85,5 +92,39 @@ export class RegistrarSalidaProducto implements OnInit {
     this.busquedaProductoForm.reset();
     this.inputsDatosForm.reset();
     this.productoEncontrado = null;
+  }
+
+  submitConfirmar(): void {
+    const motivoSelect = document.getElementById('descripcion') as HTMLSelectElement;
+    const motivo = motivoSelect.value;
+
+    if (motivo === 'Seleccione una opcion') {
+      alert('Por favor, seleccione un motivo para la salida.');
+      return;
+    }
+
+    if (this.listaProductos.length === 0) {
+      alert('La lista de productos está vacía.');
+      return;
+    }
+
+    const payload = {
+      motivo: motivo,
+      detalles: this.listaProductos.map(p => ({
+        codigoDeBarras: p.codigoDeBarras,
+        cantidad: p.cantidadSale
+      }))
+    };
+
+    this.salidaService.registrarSalida(payload).subscribe({
+      next: () => {
+        alert('Salida registrada con éxito. El stock ha sido actualizado.');
+        this.listaProductos = [];
+        motivoSelect.value = 'Seleccione una opcion';
+      },
+      error: (err) => {
+        alert('Error: ' + (err.error?.message || 'No se pudo registrar la salida'));
+      }
+    });
   }
 }
