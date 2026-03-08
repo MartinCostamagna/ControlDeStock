@@ -34,8 +34,12 @@ export class RegistrarProducto implements OnInit {
   marcaSearchControl = new FormControl('');
   //formulario registro categoria
   categoriaForm!: FormGroup;
+  // Control para la entrada de texto del autocomplete de Categoria
+  categoriaSearchControl = new FormControl('');
   //formulario registro proveedor
   proveedorForm!: FormGroup;
+  // Control para la entrada de texto del autocomplete de Proveedor
+  proveedorSearchControl = new FormControl('');
   // mensajes de exito y error
   errorMessage: string | null = null;
   successMessage: string | null = null;
@@ -46,11 +50,15 @@ export class RegistrarProducto implements OnInit {
   marcas: Marca[] = [];
   filteredMarcas: Marca[] = [];
   categorias: Categoria[] = [];
+  filteredCategorias: Categoria[] = [];
   proveedores: Proveedor[] = [];
+  filteredProveedores: Proveedor[] = [];
   paises: Pais[] = [];
   provincias: Provincia[] = [];
   ciudades: Ciudad[] = [];
   showMarcaDropdown: boolean = false;
+  showCategoriaDropdown = false;
+  showProveedorDropdown = false;
 
   constructor(
     private fb: FormBuilder,
@@ -87,12 +95,17 @@ export class RegistrarProducto implements OnInit {
 
     // Suscribe a los cambios del input de búsqueda de marca
     this.marcaSearchControl.valueChanges.subscribe(value => {
-      this.filterMarcas(value);
+      this.filterData(value, 'marca');
     });
 
     // inicializa el formulario registro categoria
     this.categoriaForm = this.fb.group({
       nombre: ['', Validators.required]
+    });
+
+    // Suscribe a los cambios del input de búsqueda de categoría
+    this.categoriaSearchControl.valueChanges.subscribe(value => {
+      this.filterData(value, 'categoria');
     });
 
     // inicializa el formulario registro proveedor
@@ -103,25 +116,31 @@ export class RegistrarProducto implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       idCiudad: [{ value: null, disabled: true }, Validators.required]
     });
+
+    // Suscribe a los cambios del input de búsqueda de proveedor
+    this.proveedorSearchControl.valueChanges.subscribe(value => {
+      this.filterData(value, 'proveedor');
+    });
+
   }
 
   // Contiene la lógica de las llamadas HTTP GET para cargar datos
   cargarDatosIniciales(): void {
     // Cargar Marcas
     this.marcaService.obtenerMarcas().subscribe({
-      next: data => { this.filteredMarcas = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); },
+      next: data => { this.marcas = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); this.filteredMarcas = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); },
       error: err => console.error('Error al cargar marcas:', err)
     });
 
     // Cargar Categorías
     this.categoriaService.obtenerCategorias().subscribe({
-      next: data => { this.categorias = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); },
+      next: data => { this.categorias = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); this.filteredCategorias = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); },
       error: err => console.error('Error al cargar categorías:', err)
     });
 
     // Cargar Proveedores
     this.proveedorService.obtenerProveedores().subscribe({
-      next: data => { this.proveedores = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); },
+      next: data => { this.proveedores = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); this.filteredProveedores = data.sort((a, b) => a.nombre.localeCompare(b.nombre)); },
       error: err => console.error('Error al cargar proveedores:', err)
     });
 
@@ -264,6 +283,22 @@ export class RegistrarProducto implements OnInit {
     });
   }
 
+  selectItem(item: any, tipo: 'marca' | 'categoria' | 'proveedor'): void {
+    if (tipo === 'marca') {
+      this.marcaSearchControl.setValue(item.nombre, { emitEvent: false });
+      this.productoForm.get('idMarca')?.setValue(item.idMarca);
+      this.showMarcaDropdown = false;
+    } else if (tipo === 'categoria') {
+      this.categoriaSearchControl.setValue(item.nombre, { emitEvent: false });
+      this.productoForm.get('idCategoria')?.setValue(item.idCategoria);
+      this.showCategoriaDropdown = false;
+    } else if (tipo === 'proveedor') {
+      this.proveedorSearchControl.setValue(item.nombre, { emitEvent: false });
+      this.productoForm.get('idProveedor')?.setValue(item.idProveedor);
+      this.showProveedorDropdown = false;
+    }
+  }
+
   submitProducto(): void {
     this.errorMessage = null;
     this.successMessage = null;
@@ -278,6 +313,14 @@ export class RegistrarProducto implements OnInit {
       next: (response) => {
         window.alert(`Registro Exitoso: Producto "${response.descripcion}" creado.`);
         this.productoForm.reset();
+
+        this.marcaSearchControl.setValue('', { emitEvent: false });
+        this.categoriaSearchControl.setValue('', { emitEvent: false });
+        this.proveedorSearchControl.setValue('', { emitEvent: false });
+
+        this.filteredMarcas = [...this.marcas];
+        this.filteredCategorias = [...this.categorias];
+        this.filteredProveedores = [...this.proveedores];
       },
       error: (err) => {
         console.error('Error al registrar producto:', err);
@@ -286,44 +329,26 @@ export class RegistrarProducto implements OnInit {
     });
   }
 
-  filterMarcas(searchText: string | null): void {
-    const lowerCaseSearch = (searchText || '').toLowerCase();
-    if (!lowerCaseSearch) {
-      this.filteredMarcas = this.marcas;
-    } else {
-      this.filteredMarcas = this.marcas.filter(marca =>
-        marca.nombre.toLowerCase().includes(lowerCaseSearch)
-      );
+  filterData(val: string | null, tipo: 'marca' | 'categoria' | 'proveedor'): void {
+    const search = (val || '').toLowerCase();
+
+    if (tipo === 'marca') {
+      this.filteredMarcas = this.marcas.filter(m => m.nombre.toLowerCase().includes(search));
+      if (!search) this.productoForm.get('idMarca')?.setValue(null);
+    } else if (tipo === 'categoria') {
+      this.filteredCategorias = this.categorias.filter(c => c.nombre.toLowerCase().includes(search));
+      if (!search) this.productoForm.get('idCategoria')?.setValue(null);
+    } else if (tipo === 'proveedor') {
+      this.filteredProveedores = this.proveedores.filter(p => p.nombre.toLowerCase().includes(search));
+      if (!search) this.productoForm.get('idProveedor')?.setValue(null);
     }
-    this.showMarcaDropdown = true;
   }
 
-  selectMarca(marca: Marca): void {
-    this.marcaSearchControl.setValue(marca.nombre, { emitEvent: false });
-    this.productoForm.get('idMarca')!.setValue(marca.idMarca);
-    this.showMarcaDropdown = false;
-    this.productoForm.get('idMarca')!.markAsTouched();
-  }
-
-  onMarcaBlur(): void {
+  onBlur(tipo: string) {
     setTimeout(() => {
-      this.showMarcaDropdown = false;
-      const selectedId = this.productoForm.get('idMarca')!.value;
-      const currentName = this.marcaSearchControl.value;
-
-      if (selectedId) {
-        const actualMarca = this.marcas.find(m => m.idMarca === selectedId);
-        if (actualMarca && actualMarca.nombre !== currentName) {
-          this.marcaSearchControl.setValue(actualMarca.nombre, { emitEvent: false });
-        }
-      } else if (currentName && currentName.trim() !== '') {
-        // Si hay texto pero no hay ID seleccionado (no se seleccionó de la lista)
-        // Borra el texto para forzar la selección o el vacío
-        this.marcaSearchControl.setValue(null, { emitEvent: false });
-        // Y el ID debe estar en null
-        this.productoForm.get('idMarca')!.setValue(null);
-        this.productoForm.get('idMarca')!.markAsTouched();
-      }
-    }, 200); // 200ms de retraso
+      if (tipo === 'marca') this.showMarcaDropdown = false;
+      if (tipo === 'categoria') this.showCategoriaDropdown = false;
+      if (tipo === 'proveedor') this.showProveedorDropdown = false;
+    }, 200);
   }
 }

@@ -9,45 +9,63 @@
     <label for="Marca">Marca</label>
     <div class="typeahead-container">
       <input type="text" id="Marca" placeholder="Seleccione una Marca" [formControl]="marcaSearchControl"
-        (focus)="showMarcaDropdown = true" (blur)="onMarcaBlur()" class="autocomplete-input" />
+        autocomplete="off" (focus)="showMarcaDropdown = true" (blur)="onBlur('marca')" class="autocomplete-input" />
       <button type="button" class="botonRegistrar" (click)="registrarMarca()">+</button>
       <ul *ngIf="showMarcaDropdown && filteredMarcas.length > 0" class="autocomplete-list">
-        <li *ngFor="let marca of filteredMarcas" (mousedown)="selectMarca(marca)">
+        <li *ngFor="let marca of filteredMarcas" (mousedown)="selectItem(marca, 'marca')">
           {{ marca.nombre }}
         </li>
       </ul>
     </div>
     <input type="hidden" formControlName="idMarca" />
 
-    <label for="Categoria">Categoria</label>
-    <select name="Categorias" id="Categoria" formControlName="idCategoria">
-      <option [ngValue]="null">Seleccione una Categoria</option>
-      <option *ngFor="let categoria of categorias" [ngValue]="categoria.idCategoria">{{ categoria.nombre }}</option>
-    </select>
-    <button type="button" class="botonRegistrar" (click)="registrarCategoria()">+</button>
+    <label for="Categoria">Categoría</label>
+    <div class="typeahead-container">
+      <input type="text" placeholder="Seleccione una Categoría" [formControl]="categoriaSearchControl"
+        autocomplete="off" (focus)="showCategoriaDropdown = true" (blur)="onBlur('categoria')"
+        class="autocomplete-input" />
+      <button type="button" class="botonRegistrar" (click)="registrarCategoria()">+</button>
+      <ul *ngIf="showCategoriaDropdown && filteredCategorias.length > 0" class="autocomplete-list">
+        <li *ngFor="let cat of filteredCategorias" (mousedown)="selectItem(cat, 'categoria')">
+          {{ cat.nombre }}
+        </li>
+      </ul>
+    </div>
+
     <label for="Descripcion">Descripcion</label>
     <input type="text" name="Descripcion" id="Descripcion" placeholder="Ingrese una Descripción"
-      formControlName="descripcion" />
+      formControlName="descripcion" autocomplete="off" />
     <label for="Codigo">Codigo</label>
-    <input type="number" name="Codigo" id="Codigo" placeholder="Ingrese el Codigo" formControlName="codigoDeBarras" />
+    <input type="number" name="Codigo" id="Codigo" placeholder="Ingrese el Codigo" formControlName="codigoDeBarras"
+      autocomplete="off" />
   </div>
+
   <div class="derecha">
     <label for="PrecioCosto">Precio de Costo</label>
     <input type="number" name="PrecioCosto" id="PrecioCosto" placeholder="Ingrese el Precio de Costo"
-      formControlName="precioCosto" />
+      formControlName="precioCosto" autocomplete="off" />
+
     <label for="PorcentajeGanancia">Porcentaje de Ganancia</label>
     <input type="number" name="PorcentajeGanancia" id="PorcentajeGanancia"
-      placeholder="Ingrese el Porcentaje de Ganancia" formControlName="porcentajeGanancia" />
+      placeholder="Ingrese el Porcentaje de Ganancia" formControlName="porcentajeGanancia" autocomplete="off" />
+
     <label for="StockMinimo">Stock Minimo</label>
     <input type="number" name="StockMinimo" id="StockMinimo" placeholder="Ingrese el Stock Minimo"
-      formControlName="stockMinimo" />
+      formControlName="stockMinimo" autocomplete="off" />
+
     <label for="Proveedor">Proveedor</label>
-    <select name="Proveedores" id="Proveedor" formControlName="idProveedor">
-      <option [ngValue]="null">Seleccione un Proveedor</option>
-      <option *ngFor="let proveedor of proveedores" [ngValue]="proveedor.idProveedor">{{ proveedor.nombre }}</option>
-    </select>
-    <button type="button" class="botonRegistrar" (click)="registrarProveedor()">+</button>
+    <div class="typeahead-container">
+      <input type="text" placeholder="Seleccione un Proveedor" [formControl]="proveedorSearchControl" autocomplete="off"
+        (focus)="showProveedorDropdown = true" (blur)="onBlur('proveedor')" class="autocomplete-input" />
+      <button type="button" class="botonRegistrar" (click)="registrarProveedor()">+</button>
+      <ul *ngIf="showProveedorDropdown && filteredProveedores.length > 0" class="autocomplete-list">
+        <li *ngFor="let prov of filteredProveedores" (mousedown)="selectItem(prov, 'proveedor')">
+          {{ prov.nombre }}
+        </li>
+      </ul>
+    </div>
   </div>
+
   <div class="divBotones">
     <button type="button" class="botonGrande" routerLink="/inicio">Cancelar</button>
     <button type="submit" class="botonGrande" [disabled]="productoForm.invalid">Guardar</button>
@@ -59,7 +77,8 @@
     <h2>Registrar Marca</h2>
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <label for="regMarca">Marca</label>
-    <input type="text" name="regMarca" id="regMarca" placeholder="Ingrese el nombre" formControlName="nombre" />
+    <input type="text" name="regMarca" id="regMarca" placeholder="Ingrese el nombre" formControlName="nombre"
+      autocomplete="off" />
     <div class="divBotonesRegistroMP">
       <button type="button" class="botonGrande" (click)="registrarMarca()">Cerrar</button>
       <button type="submit" class="botonGrande" [disabled]="marcaForm.invalid">Registrar</button>
@@ -72,7 +91,8 @@
     <h2>Registrar Categoria</h2>
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     <label for="regCategoria">Categoria</label>
-    <input type="text" name="regCategoria" id="regCategoria" placeholder="Ingrese el nombre" formControlName="nombre" />
+    <input type="text" name="regCategoria" id="regCategoria" placeholder="Ingrese el nombre" formControlName="nombre"
+      autocomplete="off" />
     <div class="divBotonesRegistroMP">
       <button type="button" class="botonGrande" (click)="registrarCategoria()">Cerrar</button>
       <button type="submit" class="botonGrande" [disabled]="categoriaForm.invalid">Registrar</button>
@@ -84,11 +104,13 @@
   <form class="modal proveedor" [formGroup]="proveedorForm" (ngSubmit)="submitProveedor()">
     <h2>Registrar Proveedor</h2>
     <label for="Nombre">Nombre</label>
-    <input type="text" name="Nombre" placeholder="Ingrese el nombre" formControlName="nombre" />
+    <input type="text" name="Nombre" placeholder="Ingrese el nombre" formControlName="nombre" autocomplete="off" />
     <label for="Telefono">Telefono</label>
-    <input type="text" name="Telefono" placeholder="Ingrese el telefono" formControlName="telefono" />
+    <input type="text" name="Telefono" placeholder="Ingrese el telefono" formControlName="telefono"
+      autocomplete="new-password" /> <!-- new password es unicamente para que chrome no muestre sugerencias -->
     <label for="Email">Email</label>
-    <input type="email" name="Email" placeholder="Ingrese el email" formControlName="email" />
+    <input type="email" name="Email" placeholder="Ingrese el email" formControlName="email"
+      autocomplete="new-password" />
     <label for="Pais">Pais</label>
     <select name="Pais" id="Pais" [(ngModel)]="selectedPaisId" (change)="onPaisChange(selectedPaisId)"
       [ngModelOptions]="{standalone: true}">
@@ -108,7 +130,8 @@
       <option *ngFor="let ciudad of ciudades" [ngValue]="ciudad.idCiudad">{{ ciudad.nombre }}</option>
     </select>
     <label for="Direccion">Dirección</label>
-    <input type="text" name="Direccion" placeholder="Ingrese la direccion" formControlName="direccion" />
+    <input type="text" name="Direccion" placeholder="Ingrese la direccion" formControlName="direccion"
+      autocomplete="new-password" />
     <div class="divBotonesRegistroMP">
       <button type="button" class="botonGrande" (click)="registrarProveedor()">Cerrar</button>
       <button type="submit" class="botonGrande" [disabled]="proveedorForm.invalid">Registrar</button>

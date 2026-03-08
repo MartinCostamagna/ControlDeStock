@@ -153,10 +153,8 @@ h2 {
 /* Estilo del contenedor del Autocomplete */
 .typeahead-container {
     position: relative;
-    /* Clave para posicionar la lista desplegable */
     display: flex;
     align-items: center;
-    /* Alinea el input y el botón + */
 }
 
 /* Estilo del input de Autocomplete */
