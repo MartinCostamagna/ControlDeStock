@@ -1,10 +1,10 @@
-import { Controller, Post, Body, Res, HttpCode, HttpStatus, UsePipes, ValidationPipe, Logger, Req, Get, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Res, HttpCode, HttpStatus, UsePipes, ValidationPipe, Logger, Req, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Response, Request } from 'express';
 import { LoginDto } from './dto/login.dto';
 import { RegisterUsuarioDto } from './dto/register-usuario.dto';
 import { ConfigService } from '@nestjs/config';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { Public } from './decorators/public.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -24,6 +24,7 @@ export class AuthController {
     return result;
   }
 
+  @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
@@ -51,6 +52,7 @@ export class AuthController {
 
   @Post('logout')
   @HttpCode(HttpStatus.OK)
+  @Public()
   async logout(@Res({ passthrough: true }) response: Response) {
     this.logger.log('Intento de logout.');
     const cookieOptions = {
@@ -63,11 +65,10 @@ export class AuthController {
     return { message: 'Sesión cerrada exitosamente.' };
   }
 
-  @Get('status')
-  @UseGuards(JwtAuthGuard)
+@Get('status')
   status(@Req() req: Request) {
     this.logger.log(`Verificando estado de auth para usuario: ${JSON.stringify(req.user)}`);
-    return { isAuthenticated: true, user: req.user };
+    return { isAuthenticated: !!req.user, user: req.user };
   }
 
   private parseExpiresIn(expiresInString: string): number {

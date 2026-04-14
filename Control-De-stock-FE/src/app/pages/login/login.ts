@@ -41,7 +41,13 @@ export class Login implements OnInit {
     this.authService.login(credentials).subscribe({
       next: (response) => {
         console.log('Login exitoso:', response);
-        this.router.navigate(['/inicio']);
+        this.authService.checkAuth().subscribe({
+          next: () => this.router.navigate(['/inicio']),
+          error: () => {
+            this.errorMessage = 'Error verificando sesión';
+            console.error('Auth check failed after login');
+          }
+        });
       },
       error: (err) => {
         console.error('Error de autenticación:', err);
