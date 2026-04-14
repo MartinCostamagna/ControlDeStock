@@ -6,16 +6,25 @@
 <form class="formEditarProducto" [formGroup]="productoForm" (ngSubmit)="submitProductoEditado()">
     <div class="izquierda">
         <label for="Marca">Marca</label>
-        <select name="Marcas" id="Marca" formControlName="idMarca">
-            <option [ngValue]="null">Seleccione una Marca</option>
-            <option *ngFor="let marca of marcas" [ngValue]="marca.idMarca">{{ marca.nombre }}</option>
-        </select>
+        <div class="typeahead-container">
+            <input type="text" id="Marca" [formControl]="marcaSearchControl" autocomplete="off"
+                (focus)="showMarcaDropdown = true" (blur)="onBlur('marca')" class="autocomplete-input" />
+            <ul *ngIf="showMarcaDropdown && filteredMarcas.length > 0" class="autocomplete-list">
+                <li *ngFor="let marca of filteredMarcas" (mousedown)="selectItem(marca, 'marca')">
+                    {{ marca.nombre }}
+                </li>
+            </ul>
+        </div>
         <label for="Categoria">Categoria</label>
-        <select name="Categorias" id="Categoria" formControlName="idCategoria">
-            <option [ngValue]="null">Seleccione una Categoria</option>
-            <option *ngFor="let categoria of categorias" [ngValue]="categoria.idCategoria">{{ categoria.nombre }}
-            </option>
-        </select>
+        <div class="typeahead-container">
+            <input type="text" id="Categoria" [formControl]="categoriaSearchControl" autocomplete="off"
+                (focus)="showCategoriaDropdown = true" (blur)="onBlur('categoria')" class="autocomplete-input" />
+            <ul *ngIf="showCategoriaDropdown && filteredCategorias.length > 0" class="autocomplete-list">
+                <li *ngFor="let cat of filteredCategorias" (mousedown)="selectItem(cat, 'categoria')">
+                    {{ cat.nombre }}
+                </li>
+            </ul>
+        </div>
         <label for="Descripcion">Descripcion</label>
         <input type="text" name="Descripcion" id="Descripcion" formControlName="descripcion" />
         <label for="Codigo">Codigo</label>
@@ -23,19 +32,21 @@
     </div>
     <div class="derecha">
         <label for="PrecioCosto">Precio de Costo</label>
-        <input type="number" name="PrecioCosto" id="PrecioCosto" placeholder="Ingrese el Precio de Costo"
-            formControlName="precioCosto" />
+        <input type="number" name="PrecioCosto" id="PrecioCosto" formControlName="precioCosto" />
         <label for="PorcentajeGanancia">Porcentaje de Ganancia</label>
-        <input type="number" name="PorcentajeGanancia" id="PorcentajeGanancia"
-            placeholder="Ingrese el Porcentaje de Ganancia" formControlName="porcentajeGanancia" />
+        <input type="number" name="PorcentajeGanancia" id="PorcentajeGanancia" formControlName="porcentajeGanancia" />
         <label for="StockMinimo">Stock Minimo</label>
         <input type="number" name="StockMinimo" id="StockMinimo" formControlName="stockMinimo" />
         <label for="Proveedor">Proveedor</label>
-        <select name="Proveedores" id="Proveedor" formControlName="idProveedor">
-            <option [ngValue]="null">Seleccione un Proveedor</option>
-            <option *ngFor="let proveedor of proveedores" [ngValue]="proveedor.idProveedor">{{ proveedor.nombre }}
-            </option>
-        </select>
+        <div class="typeahead-container">
+            <input type="text" id="Proveedor" [formControl]="proveedorSearchControl" autocomplete="off"
+                (focus)="showProveedorDropdown = true" (blur)="onBlur('proveedor')" class="autocomplete-input" />
+            <ul *ngIf="showProveedorDropdown && filteredProveedores.length > 0" class="autocomplete-list">
+                <li *ngFor="let prov of filteredProveedores" (mousedown)="selectItem(prov, 'proveedor')">
+                    {{ prov.nombre }}
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="divBotones">
         <button type="button" routerLink="/inventario">Cancelar</button>

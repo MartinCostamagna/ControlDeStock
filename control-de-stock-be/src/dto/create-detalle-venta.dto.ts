@@ -1,4 +1,4 @@
-import { IsDecimal, IsNotEmpty, IsNumber, IsPositive } from "class-validator";
+import { IsNotEmpty, IsNumber, IsPositive, IsString, IsOptional } from "class-validator";
 
 export class CreateDetalleVentaDto {
     @IsNotEmpty({ message: 'La cantidad es requerida.' })
@@ -19,6 +19,6 @@ export class CreateDetalleVentaDto {
     idVenta!: number;
 
     @IsNotEmpty({ message: 'El ID del producto es requerido.' })
-    @IsNumber({}, { message: 'El ID del producto debe ser un número.' })
-    idProducto!: number;
+    @IsString({ message: 'El código de barras debe ser una cadena de texto.' })
+    codigoDeBarras!: string;
 }

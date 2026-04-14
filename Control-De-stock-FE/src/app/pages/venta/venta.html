@@ -2,4 +2,75 @@
     <img src="imagenes/CasaBarra.png" alt="Ir a la página de inicio" routerLink="/inicio" />
 </div>
 
-<h1>Registrar venta</h1>
+<h1>Registrar Venta</h1>
+
+<form class="formBusquedaProducto" [formGroup]="busquedaProductoForm" (ngSubmit)="submitBusquedaProducto()">
+    <div class="divCodigoBusqueda">
+        <label for="CodigoDeBarra">Código de Barras</label>
+        <input type="text" id="CodigoDeBarra" placeholder="Ingrese el código" class="codigoBusqueda"
+            formControlName="codigoDeBarras" />
+    </div>
+    <div class="divBoton">
+        <button type="submit" class="botonChico">Buscar</button>
+    </div>
+</form>
+
+<form class="formDatos" [formGroup]="inputsDatosForm" (ngSubmit)="submitAgregarALista()" *ngIf="productoEncontrado">
+    <div class="divInputsLabels">
+        <label for="Marca">Marca</label>
+        <input type="text" id="Marca" formControlName="marca" />
+    </div>
+    <div class="divInputsLabels">
+        <label for="Categoria">Categoria</label>
+        <input type="text" id="Categoria" formControlName="categoria" />
+    </div>
+    <div class="divInputsLabels">
+        <label for="Descripcion">Descripcion</label>
+        <input type="text" id="Descripcion" formControlName="descripcion" />
+    </div>
+    <div class="divInputsLabels">
+        <label for="Stock">Stock</label>
+        <input type="text" id="Stock" formControlName="stock" />
+    </div>
+    <div class="divInputsLabels">
+        <label for="Precio">Precio Unit.</label>
+        <input type="text" id="Precio" formControlName="precioVenta" />
+    </div>
+    <div class="divInputsLabels">
+        <label for="Cantidad">Cantidad</label>
+        <input type="text" id="Cantidad" formControlName="cantidad" placeholder="Ingrese cantidad" />
+    </div>
+    <div class="divInputsLabels" id="divBotonAgregar">
+        <button type="submit" class="botonChico">Agregar</button>
+    </div>
+</form>
+
+<form [formGroup]="registroVentaForm">
+    <table>
+        <thead>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Marca</th>
+            <th>Precio Unitario</th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let prod of listaProductos">
+                <td>{{ prod.codigoDeBarras }}</td>
+                <td>{{ prod.descripcion }}</td>
+                <td>{{ prod.marca.nombre }}</td>
+                <td>{{ prod.precioVenta | currency }}</td>
+                <td>{{ prod.cantidadVenta }}</td>
+                <td>{{ prod.subtotal | currency }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 style="text-align: center; margin-top: 20px;">Total Venta: {{ totalVenta | currency }}</h2>
+
+    <div class="divBotones">
+        <button type="button" routerLink="/inicio">Cancelar</button>
+        <button type="button" (click)="confirmarVenta()" [disabled]="listaProductos.length === 0">Confirmar</button>
+    </div>
+</form>

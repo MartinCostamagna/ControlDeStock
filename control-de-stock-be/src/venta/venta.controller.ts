@@ -8,8 +8,8 @@ export class VentaController {
   constructor(private readonly ventaService: VentaService) { }
 
   @Post()
-  create(@Body() createVentaDto: CreateVentaDto) {
-    return this.ventaService.create(createVentaDto);
+  async create(@Body() createVentaDto: CreateVentaDto) {
+    return await this.ventaService.create(createVentaDto);
   }
 
   @Get()

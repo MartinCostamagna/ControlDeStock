@@ -66,6 +66,51 @@ select {
     font-size: 16px;
 }
 
+.typeahead-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 250px;
+}
+
+.autocomplete-input {
+    width: 240px;
+    height: 30px;
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+    box-sizing: content-box;
+}
+
+.autocomplete-list {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 1000;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 250px;
+    max-height: 200px;
+    overflow-y: auto;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-list li {
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+    color: #000000;
+}
+
+.autocomplete-list li:hover {
+    background-color: #f0f0f0;
+}
+
 /*Div Botones de envio*/
 .divBotones {
     width: 100%;

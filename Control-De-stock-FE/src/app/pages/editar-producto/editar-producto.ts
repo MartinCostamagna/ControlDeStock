@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { switchMap, tap } from 'rxjs/operators';
-import { forkJoin, of } from 'rxjs';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, FormControl } from '@angular/forms';
+import { tap } from 'rxjs/operators';
 //services
 import { ProductoService } from '../../services/producto.service';
 import { CategoriaService } from '../../services/categoria.service';
@@ -11,7 +10,6 @@ import { MarcaService } from '../../services/marca.service';
 import { ProveedorService } from '../../services/proveedor.service';
 //entities
 import { Proveedor } from '../../interfaces/proveedor.interface';
-import { Producto } from '../../interfaces/producto.interface';
 import { Categoria } from '../../interfaces/categoria.interface';
 import { Marca } from '../../interfaces/marca.interface';
 
@@ -31,9 +29,24 @@ export class EditarProducto implements OnInit {
   errorMessage: string | null = null;
   successMessage: string | null = null;
   // listas para objetos
+  marcaSearchControl = new FormControl('');
+  categoriaSearchControl = new FormControl('');
+  proveedorSearchControl = new FormControl('');
+
+  // Listas
   categorias: Categoria[] = [];
   marcas: Marca[] = [];
   proveedores: Proveedor[] = [];
+
+  // Listas Filtradas
+  filteredMarcas: Marca[] = [];
+  filteredCategorias: Categoria[] = [];
+  filteredProveedores: Proveedor[] = [];
+
+  // Visibilidad de Dropdowns
+  showMarcaDropdown = false;
+  showCategoriaDropdown = false;
+  showProveedorDropdown = false;
 
   constructor(
     private fb: FormBuilder,
@@ -69,6 +82,11 @@ export class EditarProducto implements OnInit {
     this.productoId = id;
 
     this.cargarProducto();
+
+    // Suscripciones a los cambios de búsqueda
+    this.marcaSearchControl.valueChanges.subscribe(val => this.filterData(val, 'marca'));
+    this.categoriaSearchControl.valueChanges.subscribe(val => this.filterData(val, 'categoria'));
+    this.proveedorSearchControl.valueChanges.subscribe(val => this.filterData(val, 'proveedor'));
   }
 
   // Contiene la lógica de las llamadas HTTP GET para cargar datos
@@ -93,22 +111,61 @@ export class EditarProducto implements OnInit {
   }
 
   cargarProducto(): void {
-    this.productoService.obtenerProductoPorId(this.productoId!).pipe(
-      tap(producto => {
-        this.productoForm.patchValue({
-          codigoDeBarras: producto.codigoDeBarras,
-          descripcion: producto.descripcion,
-          precioCosto: producto.precioCosto,
-          porcentajeGanancia: producto.porcentajeGanancia,
-          stock: producto.stock,
-          stockMinimo: producto.stockMinimo,
-          idMarca: producto.marca.idMarca,
-          idCategoria: producto.categoria.idCategoria,
-          idProveedor: producto.proveedor.idProveedor,
-        })
-      }
-      )
-    ).subscribe();
+    this.productoService.obtenerProductoPorId(this.productoId!).subscribe(producto => {
+      this.productoForm.patchValue({
+        codigoDeBarras: producto.codigoDeBarras,
+        descripcion: producto.descripcion,
+        precioCosto: producto.precioCosto,
+        porcentajeGanancia: producto.porcentajeGanancia,
+        stock: producto.stock,
+        stockMinimo: producto.stockMinimo,
+        idMarca: producto.marca.idMarca,
+        idCategoria: producto.categoria.idCategoria,
+        idProveedor: producto.proveedor.idProveedor,
+      });
+
+      this.marcaSearchControl.setValue(producto.marca.nombre, { emitEvent: false });
+      this.categoriaSearchControl.setValue(producto.categoria.nombre, { emitEvent: false });
+      this.proveedorSearchControl.setValue(producto.proveedor.nombre, { emitEvent: false });
+    });
+  }
+
+  filterData(val: string | null, tipo: 'marca' | 'categoria' | 'proveedor'): void {
+    const search = (val || '').toLowerCase();
+    if (tipo === 'marca') {
+      this.filteredMarcas = this.marcas.filter(m => m.nombre.toLowerCase().includes(search));
+      this.showMarcaDropdown = true;
+    } else if (tipo === 'categoria') {
+      this.filteredCategorias = this.categorias.filter(c => c.nombre.toLowerCase().includes(search));
+      this.showCategoriaDropdown = true;
+    } else if (tipo === 'proveedor') {
+      this.filteredProveedores = this.proveedores.filter(p => p.nombre.toLowerCase().includes(search));
+      this.showProveedorDropdown = true;
+    }
+  }
+
+  selectItem(item: any, tipo: 'marca' | 'categoria' | 'proveedor'): void {
+    if (tipo === 'marca') {
+      this.marcaSearchControl.setValue(item.nombre, { emitEvent: false });
+      this.productoForm.get('idMarca')?.setValue(item.idMarca);
+      this.showMarcaDropdown = false;
+    } else if (tipo === 'categoria') {
+      this.categoriaSearchControl.setValue(item.nombre, { emitEvent: false });
+      this.productoForm.get('idCategoria')?.setValue(item.idCategoria);
+      this.showCategoriaDropdown = false;
+    } else if (tipo === 'proveedor') {
+      this.proveedorSearchControl.setValue(item.nombre, { emitEvent: false });
+      this.productoForm.get('idProveedor')?.setValue(item.idProveedor);
+      this.showProveedorDropdown = false;
+    }
+  }
+
+  onBlur(tipo: string): void {
+    setTimeout(() => {
+      if (tipo === 'marca') this.showMarcaDropdown = false;
+      if (tipo === 'categoria') this.showCategoriaDropdown = false;
+      if (tipo === 'proveedor') this.showProveedorDropdown = false;
+    }, 200);
   }
 
   submitProductoEditado(): void {

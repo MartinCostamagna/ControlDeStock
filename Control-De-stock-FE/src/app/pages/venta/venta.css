@@ -15,10 +15,165 @@ img {
     cursor: pointer;
 }
 
-/* Titulo */
 h1 {
+    font-size: 40px;
     text-align: center;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 20px;
     color: #000000;
+}
+
+/* form para buscar producto por codigo */
+.formBusquedaProducto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+/* div que contiene input y label de codigo de busqueda */
+.divCodigoBusqueda {
+    display: flex;
+    flex-direction: column;
+}
+
+/* div que contiene el boton de busqueda */
+.divBoton {
+    align-self: flex-end;
+}
+
+
+.botonChico {
+    height: 30px;
+    width: 90px;
+    margin-bottom: 4px;
+}
+
+/* form de datos del producto encontrado */
+.formDatos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+/* Divs individuales de cada input y su label */
+.divInputsLabels {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+}
+
+#divBotonAgregar {
+    align-items: flex-start;
+    align-self: flex-end;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 150px;
+    height: 20px;
+    justify-items: center;
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+    margin-top: 1%;
+    margin-bottom: 2%;
+}
+
+/*Hace que los inputs se vean normal aunque esten deshabilitados*/
+input[type="text"][disabled],
+input[type="number"][disabled] {
+    background-color: #FFFFFF;
+    opacity: 1;
+    cursor: default;
+    color: #000000;
+}
+
+/* Saca flechitas del imput number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+label {
+    font-size: 15px;
+}
+
+button {
+    display: block;
+    font-family: 'Ubuntu', sans-serif;
+    width: 160px;
+    height: 40px;
+    background-color: #FF9E01;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 6px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* tabla de productos */
+table {
+    background-color: #FFFFFF;
+    width: 90%;
+    border-collapse: collapse;
+    font-size: 18px;
+    border-radius: 6px;
+    margin: auto;
+}
+
+/* Encabezado */
+th {
+    background-color: #FF9E01;
+    color: #FFFFFF;
+    border: #9a9a9a 2px solid;
+}
+
+/* Filas y columnas */
+tr,
+td {
+    border: #9a9a9a 2px solid;
+    text-align: center;
+}
+
+.divBotones {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2%;
+    margin-top: 5%;
+}
+
+@media screen and (max-width: 600px) {
+
+    /* form para buscar producto por codigo */
+    .formBusquedaProducto {
+        flex-direction: column;
+    }
+
+    .divBoton {
+        align-self: center;
+    }
+
+    .botonChico {
+        height: 30px;
+        width: 160px;
+        margin-bottom: 4px;
+    }
+
+    #divBotonAgregar {
+        align-items: center;
+        margin-top: 15px;
+    }
 }
