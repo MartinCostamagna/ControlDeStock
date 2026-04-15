@@ -20,9 +20,84 @@ h1 {
     color: #000000;
 }
 
+/* Div de Filtros */
+.filtros {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.filtro-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+}
+
+.filtros label {
+    font-size: 15px;
+    color: #000;
+}
+
+.filtros input[type="text"],
+.autocomplete-input {
+    width: 200px;
+    height: 30px;
+    text-align: center;
+    border-radius: 6px;
+    border: none;
+    padding: 5px;
+    font-size: 16px;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    background-color: #FFFFFF;
+}
+
+.typeahead-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.autocomplete-input {
+    width: 180px;
+}
+
+.autocomplete-list {
+    position: absolute;
+    top: 100%;
+    width: 200px;
+    background: white;
+    border: 1px solid #ddd;
+    z-index: 100;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.autocomplete-list li {
+    padding: 8px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.autocomplete-list li:hover {
+    background-color: #FF9E01;
+    color: white;
+}
+
 /* div para tabla de productos */
 .divTabla {
-    margin-top: 5%;
+    margin-top: 30px;
+    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;

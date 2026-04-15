@@ -16,18 +16,16 @@ import { authGuard } from './services/auth.guard';
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: Login },
-
-{ path: 'inicio', component: Inicio, canActivate: [authGuard] },
-{ path: 'registrarProducto', component: RegistrarProducto, canActivate: [authGuard] },
-{ path: 'registrarSalidaDeProducto', component: RegistrarSalidaProducto, canActivate: [authGuard] },
-{ path: 'registrarIngresoDeProducto', component: RegistrarIngresoProducto, canActivate: [authGuard] },
-{ path: 'inventario', component: Inventario, canActivate: [authGuard] },
-{ path: 'proveedores', component: Proveedores, canActivate: [authGuard] },
-{ path: 'pedidos', component: Pedidos, canActivate: [authGuard] },
-{ path: 'editarProveedor/:id', component: EditarProveedor, canActivate: [authGuard] },
-{ path: 'editarProducto/:id', component: EditarProducto, canActivate: [authGuard] },
-{ path: 'venta', component: Venta, canActivate: [authGuard] }
-
+  { path: 'inicio', component: Inicio, canActivate: [authGuard] },
+  { path: 'registrarProducto', component: RegistrarProducto, canActivate: [authGuard] },
+  { path: 'registrarSalidaDeProducto', component: RegistrarSalidaProducto, canActivate: [authGuard] },
+  { path: 'registrarIngresoDeProducto', component: RegistrarIngresoProducto, canActivate: [authGuard] },
+  { path: 'inventario', component: Inventario, canActivate: [authGuard] },
+  { path: 'proveedores', component: Proveedores, canActivate: [authGuard] },
+  { path: 'pedidos', component: Pedidos, canActivate: [authGuard] },
+  { path: 'editarProveedor/:id', component: EditarProveedor, canActivate: [authGuard] },
+  { path: 'editarProducto/:id', component: EditarProducto, canActivate: [authGuard] },
+  { path: 'venta', component: Venta, canActivate: [authGuard] }
 ];
 
 @NgModule({

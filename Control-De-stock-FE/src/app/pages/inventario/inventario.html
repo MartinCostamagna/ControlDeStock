@@ -2,6 +2,55 @@
   <img src="imagenes/CasaBarra.png" alt="Ir a la página de inicio" routerLink="/inicio" />
 </div>
 <h1>Inventario</h1>
+
+<div class="filtros">
+  <div class="filtro-item">
+    <label for="Codigo">Codigo de Barra</label>
+    <input type="text" id="Codigo" placeholder="Ingrese el Codigo" [(ngModel)]="filtroCodigo"
+      (input)="aplicarFiltros()" />
+  </div>
+
+  <div class="filtro-item">
+    <label for="Marca">Marca</label>
+    <div class="typeahead-container">
+      <input type="text" id="Marca" placeholder="Seleccione una Marca" [formControl]="marcaSearchControl"
+        autocomplete="off" (focus)="onFocus('marca')" (blur)="onBlur('marca')" class="autocomplete-input" />
+      <ul *ngIf="showMarcaDropdown && filteredMarcas.length > 0" class="autocomplete-list">
+        <li *ngFor="let marca of filteredMarcas" (mousedown)="selectItem(marca, 'marca')">
+          {{ marca.nombre }}
+        </li>
+      </ul>
+    </div>
+    <input type="hidden" formControlName="idMarca" />
+  </div>
+
+  <div class="filtro-item">
+    <label for="Categoria">Categoría</label>
+    <div class="typeahead-container">
+      <input type="text" placeholder="Seleccione una Categoría" [formControl]="categoriaSearchControl"
+        autocomplete="off" (focus)="onFocus('categoria')" (blur)="onBlur('categoria')" class="autocomplete-input" />
+      <ul *ngIf="showCategoriaDropdown && filteredCategorias.length > 0" class="autocomplete-list">
+        <li *ngFor="let cat of filteredCategorias" (mousedown)="selectItem(cat, 'categoria')">
+          {{ cat.nombre }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="filtro-item">
+    <label for="Proveedor">Proveedor</label>
+    <div class="typeahead-container">
+      <input type="text" placeholder="Seleccione un Proveedor" [formControl]="proveedorSearchControl" autocomplete="off"
+        (focus)="onFocus('proveedor')" (blur)="onBlur('proveedor')" class="autocomplete-input" />
+      <ul *ngIf="showProveedorDropdown && filteredProveedores.length > 0" class="autocomplete-list">
+        <li *ngFor="let prov of filteredProveedores" (mousedown)="selectItem(prov, 'proveedor')">
+          {{ prov.nombre }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
 <div class="divTabla">
   <p *ngIf="isLoading">Cargando inventario...</p>
   <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
