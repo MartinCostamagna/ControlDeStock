@@ -1,5 +1,5 @@
 docker-compose up -d
-docker exec -it nestjs_api_postgres psql -U admin_tpi  -d nest_api_db
+docker exec -it stock_postgres_db psql -U admin_tpi -d control_stock_db
 \dt
 \q
 docker volume rm postgres_data
@@ -23,3 +23,35 @@ npm run test:e2e
 npm run test:e2e:cov
 npm run db:test:up
 npm run test src/auth/auth.controller.spec.ts
+
+# Migraciones
+npm run migration:generate src/migrations/Initial  # <path> relativo a src/, genera timestamp-Initial.ts
+npm run migration:run
+npm run migration:revert
+
+npm run create:admin
+
+# STARTUP DIRECTO CON MIGRACIONES (Windows CMD/PowerShell)
+
+npm run dev:full
+
+# Secuencia ejecutada:
+# 1. docker compose up -d postgres_db
+# 2. Espera 15s (DB ready)
+# 3. npm run migration:run
+# 4. npm run create:admin  
+# 5. npm run start:dev
+
+# Comandos manuales si necesario:
+# docker compose up -d postgres_db
+# timeout /t 15 /nobreak >nul
+# npm run migration:run
+# npm run create:admin
+# npm run start:dev
+
+# Parar:
+docker compose down
+
+# Toggle sync
+# .env TYPEORM_SYNCHRONIZE=true -> usa synchronize (dev rápido)
+# TYPEORM_SYNCHRONIZE=false -> requiere migrations (prod)
