@@ -7,6 +7,9 @@ docker volume ls
 docker ps
 docker-compose down --volumes
 
+# Crear usuario administrador
+npx ts-node src/scripts/create-initial-admin.ts
+
 npm run db:dev:up
 npm run start:dev
 npm run migration:generate
