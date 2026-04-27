@@ -1,23 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { Producto } from '../entities/producto.entity';
-import { Marca } from '../entities/marca.entity';
-import { Categoria } from '../entities/categoria.entity';
-import { Proveedor } from '../entities/proveedor.entity';
-import { Ciudad } from '../entities/ciudad.entity';
-import { Provincia } from '../entities/provincia.entity';
-import { Pais } from '../entities/pais.entity';
-import { Usuario } from '../entities/usuario.entity';
-import { Pedido } from '../entities/pedido.entity';
-import { DetallePedido } from '../entities/detalle-pedido.entity';
-import { Entrada } from '../entities/entrada.entity';
-import { DetalleEntrada } from '../entities/detalle-entrada.entity';
-import { Salida } from '../entities/salida.entity';
-import { DetalleSalida } from '../entities/detalle-salida.entity';
-import { Notificacion } from '../entities/notificacion.entity';
-import { DetalleVenta } from 'src/entities/detalle-venta.entity';
-import { Venta } from 'src/entities/venta.entity';
+import * as entities from '../entities';
+
+const entityList = Object.values(entities);
 
 @Module({
   imports: [
@@ -31,52 +17,16 @@ import { Venta } from 'src/entities/venta.entity';
         password: configService.get<string>('DB_PASSWORD', 'postgres'),
         database: configService.get<string>('DB_DATABASE', 'control_stock_db'),
 
-        entities: [
-          Producto,
-          Marca,
-          Categoria,
-          Proveedor,
-          Ciudad,
-          Provincia,
-          Pais,
-          Usuario,
-          Pedido,
-          DetallePedido,
-          Entrada,
-          DetalleEntrada,
-          Salida,
-          DetalleSalida,
-          Notificacion,
-          Venta,
-          DetalleVenta,
-        ],
+        entities: entityList,
 
         synchronize: configService.get('TYPEORM_SYNCHRONIZE') === 'true',
 
-        logging: configService.get('NODE_ENV') === 'development',
+        logging: configService.get('TYPEORM_LOGGING') === 'true',
         ssl: configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([
-      Producto,
-      Marca,
-      Categoria,
-      Proveedor,
-      Ciudad,
-      Provincia,
-      Pais,
-      Usuario,
-      Pedido,
-      DetallePedido,
-      Entrada,
-      DetalleEntrada,
-      Salida,
-      DetalleSalida,
-      Notificacion,
-      Venta,
-      DetalleVenta,
-    ]),
+    TypeOrmModule.forFeature(entityList),
   ],
   exports: [TypeOrmModule],
 })
