@@ -38,9 +38,8 @@ npm run dev:full
 # Secuencia ejecutada:
 # 1. docker compose up -d postgres_db
 # 2. Espera 15s (DB ready)
-# 3. npm run migration:run
-# 4. npm run create:admin  
-# 5. npm run start:dev
+# 3. npm run migration:run 
+# 4. npm run start:dev
 
 # Comandos manuales si necesario:
 # docker compose up -d postgres_db
