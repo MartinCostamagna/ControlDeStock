@@ -52,4 +52,4 @@ import { DetalleVentaModule } from './detalle-venta/detalle-venta.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

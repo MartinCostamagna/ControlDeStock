@@ -16,7 +16,7 @@ export class NotificacionesService {
 
     @InjectRepository(Producto)
     private readonly productoRepository: Repository<Producto>,
-  ) {}
+  ) { }
 
   async create(createNotificacionDto: CreateNotificacionDto): Promise<Notificacion> {
     const { codigoDeBarras, mensaje, estado = EstadoNotificacion.ENVIADA } = createNotificacionDto;
@@ -38,7 +38,10 @@ export class NotificacionesService {
   async findAll(): Promise<Notificacion[]> {
     return this.notificacionRepository.find({
       relations: ['producto'],
-      where: { estado: EstadoNotificacion.ENVIADA },
+      where: [
+        { estado: EstadoNotificacion.ENVIADA },
+        { estado: EstadoNotificacion.VISTA },
+      ],
       order: { fechaHora: 'DESC' },
     });
   }
@@ -72,8 +75,14 @@ export class NotificacionesService {
   }
 
   async verificarStockBajo(producto: Producto): Promise<void> {
+    if (!producto.marca) {
+      const prodConRelaciones = await this.productoRepository.findOne({
+        where: { codigoDeBarras: producto.codigoDeBarras },
+        relations: ['marca']
+      });
+      if (prodConRelaciones) producto = prodConRelaciones;
+    }
     if (producto.stock < producto.stockMinimo) {
-      // Verificar si ya existe una notificación activa para este producto
       const notificacionExistente = await this.notificacionRepository.findOne({
         where: {
           producto: { codigoDeBarras: producto.codigoDeBarras },
@@ -82,7 +91,8 @@ export class NotificacionesService {
       });
 
       if (!notificacionExistente) {
-        const mensaje = `El producto ${producto.descripcion} está por debajo de su stock mínimo de ${producto.stockMinimo} unidades`;
+        const nombreMarca = producto.marca ? producto.marca.nombre : 'desconocida';
+        const mensaje = `El producto de ${nombreMarca}, ${producto.descripcion} está por debajo de su stock mínimo de ${producto.stockMinimo} unidades`;
         await this.create({
           codigoDeBarras: producto.codigoDeBarras,
           mensaje,

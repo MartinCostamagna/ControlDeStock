@@ -2,22 +2,63 @@
   <button class="logout-btn" (click)="logout()">
     <i class="bi bi-box-arrow-left"></i>
   </button>
-  <i class="bi bi-bell-fill"></i>
+
+  <div class="notificaciones-wrapper">
+    <div class="notificaciones-icon" (click)="toggleNotificaciones()">
+      <i class="bi bi-bell-fill"></i>
+      <span class="badge" *ngIf="cantidadNotificaciones > 0" style="color: #FFFFFF;">
+        {{ cantidadNotificaciones }}
+      </span>
+    </div>
+
+    <div class="dropdown-notificaciones" *ngIf="mostrarNotificaciones">
+      <div class="noti-header">
+        <h3>Notificaciones</h3>
+        <i class="bi bi-x-lg" style="cursor: pointer;" (click)="toggleNotificaciones()"></i>
+      </div>
+
+      <div class="noti-body">
+        <div *ngIf="notificaciones.length === 0" class="noti-vacia">
+          <p>No tienes notificaciones</p>
+        </div>
+
+        <div class="noti-item" *ngFor="let noti of notificaciones" [ngClass]="{'noti-leida': noti.estado === 'vista'}">
+          <div class="noti-contenido">
+            <p>{{ noti.mensaje }}</p>
+            <div class="noti-footer">
+              <span class="noti-fecha">{{ noti.fechaHora | date:'dd/MM HH:mm' }}hs</span>
+              <div class="noti-acciones">
+                <button *ngIf="noti.estado !== 'vista'" class="btn-check-noti"
+                  (click)="marcarComoVista(noti.idNotificacion, $event)">
+                  <i class="bi bi-check-lg"></i>
+                </button>
+                <button class="btn-del-noti" (click)="eliminarNotificacion(noti.idNotificacion, $event)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div>
-  <img src="imagenes/changuito2.png" alt="Icono de menú" />
-  <h1>Menú</h1>
-  <button type="button" routerLink="/venta">Registrar Venta</button>
-  <button type="button" routerLink="/registrarProducto">
-    Registrar Producto
-  </button>
-  <button type="button" routerLink="/registrarIngresoDeProducto">
-    Registrar Ingreso de Productos
-  </button>
-  <button type="button" routerLink="/registrarSalidaDeProducto">
-    Registrar Salida de Productos
-  </button>
-  <button type="button" routerLink="/inventario">Inventario</button>
-  <button type="button" routerLink="/proveedores">Proveedores</button>
-  <button type="button" routerLink="/pedidos">Pedidos</button>
+<div class="menu-container">
+  <div>
+    <img src="imagenes/changuito2.png" alt="Icono de menú" />
+    <h1>Menú</h1>
+    <button type="button" routerLink="/venta">Registrar Venta</button>
+    <button type="button" routerLink="/registrarProducto">
+      Registrar Producto
+    </button>
+    <button type="button" routerLink="/registrarIngresoDeProducto">
+      Registrar Ingreso de Productos
+    </button>
+    <button type="button" routerLink="/registrarSalidaDeProducto">
+      Registrar Salida de Productos
+    </button>
+    <button type="button" routerLink="/inventario">Inventario</button>
+    <button type="button" routerLink="/proveedores">Proveedores</button>
+    <button type="button" routerLink="/pedidos">Pedidos</button>
+  </div>
 </div>

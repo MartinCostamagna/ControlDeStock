@@ -23,6 +23,7 @@ const entityList = Object.values(entities);
 
         logging: configService.get('TYPEORM_LOGGING') === 'true',
         ssl: configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
+        timezone: '-03:00',
       }),
       inject: [ConfigService],
     }),

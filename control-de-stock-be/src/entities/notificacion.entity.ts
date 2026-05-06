@@ -10,19 +10,19 @@ export enum EstadoNotificacion {
 
 @Entity('notificaciones')
 export class Notificacion {
-    @PrimaryGeneratedColumn()
-    idNotificacion!: number;
+  @PrimaryGeneratedColumn()
+  idNotificacion!: number;
 
-    @Column({ type: 'enum', enum: EstadoNotificacion, default: EstadoNotificacion.ENVIADA })
-    estado!: EstadoNotificacion;
+  @Column({ type: 'enum', enum: EstadoNotificacion, default: EstadoNotificacion.ENVIADA })
+  estado!: EstadoNotificacion;
 
-    @ManyToOne(() => Producto, { nullable: false })
-    @JoinColumn({ name: 'codigoDeBarras' })
-    producto!: Producto;
+  @ManyToOne(() => Producto, { nullable: false })
+  @JoinColumn({ name: 'codigoDeBarras' })
+  producto!: Producto;
 
-    @Column({ type: 'varchar', nullable: false })
-    mensaje!: string;
+  @Column({ type: 'varchar', nullable: false })
+  mensaje!: string;
 
-    @CreateDateColumn()
-    fechaHora!: Date;
+  @CreateDateColumn({ type: 'timestamp with time zone' })
+  fechaHora!: Date;
 }
