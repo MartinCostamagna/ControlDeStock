@@ -43,22 +43,70 @@
     </div>
   </div>
 </div>
+
 <div class="menu-container">
   <div>
-    <img src="imagenes/changuito2.png" alt="Icono de menú" />
+    <img class="img-logo" src="imagenes/changuito2.png" alt="Icono de menú" />
     <h1>Menú</h1>
-    <button type="button" routerLink="/venta">Registrar Venta</button>
-    <button type="button" routerLink="/registrarProducto">
-      Registrar Producto
-    </button>
-    <button type="button" routerLink="/registrarIngresoDeProducto">
-      Registrar Ingreso de Productos
-    </button>
-    <button type="button" routerLink="/registrarSalidaDeProducto">
-      Registrar Salida de Productos
-    </button>
-    <button type="button" routerLink="/inventario">Inventario</button>
-    <button type="button" routerLink="/proveedores">Proveedores</button>
-    <button type="button" routerLink="/pedidos">Pedidos</button>
+
+    <div class="DivBotones">
+
+      <div class="DivSuperior">
+
+        <div class="panel-seccion DivVentas">
+          <h2>Ventas y Caja</h2>
+          <div class="DivVentasInterno">
+            <div class="btn-tarjeta" routerLink="/venta">
+              <img src="/imagenes/RegistrarVenta.png" alt="Ir a Registrar Venta" />
+              <p>Registrar Venta</p>
+            </div>
+            <div class="btn-tarjeta" routerLink="/balance">
+              <img src="/imagenes/Balance.png" alt="Ir a Balance" />
+              <p>Ver Balance</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-seccion DivStock">
+          <h2>Stock</h2>
+          <div class="DivStockInterno">
+            <div class="btn-tarjeta" routerLink="/registrarProducto">
+              <img src="/imagenes/RegistrarProducto.png" alt="Ir a Registrar Producto" />
+              <p>Nuevo Producto</p>
+            </div>
+            <div class="btn-tarjeta" routerLink="/registrarIngresoDeProducto">
+              <img src="/imagenes/IngresoDeMercaderia.png" alt="Ir a Registrar Ingreso de Producto" />
+              <p>Entrada de Mercadería</p>
+            </div>
+            <div class="btn-tarjeta" routerLink="/registrarSalidaDeProducto">
+              <img src="/imagenes/SalidaDeMercaderia.png" alt="Ir a Registrar Salida de Producto" />
+              <p>Salida de Mercadería</p>
+            </div>
+            <div class="btn-tarjeta" routerLink="/inventario">
+              <img src="/imagenes/VerInventario.png" alt="Ir a Inventario" />
+              <p>Ver Inventario</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-seccion DivLogisticaYReportes">
+        <h2>Logistica y Reportes</h2>
+        <div class="DivLogisticaYReportesInterno">
+          <div class="btn-tarjeta logistica-btn" routerLink="/proveedores">
+            <img src="/imagenes/Proveedores.png" alt="Ir a Proveedores" />
+            <p>Proveedores</p>
+          </div>
+          <div class="btn-tarjeta logistica-btn" routerLink="/pedidos">
+            <img src="/imagenes/Pedidos.png" alt="Ir a Pedidos" />
+            <p>Pedidos Pendientes</p>
+          </div>
+          <div class="btn-tarjeta logistica-btn" routerLink="/estadisticas">
+            <img src="/imagenes/Estadisticas.png" alt="Ir a Estadisticas" />
+            <p>Análisis Estadístico</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

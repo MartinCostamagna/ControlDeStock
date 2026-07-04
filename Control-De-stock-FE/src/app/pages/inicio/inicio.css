@@ -167,18 +167,19 @@
 /* Botones de navegacion */
 .menu-container {
     text-align: center;
+    padding-bottom: 40px;
 }
 
-img {
-    margin-top: 50px;
-    width: 110px;
+.img-logo {
+    margin-top: 30px;
+    width: 90px;
 }
 
 h1 {
     font-size: 35px;
     color: #000000;
     margin: auto;
-    margin-bottom: 50px;
+    margin-bottom: 8px;
 }
 
 button {
@@ -196,6 +197,122 @@ button {
     cursor: pointer;
 }
 
+.DivBotones {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.DivSuperior {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.panel-seccion {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 20px 25px 30px 25px;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-seccion h2 {
+    text-align: left;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: #222;
+}
+
+.DivLogisticaYReportes {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.DivVentas,
+.DivStock,
+.DivLogisticaYReportes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+.DivVentasInterno,
+.DivStockInterno,
+.DivLogisticaYReportesInterno {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    justify-content: space-between;
+}
+
+.DivLogisticaYReportesInterno {
+    gap: 30px;
+    justify-content: center;
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.btn-tarjeta {
+    background-color: #ffffff;
+    border: 1px solid #d4b581;
+    border-radius: 8px;
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 160px;
+    height: 120px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.btn-tarjeta:hover {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    background-color: #fafafa;
+}
+
+.logistica-btn {
+    flex: 1;
+    flex-direction: row;
+    width: auto;
+    justify-content: center;
+    gap: 15px;
+    height: 90px;
+}
+
+.btn-tarjeta img {
+    width: 55px;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.logistica-btn img {
+    margin-bottom: 0;
+}
+
+.btn-tarjeta p {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    text-align: center;
+}
+
 /* Adaptacion a telefono */
 @media screen and (max-width: 600px) {
     img {
@@ -204,6 +321,22 @@ button {
 
     .barraSuperior i {
         margin-left: auto;
+    }
+
+    .DivSuperior {
+        flex-direction: column;
+    }
+
+    .DivVentasInterno,
+    .DivStockInterno,
+    .DivLogisticaYReportesInterno {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .logistica-btn {
+        flex-direction: column;
+        height: auto;
     }
 
 }

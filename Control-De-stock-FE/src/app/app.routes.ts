@@ -12,6 +12,8 @@ import { EditarProveedor } from './pages/editar-proveedor/editar-proveedor';
 import { EditarProducto } from './pages/editar-producto/editar-producto';
 import { Venta } from './pages/venta/venta';
 import { authGuard } from './services/auth.guard';
+import { Balance } from './pages/balance/balance';
+import { Estadisticas } from './pages/estadisticas/estadisticas';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -25,7 +27,9 @@ export const routes: Routes = [
   { path: 'pedidos', component: Pedidos, canActivate: [authGuard] },
   { path: 'editarProveedor/:id', component: EditarProveedor, canActivate: [authGuard] },
   { path: 'editarProducto/:id', component: EditarProducto, canActivate: [authGuard] },
-  { path: 'venta', component: Venta, canActivate: [authGuard] }
+  { path: 'venta', component: Venta, canActivate: [authGuard] },
+  { path: 'balance', component: Balance, canActivate: [authGuard] },
+  { path: 'estadisticas', component: Estadisticas, canActivate: [authGuard] }
 ];
 
 @NgModule({
